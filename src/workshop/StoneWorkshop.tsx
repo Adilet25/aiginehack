@@ -9,7 +9,8 @@ import {
   Upload,
 } from "lucide-react";
 import { useGame } from "../app/providers/GameProvider";
-import type { ArtworkCategory } from "../types";
+import { useLang } from "../app/providers/LanguageProvider";
+import type { ArtworkCategory, Lang } from "../types";
 
 type ToolMode = "hammer" | "chisel" | "brush";
 type TemplateType = "none" | "goat" | "deer" | "sun" | "hunter";
@@ -43,63 +44,125 @@ const templatePaths: Record<Exclude<TemplateType, "none">, string> = {
     "M210 120 L220 155 L215 190 M220 155 L260 150 M260 150 L300 115 M260 150 L300 185 M215 190 L195 240 M215 190 L235 240 M300 115 C330 120, 355 135, 380 155",
 };
 
-const interpretationLibrary: Record<DetectedType, Interpretation> = {
-  goat: {
-    detectedType: "goat",
-    title: "Похоже на горного козла",
-    whatItShows:
-      "Система увидела вытянутую фигуру животного с акцентом на рога, спину и устойчивую позу.",
-    meaning:
-      "Такой образ может быть связан с силой, выносливостью, высотой, дикой природой и охотничьим миром.",
-    projection:
-      "На камне словно показано животное, уверенно идущее по склону. Это может быть образ силы природы или фигура, за которой наблюдает человек.",
-    confidence: "high",
-  },
-  deer: {
-    detectedType: "deer",
-    title: "Похоже на оленя",
-    whatItShows:
-      "Рисунок похож на стройное животное с длинным корпусом и плавной линией движения.",
-    meaning:
-      "Образ оленя может передавать красоту, чуткость, движение, память и связь с природным циклом.",
-    projection:
-      "Фигура выглядит так, будто животное движется тихо и осторожно. Это может быть не только сцена природы, но и символ утончённости и пути.",
-    confidence: "medium",
-  },
-  hunter: {
-    detectedType: "hunter",
-    title: "Похоже на охотника или человека в действии",
-    whatItShows:
-      "Система увидела более вертикальную композицию с намёком на фигуру человека и направленное действие.",
-    meaning:
-      "Такой мотив может быть связан с охотой, наблюдением, стратегией, защитой или движением к цели.",
-    projection:
-      "Похоже, что фигура человека находится в моменте действия: он наблюдает, преследует или направляет силу в определённую сторону.",
-    confidence: "medium",
-  },
-  sun: {
-    detectedType: "sun",
-    title: "Похоже на солнечный знак",
-    whatItShows:
-      "Система обнаружила круговую или лучевую композицию, похожую на знак, а не на обычную сцену.",
-    meaning:
-      "Такой рисунок может относиться к солнцу, циклу времени, сакральному символу или космическому порядку.",
-    projection:
-      "Это скорее не сюжет, а знак. Он выглядит как попытка передать идею света, ритма, неба или ритуального значения.",
-    confidence: "high",
-  },
-  abstract: {
-    detectedType: "abstract",
-    title: "Неоднозначная композиция",
-    whatItShows:
-      "Система видит набор линий, насечек и форм, но пока недостаточно признаков для уверенного распознавания.",
-    meaning:
-      "Это может быть абстрактный знак, часть более крупного рисунка или незавершённый мотив.",
-    projection:
-      "Пока сцена не читается однозначно. Возможно, рисунок только начинает проявляться или требует дополнительных штрихов, чтобы стал понятен сюжет.",
-    confidence: "low",
-  },
-};
+function getInterpretationLibrary(lang: Lang): Record<DetectedType, Interpretation> {
+  if (lang === "en") {
+    return {
+      goat: {
+        detectedType: "goat",
+        title: "Looks like a mountain goat",
+        whatItShows:
+          "The system saw an elongated animal figure with an emphasis on horns, back and a stable pose.",
+        meaning:
+          "Such an image may be connected with strength, endurance, height, wild nature and the hunting world.",
+        projection:
+          "The stone seems to show an animal confidently walking along a slope. This may be an image of the power of nature or a figure watched by a human.",
+        confidence: "high",
+      },
+      deer: {
+        detectedType: "deer",
+        title: "Looks like a deer",
+        whatItShows:
+          "The drawing resembles a slender animal with a long body and a smooth line of movement.",
+        meaning:
+          "The image of a deer may convey beauty, sensitivity, movement, memory and connection with the natural cycle.",
+        projection:
+          "The figure looks as if the animal is moving quietly and carefully. This may be not only a scene of nature, but also a symbol of refinement and path.",
+        confidence: "medium",
+      },
+      hunter: {
+        detectedType: "hunter",
+        title: "Looks like a hunter or a human in action",
+        whatItShows:
+          "The system saw a more vertical composition with a hint of a human figure and directed action.",
+        meaning:
+          "Such a motif may be connected with hunting, observation, strategy, protection or movement toward a goal.",
+        projection:
+          "It seems that the human figure is in a moment of action: observing, pursuing or directing force in a certain direction.",
+        confidence: "medium",
+      },
+      sun: {
+        detectedType: "sun",
+        title: "Looks like a solar sign",
+        whatItShows:
+          "The system detected a circular or radial composition resembling a sign rather than a usual scene.",
+        meaning:
+          "Such a drawing may relate to the sun, the cycle of time, a sacred symbol or cosmic order.",
+        projection:
+          "This is rather not a plot but a sign. It looks like an attempt to convey the idea of light, rhythm, sky or ritual meaning.",
+        confidence: "high",
+      },
+      abstract: {
+        detectedType: "abstract",
+        title: "Ambiguous composition",
+        whatItShows:
+          "The system sees a set of lines, notches and shapes, but not yet enough features for confident recognition.",
+        meaning:
+          "This may be an abstract sign, part of a larger drawing or an unfinished motif.",
+        projection:
+          "For now the scene is not read unambiguously. Perhaps the drawing is only beginning to emerge or needs additional strokes for the plot to become clear.",
+        confidence: "low",
+      },
+    };
+  }
+
+  return {
+    goat: {
+      detectedType: "goat",
+      title: "Похоже на горного козла",
+      whatItShows:
+        "Система увидела вытянутую фигуру животного с акцентом на рога, спину и устойчивую позу.",
+      meaning:
+        "Такой образ может быть связан с силой, выносливостью, высотой, дикой природой и охотничьим миром.",
+      projection:
+        "На камне словно показано животное, уверенно идущее по склону. Это может быть образ силы природы или фигура, за которой наблюдает человек.",
+      confidence: "high",
+    },
+    deer: {
+      detectedType: "deer",
+      title: "Похоже на оленя",
+      whatItShows:
+        "Рисунок похож на стройное животное с длинным корпусом и плавной линией движения.",
+      meaning:
+        "Образ оленя может передавать красоту, чуткость, движение, память и связь с природным циклом.",
+      projection:
+        "Фигура выглядит так, будто животное движется тихо и осторожно. Это может быть не только сцена природы, но и символ утончённости и пути.",
+      confidence: "medium",
+    },
+    hunter: {
+      detectedType: "hunter",
+      title: "Похоже на охотника или человека в действии",
+      whatItShows:
+        "Система увидела более вертикальную композицию с намёком на фигуру человека и направленное действие.",
+      meaning:
+        "Такой мотив может быть связан с охотой, наблюдением, стратегией, защитой или движением к цели.",
+      projection:
+        "Похоже, что фигура человека находится в моменте действия: он наблюдает, преследует или направляет силу в определённую сторону.",
+      confidence: "medium",
+    },
+    sun: {
+      detectedType: "sun",
+      title: "Похоже на солнечный знак",
+      whatItShows:
+        "Система обнаружила круговую или лучевую композицию, похожую на знак, а не на обычную сцену.",
+      meaning:
+        "Такой рисунок может относиться к солнцу, циклу времени, сакральному символу или космическому порядку.",
+      projection:
+        "Это скорее не сюжет, а знак. Он выглядит как попытка передать идею света, ритма, неба или ритуального значения.",
+      confidence: "high",
+    },
+    abstract: {
+      detectedType: "abstract",
+      title: "Неоднозначная композиция",
+      whatItShows:
+        "Система видит набор линий, насечек и форм, но пока недостаточно признаков для уверенного распознавания.",
+      meaning:
+        "Это может быть абстрактный знак, часть более крупного рисунка или незавершённый мотив.",
+      projection:
+        "Пока сцена не читается однозначно. Возможно, рисунок только начинает проявляться или требует дополнительных штрихов, чтобы стал понятен сюжет.",
+      confidence: "low",
+    },
+  };
+}
 
 const confidenceStyles = {
   low: "border-red-400/20 bg-red-500/10 text-red-100",
@@ -110,6 +173,12 @@ const confidenceStyles = {
 export default function StoneWorkshop() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { publishArtwork } = useGame();
+  const { t, lang } = useLang();
+
+  const interpretationLibrary = useMemo(
+    () => getInterpretationLibrary(lang),
+    [lang],
+  );
 
   const [tool, setTool] = useState<ToolMode>("hammer");
   const [template, setTemplate] = useState<TemplateType>("none");
@@ -373,11 +442,11 @@ export default function StoneWorkshop() {
     const canvas = canvasRef.current;
     if (!canvas) return;
     if (!interpretation) {
-      setPublishMessage("Сначала интерпретируй рисунок.");
+      setPublishMessage(t.interpretFirst);
       return;
     }
     if (!publishTitle.trim() || !publishAuthor.trim()) {
-      setPublishMessage("Заполни название работы и имя автора.");
+      setPublishMessage(t.fillTitleAuthor);
       return;
     }
 
@@ -389,11 +458,25 @@ export default function StoneWorkshop() {
       category: interpretation.detectedType as ArtworkCategory,
     });
 
-    setPublishMessage("Работа опубликована в Community Gallery.");
+    setPublishMessage(t.artworkPublished);
     setPublishTitle("");
     setPublishAuthor("");
     setPublishDescription("");
   };
+
+  const confidenceLabel: Record<Interpretation["confidence"], string> = {
+    low: t.confidenceLow,
+    medium: t.confidenceMedium,
+    high: t.confidenceHigh,
+  };
+
+  const templateOptions: { key: TemplateType; label: string }[] = [
+    { key: "none", label: t.noTemplate },
+    { key: "goat", label: t.goat },
+    { key: "deer", label: t.deer },
+    { key: "sun", label: t.sunSign },
+    { key: "hunter", label: t.hunter },
+  ];
 
   return (
     <div className="space-y-6">
@@ -401,18 +484,16 @@ export default function StoneWorkshop() {
         <div className="space-y-4">
           <div className="glow-card panel-ornament rounded-3xl p-5">
             <h3 className="text-xl font-bold text-stone-900 dark:text-white">
-              Режим резьбы по камню
+              {t.carvingMode}
             </h3>
-            <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-white/65">
-              Здесь ты не просто рисуешь. Ты словно выбиваешь рисунок на камне:
-              молоток оставляет плотные следы, зубило делает насечки, а мягкий
-              инструмент помогает довести контур.
+            <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-stone-600 dark:text-white/65">
+              {t.carvingModeDesc}
             </p>
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
             <h4 className="text-lg font-bold text-stone-900 dark:text-white">
-              Инструменты
+              {t.tools}
             </h4>
 
             <div className="mt-4 grid gap-3">
@@ -421,15 +502,15 @@ export default function StoneWorkshop() {
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "hammer"
                     ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
-                    : "border-white/10 bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
+                    : "border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Hammer size={18} />
                   <div>
-                    <div className="font-semibold">Молоток</div>
-                    <div className="text-xs text-stone-900 dark:text-white/50">
-                      Грубые удары по камню
+                    <div className="font-semibold">{t.hammer}</div>
+                    <div className="text-xs text-stone-900 dark:text-stone-500 dark:text-white/50">
+                      {t.hammerDesc}
                     </div>
                   </div>
                 </div>
@@ -440,15 +521,15 @@ export default function StoneWorkshop() {
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "chisel"
                     ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
-                    : "border-white/10 bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
+                    : "border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Sparkles size={18} />
                   <div>
-                    <div className="font-semibold">Зубило</div>
-                    <div className="text-xs text-stone-900 dark:text-white/50">
-                      Точные насечки и форма
+                    <div className="font-semibold">{t.chisel}</div>
+                    <div className="text-xs text-stone-900 dark:text-stone-500 dark:text-white/50">
+                      {t.chiselDesc}
                     </div>
                   </div>
                 </div>
@@ -459,15 +540,15 @@ export default function StoneWorkshop() {
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "brush"
                     ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
-                    : "border-white/10 bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
+                    : "border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Brush size={18} />
                   <div>
-                    <div className="font-semibold">Мягкий инструмент</div>
-                    <div className="text-xs text-stone-900 dark:text-white/50">
-                      Лёгкая проработка линий
+                    <div className="font-semibold">{t.softTool}</div>
+                    <div className="text-xs text-stone-900 dark:text-stone-500 dark:text-white/50">
+                      {t.softToolDesc}
                     </div>
                   </div>
                 </div>
@@ -477,24 +558,18 @@ export default function StoneWorkshop() {
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
             <h4 className="text-lg font-bold text-stone-900 dark:text-white">
-              Шаблон
+              {t.template}
             </h4>
 
             <div className="mt-4 grid grid-cols-2 gap-3">
-              {[
-                { key: "none", label: "Без шаблона" },
-                { key: "goat", label: "Козёл" },
-                { key: "deer", label: "Олень" },
-                { key: "sun", label: "Солнечный знак" },
-                { key: "hunter", label: "Охотник" },
-              ].map((item) => (
+              {templateOptions.map((item) => (
                 <button
                   key={item.key}
                   onClick={() => setTemplate(item.key as TemplateType)}
                   className={`rounded-2xl border px-3 py-3 text-sm font-semibold transition ${
                     template === item.key
                       ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
-                      : "border-white/10 bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
+                      : "border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
                   }`}
                 >
                   {item.label}
@@ -505,7 +580,7 @@ export default function StoneWorkshop() {
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
             <h4 className="text-lg font-bold text-stone-900 dark:text-white">
-              Действия
+              {t.actions}
             </h4>
 
             <div className="mt-4 grid gap-3">
@@ -514,30 +589,30 @@ export default function StoneWorkshop() {
                 className="flex items-center gap-3 rounded-2xl border border-blue-400/20 bg-blue-500/10 px-4 py-3 text-blue-100 transition hover:bg-blue-500/20"
               >
                 <Search size={18} />
-                Интерпретировать рисунок
+                {t.interpretDrawing}
               </button>
 
               <button
                 onClick={clearCanvas}
-                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-stone-900 dark:text-white transition hover:bg-white/10"
+                className="flex items-center gap-3 rounded-2xl border border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 px-4 py-3 text-stone-900 dark:text-stone-900 dark:text-white transition hover:bg-white/10"
               >
                 <RotateCcw size={18} />
-                Очистить камень
+                {t.clearStone}
               </button>
 
               <button
                 onClick={saveImage}
-                className="flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
+                className="flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-stone-900 dark:text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
               >
                 <Download size={18} />
-                Сохранить петроглиф
+                {t.savePetroglyph}
               </button>
             </div>
           </div>
         </div>
 
         <div className="glow-card panel-ornament rounded-3xl p-5">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#231d17]">
+          <div className="relative overflow-hidden rounded-3xl border border-stone-200 dark:border-white/10 bg-[#231d17]">
             <canvas
               ref={canvasRef}
               width={900}
@@ -561,17 +636,8 @@ export default function StoneWorkshop() {
             )}
           </div>
 
-          <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-7 text-stone-900 dark:text-white/65">
-            Совет: начни с шаблона, выбери{" "}
-            <b className="text-stone-900 dark:text-white">молоток</b> для грубой
-            формы, потом пройди{" "}
-            <b className="text-stone-900 dark:text-white">зубилом</b> по линиям,
-            а в конце используй
-            <b className="text-stone-900 dark:text-white">
-              {" "}
-              мягкий инструмент
-            </b>{" "}
-            для деталей.
+          <div className="mt-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-3 text-sm leading-7 text-stone-900 dark:text-stone-600 dark:text-white/65">
+            {t.workshopTip}
           </div>
         </div>
       </div>
@@ -582,8 +648,8 @@ export default function StoneWorkshop() {
             <div className="glow-card panel-ornament rounded-3xl p-6">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-white/40">
-                    Interpretation
+                  <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-stone-400 dark:text-white/40">
+                    {t.interpretation}
                   </p>
                   <h3 className="mt-2 text-2xl font-black text-stone-900 dark:text-white">
                     {interpretation.title}
@@ -593,23 +659,23 @@ export default function StoneWorkshop() {
                 <span
                   className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase ${confidenceStyles[interpretation.confidence]}`}
                 >
-                  {interpretation.confidence}
+                  {confidenceLabel[interpretation.confidence]}
                 </span>
               </div>
 
               <div className="mt-5 space-y-4">
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/40">
-                    Что система увидела
+                <div className="rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 p-4">
+                  <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-stone-400 dark:text-white/40">
+                    {t.whatSystemSaw}
                   </p>
-                  <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/80">
+                  <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-stone-800 dark:text-white/80">
                     {interpretation.whatItShows}
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4">
                   <p className="text-xs uppercase tracking-wide text-blue-100/60">
-                    Возможный смысл
+                    {t.possibleMeaning}
                   </p>
                   <p className="mt-2 text-sm leading-7 text-blue-50/90">
                     {interpretation.meaning}
@@ -619,11 +685,11 @@ export default function StoneWorkshop() {
             </div>
 
             <div className="glow-card panel-ornament rounded-3xl p-6">
-              <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-white/40">
-                Projection
+              <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-stone-400 dark:text-white/40">
+                {t.projection}
               </p>
               <h3 className="mt-2 text-2xl font-black text-stone-900 dark:text-white">
-                Возможная сцена
+                {t.possibleScene}
               </h3>
 
               <div className="mt-5 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-5">
@@ -632,9 +698,8 @@ export default function StoneWorkshop() {
                 </p>
               </div>
 
-              <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm leading-7 text-stone-900 dark:text-white/60">
-                Это предварительная интерпретация для MVP. Она основана на
-                выбранном шаблоне или простой визуальной эвристике.
+              <div className="mt-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 p-4 text-sm leading-7 text-stone-900 dark:text-stone-600 dark:text-white/60">
+                {t.mvpNote}
               </div>
             </div>
           </div>
@@ -646,10 +711,10 @@ export default function StoneWorkshop() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-stone-900 dark:text-white">
-                  Publish to Community
+                  {t.publishToCommunity}
                 </h3>
-                <p className="text-sm text-stone-900 dark:text-white/60">
-                  Опубликуй работу, чтобы другие могли её оценивать.
+                <p className="text-sm text-stone-900 dark:text-stone-600 dark:text-white/60">
+                  {t.publishDesc}
                 </p>
               </div>
             </div>
@@ -658,41 +723,40 @@ export default function StoneWorkshop() {
               <input
                 value={publishTitle}
                 onChange={(e) => setPublishTitle(e.target.value)}
-                placeholder="Название работы"
-                className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
+                placeholder={t.workTitle}
+                className="rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
               />
               <input
                 value={publishAuthor}
                 onChange={(e) => setPublishAuthor(e.target.value)}
-                placeholder="Имя автора"
-                className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
+                placeholder={t.authorName}
+                className="rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
               />
             </div>
 
             <textarea
               value={publishDescription}
               onChange={(e) => setPublishDescription(e.target.value)}
-              placeholder="Короткое описание работы"
+              placeholder={t.shortDescription}
               rows={4}
-              className="mt-4 w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
+              className="mt-4 w-full rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
             />
 
             <div className="mt-5 flex flex-wrap gap-3">
               <button
                 onClick={handlePublish}
-                className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
+                className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
               >
-                Publish artwork
+                {t.publishArtwork}
               </button>
 
               <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm text-stone-900 dark:text-white">
-                1 место: шанс на физическое воплощение и процент от продажи по
-                правилам конкурса
+                {t.firstPlacePrize}
               </div>
             </div>
 
             {publishMessage && (
-              <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-stone-900 dark:text-white/80">
+              <div className="mt-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 px-4 py-3 text-sm text-stone-900 dark:text-stone-800 dark:text-white/80">
                 {publishMessage}
               </div>
             )}

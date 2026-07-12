@@ -66,9 +66,9 @@ function distanceMeters(
   return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-function formatDistance(meters: number) {
-  if (meters < 1000) return `${Math.round(meters)} м`;
-  return `${(meters / 1000).toFixed(1)} км`;
+function formatDistance(meters: number, lang: "ru" | "en") {
+  if (meters < 1000) return `${Math.round(meters)} ${lang === "ru" ? "м" : "m"}`;
+  return `${(meters / 1000).toFixed(1)} ${lang === "ru" ? "км" : "km"}`;
 }
 
 // distance from point P to line segment AB in approximate "degree space"
@@ -106,7 +106,7 @@ function pointToSegmentDistance(
 }
 
 export default function MapPage() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { mapLocations } = useGame();
 
   const [selected, setSelected] = useState<HeritageLocation | null>(null);
@@ -167,7 +167,7 @@ export default function MapPage() {
 
     if (nearby.kind === "sacred") {
       setNearbyWarning(
-        `${t.nearbyWarning}: ${nearby.name}. Соблюдайте тишину, не мусорьте и не повреждайте среду.`,
+        `${t.nearbyWarning}: ${nearby.name}`,
       );
 
       if ("vibrate" in navigator) {
@@ -175,10 +175,10 @@ export default function MapPage() {
       }
     } else {
       setNearbyWarning(
-        `Вы рядом с петроглифом: ${nearby.name}. Можно изучить его, сфотографировать и отправить на проверку.`,
+        t.petroglyphNearby.replace("{name}", nearby.name),
       );
     }
-  }, [mapLocations, t.nearbyWarning, userPosition]);
+  }, [mapLocations, t.nearbyWarning, t.petroglyphNearby, userPosition]);
 
   const destinationLocation = useMemo(
     () => mapLocations.find((loc) => String(loc.id) === destinationId) ?? null,
@@ -190,7 +190,7 @@ export default function MapPage() {
       if (!userPosition) return null;
       return {
         type: "user",
-        name: "My location",
+        name: t.myLocation,
         lat: userPosition[0],
         lng: userPosition[1],
       };
@@ -205,7 +205,7 @@ export default function MapPage() {
       type: "location",
       location,
     };
-  }, [startMode, userPosition, mapLocations, startLocationId]);
+  }, [startMode, userPosition, mapLocations, startLocationId, t.myLocation]);
 
   const routePoints = useMemo<PlannerPoint[]>(() => {
     if (!routeBuilt || !startPoint || !destinationLocation) return [];
@@ -320,13 +320,13 @@ export default function MapPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Sacred & Rock Art Map"
-        subtitle="Карта для туристов, местных жителей и семейных поездок: укажи точку A и точку B, а система сама предложит культурные места по пути."
+        title={t.mapTitle}
+        subtitle={t.mapSubtitle}
       />
 
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="glow-card panel-ornament overflow-hidden rounded-3xl p-3">
-          <div className="h-[620px] overflow-hidden rounded-2xl border border-white/10">
+          <div className="h-[620px] overflow-hidden rounded-2xl border border-stone-200 dark:border-white/10">
             <MapContainer
               center={center}
               zoom={7}
@@ -388,7 +388,7 @@ export default function MapPage() {
                                 : "bg-blue-100 text-blue-700"
                             }`}
                           >
-                            {location.kind}
+                            {location.kind === "sacred" ? t.kindSacred : t.kindPetroglyph}
                           </span>
                         </div>
 
@@ -396,7 +396,7 @@ export default function MapPage() {
                           onClick={() => addStopToRoute(location)}
                           className="w-full rounded-xl bg-amber-500 px-3 py-2 font-semibold text-stone-900 dark:text-white transition hover:bg-amber-600"
                         >
-                          Add to route
+                          {t.addToRoute}
                         </button>
                       </div>
                     </Popup>
@@ -426,17 +426,16 @@ export default function MapPage() {
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
             <h3 className="text-2xl font-black text-stone-900 dark:text-white">
-              Trip Planner
+              {t.tripPlanner}
             </h3>
             <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/65">
-              Выбери точку A и точку B, а затем построй путь вручную или
-              автоматически.
+              {t.tripPlannerDesc}
             </p>
 
             <div className="mt-5 space-y-4">
               <div>
                 <label className="mb-2 block text-sm font-semibold text-stone-900 dark:text-white/80">
-                  Point A
+                  {t.pointA}
                 </label>
 
                 <div className="grid gap-3">
@@ -445,19 +444,19 @@ export default function MapPage() {
                     onChange={(e) =>
                       setStartMode(e.target.value as "user" | "location")
                     }
-                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none"
+                    className="rounded-2xl border border-stone-200 bg-white/80 px-4 py-3 text-stone-900 dark:border-white/10 dark:bg-black/20 dark:text-white outline-none"
                   >
-                    <option value="user">My location</option>
-                    <option value="location">Choose location</option>
+                    <option value="user">{t.myLocation}</option>
+                    <option value="location">{t.chooseLocation}</option>
                   </select>
 
                   {startMode === "location" && (
                     <select
                       value={startLocationId}
                       onChange={(e) => setStartLocationId(e.target.value)}
-                      className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none"
+                      className="rounded-2xl border border-stone-200 bg-white/80 px-4 py-3 text-stone-900 dark:border-white/10 dark:bg-black/20 dark:text-white outline-none"
                     >
-                      <option value="">Select point A</option>
+                      <option value="">{t.selectPointA}</option>
                       {mapLocations.map((loc) => (
                         <option key={loc.id} value={loc.id}>
                           {loc.name}
@@ -470,15 +469,15 @@ export default function MapPage() {
 
               <div>
                 <label className="mb-2 block text-sm font-semibold text-stone-900 dark:text-white/80">
-                  Point B
+                  {t.pointB}
                 </label>
 
                 <select
                   value={destinationId}
                   onChange={(e) => setDestinationId(e.target.value)}
-                  className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none"
+                  className="w-full rounded-2xl border border-stone-200 bg-white/80 px-4 py-3 text-stone-900 dark:border-white/10 dark:bg-black/20 dark:text-white outline-none"
                 >
-                  <option value="">Select point B</option>
+                  <option value="">{t.selectPointB}</option>
                   {mapLocations.map((loc) => (
                     <option key={loc.id} value={loc.id}>
                       {loc.name}
@@ -490,30 +489,30 @@ export default function MapPage() {
               <div>
                 <div className="mb-2 flex items-center justify-between">
                   <label className="block text-sm font-semibold text-stone-900 dark:text-white/80">
-                    Stops on the way
+                    {t.stopsOnWay}
                   </label>
                   <span className="text-xs text-stone-900 dark:text-white/45">
-                    Click “Add to route” or use auto route
+                    {t.stopsHint}
                   </span>
                 </div>
 
                 {routeStops.length === 0 ? (
                   <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-900 dark:text-white/50">
-                    No stops added yet
+                    {t.noStops}
                   </div>
                 ) : (
                   <div className="space-y-2">
                     {routeStops.map((stop, index) => (
                       <div
                         key={stop.id}
-                        className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
+                        className="flex items-center justify-between rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 dark:border-white/10 dark:bg-black/20"
                       >
                         <div>
                           <p className="text-sm font-semibold text-stone-900 dark:text-white">
                             {index + 1}. {stop.name}
                           </p>
                           <p className="text-xs text-stone-900 dark:text-white/50">
-                            {stop.kind}
+                            {stop.kind === "sacred" ? t.kindSacred : t.kindPetroglyph}
                           </p>
                         </div>
 
@@ -521,7 +520,7 @@ export default function MapPage() {
                           onClick={() => removeStop(stop.id)}
                           className="rounded-xl border border-red-400/20 bg-red-500/10 px-3 py-1 text-xs font-semibold text-red-100 hover:bg-red-500/20"
                         >
-                          Remove
+                          {t.remove}
                         </button>
                       </div>
                     ))}
@@ -534,28 +533,28 @@ export default function MapPage() {
                   onClick={buildRoute}
                   className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-amber-500/20"
                 >
-                  Build manually
+                  {t.buildManually}
                 </button>
 
                 <button
                   onClick={autoBuildRoute}
                   className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
                 >
-                  Create route automatically
+                  {t.buildAuto}
                 </button>
 
                 <button
                   onClick={clearRoute}
                   className="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-white/10"
                 >
-                  Clear
+                  {t.clear}
                 </button>
               </div>
 
               {autoSuggestions.length > 0 && (
                 <div className="rounded-3xl border border-blue-400/20 bg-blue-500/10 p-5">
                   <h4 className="text-lg font-bold text-stone-900 dark:text-white">
-                    Suggested cultural stops
+                    {t.suggestedStops}
                   </h4>
                   <div className="mt-3 space-y-2">
                     {autoSuggestions.map((stop) => (
@@ -565,7 +564,7 @@ export default function MapPage() {
                       >
                         {stop.name}{" "}
                         <span className="text-stone-900 dark:text-white/40">
-                          • {stop.kind}
+                          • {stop.kind === "sacred" ? t.kindSacred : t.kindPetroglyph}
                         </span>
                       </div>
                     ))}
@@ -576,24 +575,24 @@ export default function MapPage() {
               {routeBuilt && routePoints.length > 1 && (
                 <div className="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-5">
                   <h4 className="text-lg font-bold text-stone-900 dark:text-white">
-                    Route summary
+                    {t.routeSummary}
                   </h4>
                   <div className="mt-3 space-y-2 text-sm text-emerald-50">
                     <p>
-                      <span className="font-semibold">Start:</span>{" "}
+                      <span className="font-semibold">{t.routeStart}:</span>{" "}
                       {getPointName(routePoints[0])}
                     </p>
                     <p>
-                      <span className="font-semibold">Destination:</span>{" "}
+                      <span className="font-semibold">{t.routeDestination}:</span>{" "}
                       {getPointName(routePoints[routePoints.length - 1])}
                     </p>
                     <p>
-                      <span className="font-semibold">Stops:</span>{" "}
+                      <span className="font-semibold">{t.routeStops}:</span>{" "}
                       {routeStops.length}
                     </p>
                     <p>
-                      <span className="font-semibold">Estimated distance:</span>{" "}
-                      {formatDistance(totalDistance)}
+                      <span className="font-semibold">{t.routeDistance}:</span>{" "}
+                      {formatDistance(totalDistance, lang)}
                     </p>
                   </div>
                 </div>

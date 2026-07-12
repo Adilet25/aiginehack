@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useGame } from "../../app/providers/GameProvider";
+import { useLang } from "../../app/providers/LanguageProvider";
 import SubmissionViewer from "./SubmissionViewer";
-import type { PetroSubmission } from "../../types";
+import type { PetroSubmission, SubmissionStatus } from "../../types";
 
 export default function MySubmissions() {
   const { submissions } = useGame();
+  const { t } = useLang();
   const [selected, setSelected] = useState<PetroSubmission | null>(null);
 
-  const statusStyles = {
+  const statusStyles: Record<SubmissionStatus, string> = {
     pending:
       "border-amber-400/20 bg-amber-500/10 text-stone-900 dark:text-white",
     approved:
@@ -15,16 +17,22 @@ export default function MySubmissions() {
     rejected: "border-red-400/20 bg-red-500/10 text-red-100",
   };
 
+  const statusLabel: Record<SubmissionStatus, string> = {
+    pending: t.statusPending,
+    approved: t.statusApproved,
+    rejected: t.statusRejected,
+  };
+
   return (
     <>
       <div className="glow-card panel-ornament rounded-3xl p-5">
         <h3 className="text-lg font-bold text-stone-900 dark:text-white">
-          My Uploads
+          {t.myUploads}
         </h3>
 
         {submissions.length === 0 ? (
-          <p className="mt-3 text-sm text-stone-900 dark:text-white/55">
-            Пока загрузок нет.
+          <p className="mt-3 text-sm text-stone-900 dark:text-stone-500 dark:text-white/55">
+            {t.noUploads}
           </p>
         ) : (
           <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -32,7 +40,7 @@ export default function MySubmissions() {
               <button
                 key={submission.id}
                 onClick={() => setSelected(submission)}
-                className="overflow-hidden rounded-3xl border border-white/10 bg-black/20 text-left transition hover:-translate-y-1 hover:border-white/20"
+                className="overflow-hidden rounded-3xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 text-left transition hover:-translate-y-1 hover:border-white/20"
               >
                 <img
                   src={submission.imageUrl}
@@ -49,10 +57,10 @@ export default function MySubmissions() {
                         statusStyles[submission.status]
                       }`}
                     >
-                      {submission.status}
+                      {statusLabel[submission.status]}
                     </span>
                   </div>
-                  <p className="mt-2 line-clamp-2 text-sm text-stone-900 dark:text-white/60">
+                  <p className="mt-2 line-clamp-2 text-sm text-stone-900 dark:text-stone-600 dark:text-white/60">
                     {submission.aiSummary}
                   </p>
                 </div>

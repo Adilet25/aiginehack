@@ -41,18 +41,18 @@ export default function LocationSidePanel({
               location.kind === "sacred" ? "kind-sacred" : "kind-petro"
             }`}
           >
-            {location.kind}
+            {location.kind === "sacred" ? t.kindSacred : t.kindPetroglyph}
           </span>
         </div>
 
         <p className="text-sm leading-7 text-muted">{location.description}</p>
 
         {location.culturalNote && (
-          <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
-            <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/40">
-              Cultural note
+          <div className="mt-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 p-4">
+            <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-stone-400 dark:text-white/40">
+              {t.culturalNote}
             </p>
-            <p className="mt-2 text-sm text-stone-900 dark:text-white/80">
+            <p className="mt-2 text-sm text-stone-900 dark:text-stone-800 dark:text-white/80">
               {location.culturalNote}
             </p>
           </div>
@@ -61,7 +61,7 @@ export default function LocationSidePanel({
         {location.analysisSummary && (
           <div className="mt-4 rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4">
             <p className="text-xs uppercase tracking-wide text-blue-100/60">
-              Analysis
+              {t.analysis}
             </p>
             <p className="mt-2 text-sm text-blue-50">
               {location.analysisSummary}
@@ -87,7 +87,7 @@ export default function LocationSidePanel({
 
         {location.sourceLabel && (
           <p className="mt-5 text-xs uppercase tracking-widest text-stone-900 dark:text-white/35">
-            Source: {location.sourceLabel}
+            {t.source}: {location.sourceLabel}
           </p>
         )}
       </div>
