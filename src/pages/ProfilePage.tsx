@@ -1,11 +1,11 @@
-import PageHeader from '../components/shared/PageHeader'
-import StatCard from '../components/shared/StatCard'
-import { useGame } from '../app/providers/GameProvider'
-import { getXpProgress } from '../utils/level'
+import PageHeader from "../components/shared/PageHeader";
+import StatCard from "../components/shared/StatCard";
+import { useGame } from "../app/providers/GameProvider";
+import { getXpProgress } from "../utils/level";
 
 export default function ProfilePage() {
-  const { level, points, achievements, collection, xp } = useGame()
-  const xpProgress = getXpProgress(xp)
+  const { level, points, achievements, collection, xp } = useGame();
+  const xpProgress = getXpProgress(xp);
 
   return (
     <div>
@@ -15,29 +15,32 @@ export default function ProfilePage() {
       />
 
       <div className="grid gap-4 md:grid-cols-3">
-        <StatCard label="Level" value={<span className="text-emerald-400">{level}</span>} />
+        <StatCard
+          label="Level"
+          value={<span className="text-emerald-400">{level}</span>}
+        />
         <StatCard label="Points" value={points} />
         <StatCard label="Artifacts" value={collection.length} />
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="glow-card rounded-3xl border border-white/10 bg-white/5 p-6">
-          <h3 className="text-lg font-bold text-white">XP Progress</h3>
+          <h3 className="text-lg font-bold text-stone-900">XP Progress</h3>
           <div className="mt-4 h-4 overflow-hidden rounded-full bg-white/10">
             <div
               className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-500"
               style={{ width: `${xpProgress}%` }}
             />
           </div>
-          <p className="mt-3 text-sm text-white/60">
+          <p className="mt-3 text-sm text-stone-900/60">
             {xpProgress}/100 XP до следующего уровня
           </p>
         </div>
 
         <div className="glow-card rounded-3xl border border-white/10 bg-white/5 p-6">
-          <h3 className="text-lg font-bold text-white">Achievements</h3>
+          <h3 className="text-lg font-bold text-stone-900">Achievements</h3>
           {achievements.length === 0 ? (
-            <p className="mt-3 text-sm text-white/55">
+            <p className="mt-3 text-sm text-stone-900/55">
               Пока достижений нет. Начни исследование карты и собирай артефакты.
             </p>
           ) : (
@@ -55,5 +58,5 @@ export default function ProfilePage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,27 +1,25 @@
-import { useState } from 'react'
-import { useGame } from '../../app/providers/GameProvider'
-import SubmissionViewer from './SubmissionViewer'
-import type { PetroSubmission } from '../../types'
+import { useState } from "react";
+import { useGame } from "../../app/providers/GameProvider";
+import SubmissionViewer from "./SubmissionViewer";
+import type { PetroSubmission } from "../../types";
 
 export default function MySubmissions() {
-  const { submissions } = useGame()
-  const [selected, setSelected] = useState<PetroSubmission | null>(null)
+  const { submissions } = useGame();
+  const [selected, setSelected] = useState<PetroSubmission | null>(null);
 
   const statusStyles = {
-    pending: 'border-amber-400/20 bg-amber-500/10 text-amber-100',
-    approved: 'border-emerald-400/20 bg-emerald-500/10 text-emerald-100',
-    rejected: 'border-red-400/20 bg-red-500/10 text-red-100',
-  }
+    pending: "border-amber-400/20 bg-amber-500/10 text-stone-900",
+    approved: "border-emerald-400/20 bg-emerald-500/10 text-stone-900",
+    rejected: "border-red-400/20 bg-red-500/10 text-red-100",
+  };
 
   return (
     <>
       <div className="glow-card panel-ornament rounded-3xl p-5">
-        <h3 className="text-lg font-bold text-white">My Uploads</h3>
+        <h3 className="text-lg font-bold text-stone-900">My Uploads</h3>
 
         {submissions.length === 0 ? (
-          <p className="mt-3 text-sm text-white/55">
-            Пока загрузок нет.
-          </p>
+          <p className="mt-3 text-sm text-stone-900/55">Пока загрузок нет.</p>
         ) : (
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {submissions.map((submission) => (
@@ -37,7 +35,9 @@ export default function MySubmissions() {
                 />
                 <div className="p-4">
                   <div className="flex items-start justify-between gap-3">
-                    <h4 className="font-semibold text-white">{submission.title}</h4>
+                    <h4 className="font-semibold text-stone-900">
+                      {submission.title}
+                    </h4>
                     <span
                       className={`rounded-full border px-2 py-1 text-[10px] uppercase ${
                         statusStyles[submission.status]
@@ -46,7 +46,7 @@ export default function MySubmissions() {
                       {submission.status}
                     </span>
                   </div>
-                  <p className="mt-2 line-clamp-2 text-sm text-white/60">
+                  <p className="mt-2 line-clamp-2 text-sm text-stone-900/60">
                     {submission.aiSummary}
                   </p>
                 </div>
@@ -61,5 +61,5 @@ export default function MySubmissions() {
         onClose={() => setSelected(null)}
       />
     </>
-  )
+  );
 }

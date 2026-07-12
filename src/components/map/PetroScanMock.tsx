@@ -1,53 +1,52 @@
-import { useState } from 'react'
-import { Camera, ScanSearch } from 'lucide-react'
-import { useLang } from '../../app/providers/LanguageProvider'
-import { useGame } from '../../app/providers/GameProvider'
-import type { PetroSubmission } from '../../types'
+import { useState } from "react";
+import { Camera, ScanSearch } from "lucide-react";
+import { useLang } from "../../app/providers/LanguageProvider";
+import { useGame } from "../../app/providers/GameProvider";
+import type { PetroSubmission } from "../../types";
 
 const mockResults = [
   {
     isPetroglyph: true,
-    title: 'Possible petroglyph',
+    title: "Possible petroglyph",
     summary:
-      'Контурные линии напоминают древнюю гравировку. Возможна сцена охоты или изображение животного.',
-    suggestedType: 'animal' as const,
+      "Контурные линии напоминают древнюю гравировку. Возможна сцена охоты или изображение животного.",
+    suggestedType: "animal" as const,
   },
   {
     isPetroglyph: true,
-    title: 'Possible symbol',
+    title: "Possible symbol",
     summary:
-      'Обнаружены формы, похожие на символический или сакральный знак. Требуется проверка администратором.',
-    suggestedType: 'symbol' as const,
+      "Обнаружены формы, похожие на символический или сакральный знак. Требуется проверка администратором.",
+    suggestedType: "symbol" as const,
   },
   {
     isPetroglyph: false,
-    title: 'Low confidence',
+    title: "Low confidence",
     summary:
-      'Изображение не выглядит как уверенный пример петроглифа. Рекомендуется повторить съемку.',
-    suggestedType: 'unknown' as const,
+      "Изображение не выглядит как уверенный пример петроглифа. Рекомендуется повторить съемку.",
+    suggestedType: "unknown" as const,
   },
-]
+];
 
 export default function PetroScanMock() {
-  const [preview, setPreview] = useState<string | null>(null)
-  const [isAnalyzing, setIsAnalyzing] = useState(false)
-  const [message, setMessage] = useState<string | null>(null)
-  const { t } = useLang()
-  const { addSubmission } = useGame()
+  const [preview, setPreview] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const { t } = useLang();
+  const { addSubmission } = useGame();
 
   const handleFile = (file?: File) => {
-    if (!file) return
+    if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file)
-    setPreview(imageUrl)
-    setIsAnalyzing(true)
-    setMessage(null)
+    const imageUrl = URL.createObjectURL(file);
+    setPreview(imageUrl);
+    setIsAnalyzing(true);
+    setMessage(null);
 
     setTimeout(() => {
-      const result =
-        file.name.toLowerCase().includes('petro')
-          ? mockResults[0]
-          : mockResults[Math.floor(Math.random() * mockResults.length)]
+      const result = file.name.toLowerCase().includes("petro")
+        ? mockResults[0]
+        : mockResults[Math.floor(Math.random() * mockResults.length)];
 
       const submission: PetroSubmission = {
         id: Date.now(),
@@ -55,17 +54,17 @@ export default function PetroScanMock() {
         title: `User submission ${new Date().toLocaleTimeString()}`,
         aiSummary: result.summary,
         suggestedType: result.suggestedType,
-        status: 'pending',
+        status: "pending",
         createdAt: new Date().toISOString(),
         lat: 42.87 + Math.random() * 0.02,
-        lng: 74.60 + Math.random() * 0.02,
-      }
+        lng: 74.6 + Math.random() * 0.02,
+      };
 
-      addSubmission(submission)
-      setMessage('Фото загружено и отправлено на проверку администратору.')
-      setIsAnalyzing(false)
-    }, 1500)
-  }
+      addSubmission(submission);
+      setMessage("Фото загружено и отправлено на проверку администратору.");
+      setIsAnalyzing(false);
+    }, 1500);
+  };
 
   return (
     <div className="glow-card panel-ornament rounded-3xl p-5">
@@ -95,7 +94,11 @@ export default function PetroScanMock() {
 
       {preview && (
         <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
-          <img src={preview} alt="Stone preview" className="h-52 w-full object-cover" />
+          <img
+            src={preview}
+            alt="Stone preview"
+            className="h-52 w-full object-cover"
+          />
         </div>
       )}
 
@@ -106,10 +109,10 @@ export default function PetroScanMock() {
       )}
 
       {message && (
-        <div className="mt-4 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+        <div className="mt-4 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-stone-900">
           {message}
         </div>
       )}
     </div>
-  )
+  );
 }

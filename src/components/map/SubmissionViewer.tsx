@@ -1,21 +1,21 @@
-import type { PetroSubmission } from '../../types'
+import type { PetroSubmission } from "../../types";
 
 interface SubmissionViewerProps {
-  submission: PetroSubmission | null
-  onClose: () => void
+  submission: PetroSubmission | null;
+  onClose: () => void;
 }
 
 export default function SubmissionViewer({
   submission,
   onClose,
 }: SubmissionViewerProps) {
-  if (!submission) return null
+  if (!submission) return null;
 
   const statusStyles = {
-    pending: 'border-amber-400/25 bg-amber-500/10 text-amber-100',
-    approved: 'border-emerald-400/25 bg-emerald-500/10 text-emerald-100',
-    rejected: 'border-red-400/25 bg-red-500/10 text-red-100',
-  }
+    pending: "border-amber-400/25 bg-amber-500/10 text-stone-900",
+    approved: "border-emerald-400/25 bg-emerald-500/10 text-stone-900",
+    rejected: "border-red-400/25 bg-red-500/10 text-red-100",
+  };
 
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
@@ -32,8 +32,10 @@ export default function SubmissionViewer({
           <div className="flex flex-col">
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
-                <h2 className="text-2xl font-black text-white">{submission.title}</h2>
-                <p className="mt-1 text-sm text-white/50">
+                <h2 className="text-2xl font-black text-stone-900">
+                  {submission.title}
+                </h2>
+                <p className="mt-1 text-sm text-stone-900/50">
                   Uploaded: {new Date(submission.createdAt).toLocaleString()}
                 </p>
               </div>
@@ -60,17 +62,17 @@ export default function SubmissionViewer({
             </div>
 
             <div className="mt-4 rounded-3xl border border-white/10 bg-black/20 p-5">
-              <p className="text-xs uppercase tracking-wide text-white/40">
+              <p className="text-xs uppercase tracking-wide text-stone-900/40">
                 Suggested type
               </p>
-              <p className="mt-2 text-base font-semibold text-white">
+              <p className="mt-2 text-base font-semibold text-stone-900">
                 {submission.suggestedType}
               </p>
             </div>
 
             <button
               onClick={onClose}
-              className="mt-auto rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+              className="mt-auto rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-stone-900 transition hover:bg-white/10"
             >
               Close
             </button>
@@ -78,5 +80,5 @@ export default function SubmissionViewer({
         </div>
       </div>
     </div>
-  )
+  );
 }

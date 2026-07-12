@@ -1,16 +1,16 @@
-import type { HeritageLocation } from '../../types'
-import { useLang } from '../../app/providers/LanguageProvider'
+import type { HeritageLocation } from "../../types";
+import { useLang } from "../../app/providers/LanguageProvider";
 
 interface LocationSidePanelProps {
-  location: HeritageLocation | null
-  nearbyWarning?: string | null
+  location: HeritageLocation | null;
+  nearbyWarning?: string | null;
 }
 
 export default function LocationSidePanel({
   location,
   nearbyWarning,
 }: LocationSidePanelProps) {
-  const { t } = useLang()
+  const { t } = useLang();
 
   if (!location) {
     return (
@@ -18,7 +18,7 @@ export default function LocationSidePanel({
         <h3 className="text-lg font-bold">{t.selectedPlace}</h3>
         <p className="mt-2 text-sm text-muted">{t.noPlace}</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -38,7 +38,7 @@ export default function LocationSidePanel({
 
           <span
             className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase ${
-              location.kind === 'sacred' ? 'kind-sacred' : 'kind-petro'
+              location.kind === "sacred" ? "kind-sacred" : "kind-petro"
             }`}
           >
             {location.kind}
@@ -49,15 +49,23 @@ export default function LocationSidePanel({
 
         {location.culturalNote && (
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
-            <p className="text-xs uppercase tracking-wide text-white/40">Cultural note</p>
-            <p className="mt-2 text-sm text-white/80">{location.culturalNote}</p>
+            <p className="text-xs uppercase tracking-wide text-stone-900/40">
+              Cultural note
+            </p>
+            <p className="mt-2 text-sm text-stone-900/80">
+              {location.culturalNote}
+            </p>
           </div>
         )}
 
         {location.analysisSummary && (
           <div className="mt-4 rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4">
-            <p className="text-xs uppercase tracking-wide text-blue-100/60">Analysis</p>
-            <p className="mt-2 text-sm text-blue-50">{location.analysisSummary}</p>
+            <p className="text-xs uppercase tracking-wide text-blue-100/60">
+              Analysis
+            </p>
+            <p className="mt-2 text-sm text-blue-50">
+              {location.analysisSummary}
+            </p>
           </div>
         )}
 
@@ -78,11 +86,11 @@ export default function LocationSidePanel({
         )}
 
         {location.sourceLabel && (
-          <p className="mt-5 text-xs uppercase tracking-widest text-white/35">
+          <p className="mt-5 text-xs uppercase tracking-widest text-stone-900/35">
             Source: {location.sourceLabel}
           </p>
         )}
       </div>
     </div>
-  )
+  );
 }
