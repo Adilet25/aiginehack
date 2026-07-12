@@ -1,6 +1,7 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -13,7 +14,8 @@ import type {
   WorkshopArtwork,
 } from '../../types'
 import { getLevelFromXp } from '../../utils/level'
-import { locations as seedLocations } from '../../data/locations'
+import { getLocations } from '../../data/locations'
+import { useLang } from './LanguageProvider'
 
 interface GameContextType extends UserState {
   addArtifact: (artifact: Artifact) => { added: boolean; duplicate: boolean }
@@ -43,40 +45,59 @@ const initialState: UserState = {
   achievements: [],
 }
 
-const initialArtworks: WorkshopArtwork[] = [
-  {
-    id: 1001,
-    title: 'Arhar of the Ridge',
-    author: 'Aizada',
-    imageUrl: '/demo-artworks/arhar-demo.jpg',
-    category: 'goat',
-    description: 'Горный архар на каменном склоне.',
-    votes: 42,
-    rating: 4.8,
-    voters: 11,
-    createdAt: new Date().toISOString(),
-    isPublished: true,
-  },
-  {
-    id: 1002,
-    title: 'Sun Memory',
-    author: 'Bek',
-    imageUrl: '/demo-artworks/sun-demo.jpg',
-    category: 'sun',
-    description: 'Солнечный знак в стиле древней насечки.',
-    votes: 31,
-    rating: 4.6,
-    voters: 9,
-    createdAt: new Date().toISOString(),
-    isPublished: true,
-  },
-]
+function getInitialArtworks(lang: 'ru' | 'en'): WorkshopArtwork[] {
+  return [
+    {
+      id: 1001,
+      title: 'Arhar of the Ridge',
+      author: 'Aizada',
+      imageUrl: '/demo-artworks/arhar-demo.jpg',
+      category: 'goat',
+      description: lang === 'en'
+        ? 'Mountain arhar on a rocky slope.'
+        : 'Горный архар на каменном склоне.',
+      votes: 42,
+      rating: 4.8,
+      voters: 11,
+      createdAt: new Date().toISOString(),
+      isPublished: true,
+    },
+    {
+      id: 1002,
+      title: 'Sun Memory',
+      author: 'Bek',
+      imageUrl: '/demo-artworks/sun-demo.jpg',
+      category: 'sun',
+      description: lang === 'en'
+        ? 'Solar sign in the style of ancient notches.'
+        : 'Солнечный знак в стиле древней насечки.',
+      votes: 31,
+      rating: 4.6,
+      voters: 9,
+      createdAt: new Date().toISOString(),
+      isPublished: true,
+    },
+  ]
+}
 
 export function GameProvider({ children }: { children: ReactNode }) {
+  const { lang } = useLang()
   const [state, setState] = useState<UserState>(initialState)
-  const [mapLocations, setMapLocations] = useState<HeritageLocation[]>(seedLocations)
+  const [mapLocations, setMapLocations] = useState<HeritageLocation[]>(() => getLocations(lang))
   const [submissions, setSubmissions] = useState<PetroSubmission[]>([])
-  const [artworks, setArtworks] = useState<WorkshopArtwork[]>(initialArtworks)
+  const [artworks, setArtworks] = useState<WorkshopArtwork[]>(() => getInitialArtworks(lang))
+
+  // When language changes, regenerate seed data (locations & demo artworks)
+  // so their textual content stays in sync with the active language.
+  // User submissions and published artworks are preserved as-is.
+  useEffect(() => {
+    setMapLocations(getLocations(lang))
+    setArtworks((prev) => {
+      // Preserve user-published artworks (id !== 1001 && id !== 1002)
+      const userArtworks = prev.filter((a) => a.id !== 1001 && a.id !== 1002)
+      return [...getInitialArtworks(lang), ...userArtworks]
+    })
+  }, [lang])
 
   const addPoints = (amount: number) => {
     setState((prev) => {
@@ -170,13 +191,17 @@ export function GameProvider({ children }: { children: ReactNode }) {
       id: Date.now(),
       name: target.title,
       kind: 'petroglyph',
-      description: 'Пользовательская находка, подтвержденная администратором.',
-      culturalNote: 'Точка появилась на карте после moderation review.',
+      description: lang === 'en'
+        ? 'User-submitted find confirmed by an administrator.'
+        : 'Пользовательская находка, подтвержденная администратором.',
+      culturalNote: lang === 'en'
+        ? 'Point appeared on the map after moderation review.'
+        : 'Точка появилась на карте после moderation review.',
       lat: target.lat,
       lng: target.lng,
       radiusMeters: 120,
       isUserGenerated: true,
-      sourceLabel: 'Approved community submission',
+      sourceLabel: lang === 'en' ? 'Approved community submission' : 'Одобренная заявка сообщества',
       analysisSummary: target.aiSummary,
     }
 
