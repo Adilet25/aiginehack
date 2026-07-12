@@ -74,7 +74,7 @@ export default function LeaderboardPage() {
         subtitle="Лучшие работы и авторы сообщества."
       />
 
-      <div className="rounded-3xl border border-amber-400/20 bg-amber-500/10 p-5 text-stone-900">
+      <div className="rounded-3xl border border-amber-400/20 bg-amber-500/10 p-5 text-stone-900 dark:text-white">
         <div className="text-sm uppercase tracking-[0.2em] opacity-75">
           Grand Prize
         </div>
@@ -86,7 +86,7 @@ export default function LeaderboardPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="glow-card panel-ornament rounded-3xl p-6">
-          <h3 className="text-2xl font-black text-stone-900">
+          <h3 className="text-2xl font-black text-stone-900 dark:text-white">
             Top Petroglyphs
           </h3>
 
@@ -96,7 +96,7 @@ export default function LeaderboardPage() {
                 key={artwork.id}
                 className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 p-4"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/15 font-black text-stone-900">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/15 font-black text-stone-900 dark:text-white">
                   #{index + 1}
                 </div>
 
@@ -107,19 +107,19 @@ export default function LeaderboardPage() {
                 />
 
                 <div className="min-w-0 flex-1">
-                  <h4 className="truncate font-bold text-stone-900">
+                  <h4 className="truncate font-bold text-stone-900 dark:text-white">
                     {artwork.title}
                   </h4>
-                  <p className="text-sm text-stone-900/55">
+                  <p className="text-sm text-stone-900 dark:text-white/55">
                     by {artwork.author}
                   </p>
                 </div>
 
                 <div className="text-right">
-                  <p className="font-bold text-stone-900">
+                  <p className="font-bold text-stone-900 dark:text-white">
                     {artwork.rating || "—"}★
                   </p>
-                  <p className="text-xs text-stone-900/50">
+                  <p className="text-xs text-stone-900 dark:text-white/50">
                     {artwork.votes} votes
                   </p>
                 </div>
@@ -129,7 +129,9 @@ export default function LeaderboardPage() {
         </div>
 
         <div className="glow-card panel-ornament rounded-3xl p-6">
-          <h3 className="text-2xl font-black text-stone-900">Top Artists</h3>
+          <h3 className="text-2xl font-black text-stone-900 dark:text-white">
+            Top Artists
+          </h3>
 
           <div className="mt-5 space-y-3">
             {topAuthors.map((author, index) => (
@@ -137,24 +139,24 @@ export default function LeaderboardPage() {
                 key={author.author}
                 className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 p-4"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/15 font-black text-stone-900">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/15 font-black text-stone-900 dark:text-white">
                   #{index + 1}
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <h4 className="truncate font-bold text-stone-900">
+                  <h4 className="truncate font-bold text-stone-900 dark:text-white">
                     {author.author}
                   </h4>
-                  <p className="text-sm text-stone-900/55">
+                  <p className="text-sm text-stone-900 dark:text-white/55">
                     {author.works} works published
                   </p>
                 </div>
 
                 <div className="text-right">
-                  <p className="font-bold text-stone-900">
+                  <p className="font-bold text-stone-900 dark:text-white">
                     {author.avgRating || "—"}★
                   </p>
-                  <p className="text-xs text-stone-900/50">
+                  <p className="text-xs text-stone-900 dark:text-white/50">
                     {author.totalVotes} votes
                   </p>
                 </div>

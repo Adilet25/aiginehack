@@ -117,10 +117,10 @@ export default function KyrgyzCalendarWheel() {
   return (
     <div className="glow-card panel-ornament rounded-3xl p-6">
       <div className="mb-4">
-        <h3 className="text-2xl font-black text-stone-900">
+        <h3 className="text-2xl font-black text-stone-900 dark:text-white">
           Круговой календарь
         </h3>
-        <p className="mt-2 text-sm leading-7 text-stone-900/65">
+        <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/65">
           Визуализация года в форме кругового календаря: месяцы, кыргызские
           названия и сезонные периоды чилде.
         </p>

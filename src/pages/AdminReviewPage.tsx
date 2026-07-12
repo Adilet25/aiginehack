@@ -15,7 +15,9 @@ export default function AdminReviewPage() {
 
       {pendingItems.length === 0 ? (
         <div className="glow-card rounded-3xl border border-white/10 bg-white/5 p-8">
-          <p className="text-sm text-stone-900/60">Нет pending заявок.</p>
+          <p className="text-sm text-stone-900 dark:text-white/60">
+            Нет pending заявок.
+          </p>
         </div>
       ) : (
         <div className="grid gap-5 lg:grid-cols-2">
@@ -32,15 +34,17 @@ export default function AdminReviewPage() {
                 />
               </div>
 
-              <h3 className="mt-4 text-xl font-bold text-stone-900">
+              <h3 className="mt-4 text-xl font-bold text-stone-900 dark:text-white">
                 {item.title}
               </h3>
-              <p className="mt-2 text-sm text-stone-900/65">{item.aiSummary}</p>
+              <p className="mt-2 text-sm text-stone-900 dark:text-white/65">
+                {item.aiSummary}
+              </p>
 
               <div className="mt-5 flex gap-3">
                 <button
                   onClick={() => approveSubmission(item.id)}
-                  className="rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-stone-900 transition hover:bg-emerald-500/20"
+                  className="rounded-2xl border border-emerald-400/25 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
                 >
                   Approve
                 </button>

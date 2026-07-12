@@ -287,9 +287,10 @@ function isSameDate(a: Date, b: Date) {
 }
 
 const markerStyles = {
-  togool: "bg-amber-500/15 text-stone-900 border-amber-400/20",
+  togool: "bg-amber-500/15 text-stone-900 dark:text-white border-amber-400/20",
   cold: "bg-cyan-500/15 text-cyan-100 border-cyan-400/20",
-  season: "bg-emerald-500/15 text-stone-900 border-emerald-400/20",
+  season:
+    "bg-emerald-500/15 text-stone-900 dark:text-white border-emerald-400/20",
   sky: "bg-violet-500/15 text-violet-100 border-violet-400/20",
 };
 
@@ -377,7 +378,7 @@ const calendarGuide = [
 //     endDay: 18,
 //     color: 'from-amber-500/30 to-orange-500/20',
 //     border: 'border-amber-400/20',
-//     text: 'text-stone-900',
+//     text: 'text-stone-900 dark:text-white',
 //     description:
 //       'Сорокадневный период летней жары. Это время пика тепла, активной жизни на жайлоо и важного сезонного поворота.',
 //   },
@@ -454,10 +455,10 @@ export default function CalendarPage() {
           <div className="glow-card panel-ornament rounded-3xl p-5 md:p-6">
             <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-stone-900/40">
+                <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-white/40">
                   Calendar view
                 </p>
-                <h2 className="mt-1 text-3xl font-black text-stone-900">
+                <h2 className="mt-1 text-3xl font-black text-stone-900 dark:text-white">
                   {monthInfo.russianName} {year}
                 </h2>
                 <p className="mt-2 text-sm text-amber-200">
@@ -468,7 +469,7 @@ export default function CalendarPage() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-3 text-stone-900 transition hover:bg-white/10"
+                  className="rounded-2xl border border-white/10 bg-white/5 p-3 text-stone-900 dark:text-white transition hover:bg-white/10"
                 >
                   <ChevronLeft size={18} />
                 </button>
@@ -480,14 +481,14 @@ export default function CalendarPage() {
                     );
                     setSelectedDate(today);
                   }}
-                  className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm font-semibold text-stone-900 transition hover:bg-amber-500/20"
+                  className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm font-semibold text-stone-900 dark:text-white transition hover:bg-amber-500/20"
                 >
                   Today
                 </button>
 
                 <button
                   onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-3 text-stone-900 transition hover:bg-white/10"
+                  className="rounded-2xl border border-white/10 bg-white/5 p-3 text-stone-900 dark:text-white transition hover:bg-white/10"
                 >
                   <ChevronRight size={18} />
                 </button>
@@ -502,13 +503,13 @@ export default function CalendarPage() {
                   <MoonStar size={20} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-stone-900">
+                  <h3 className="text-xl font-bold text-stone-900 dark:text-white">
                     {monthInfo.russianName} = {monthInfo.kyrgyzName}
                   </h3>
-                  <p className="mt-2 text-sm font-semibold text-stone-900">
+                  <p className="mt-2 text-sm font-semibold text-stone-900 dark:text-white">
                     {monthInfo.togool}
                   </p>
-                  <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-900/85">
+                  <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-900 dark:text-white/85">
                     {monthInfo.explanation}
                   </p>
                 </div>
@@ -519,7 +520,7 @@ export default function CalendarPage() {
               {weekdays.map((day) => (
                 <div
                   key={day}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-center text-xs font-semibold uppercase tracking-wide text-stone-900/55"
+                  className="rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-center text-xs font-semibold uppercase tracking-wide text-stone-900 dark:text-white/55"
                 >
                   {day}
                 </div>
@@ -552,13 +553,13 @@ export default function CalendarPage() {
                       <div className="flex h-full flex-col">
                         <div className="mb-2 flex items-center justify-between">
                           <span
-                            className={`text-sm font-bold ${isToday ? "text-emerald-300" : "text-stone-900"}`}
+                            className={`text-sm font-bold ${isToday ? "text-emerald-300" : "text-stone-900 dark:text-white"}`}
                           >
                             {item.dayNumber}
                           </span>
 
                           {isToday && (
-                            <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold uppercase text-stone-900">
+                            <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold uppercase text-stone-900 dark:text-white">
                               Today
                             </span>
                           )}
@@ -589,10 +590,10 @@ export default function CalendarPage() {
                 <Trophy size={18} />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-stone-900">
+                <h3 className="text-xl font-bold text-stone-900 dark:text-white">
                   Learn & Play
                 </h3>
-                <p className="text-sm text-stone-900/60">
+                <p className="text-sm text-stone-900 dark:text-white/60">
                   Угадай кыргызское название месяца и запоминай через игру.
                 </p>
               </div>
@@ -600,26 +601,28 @@ export default function CalendarPage() {
 
             <div className="mb-5 grid gap-4 md:grid-cols-3">
               <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                <p className="text-xs uppercase tracking-wide text-stone-900/40">
+                <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/40">
                   Russian month
                 </p>
-                <p className="mt-2 text-lg font-bold text-stone-900">
+                <p className="mt-2 text-lg font-bold text-stone-900 dark:text-white">
                   {quizMonth.russianName}
                 </p>
               </div>
 
               <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 p-4">
-                <p className="text-xs uppercase tracking-wide text-stone-900/60">
+                <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/60">
                   Score
                 </p>
-                <p className="mt-2 text-lg font-bold text-stone-900">{score}</p>
+                <p className="mt-2 text-lg font-bold text-stone-900 dark:text-white">
+                  {score}
+                </p>
               </div>
 
               <div className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-4">
-                <p className="text-xs uppercase tracking-wide text-stone-900/60">
+                <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/60">
                   Streak
                 </p>
-                <p className="mt-2 text-lg font-bold text-stone-900">
+                <p className="mt-2 text-lg font-bold text-stone-900 dark:text-white">
                   {streak}
                 </p>
               </div>
@@ -633,11 +636,11 @@ export default function CalendarPage() {
                   className={`rounded-2xl border p-4 text-left transition ${
                     showAnswer && option.month === quizMonth.month
                       ? "border-emerald-400/30 bg-emerald-500/15 text-emerald-50"
-                      : "border-white/10 bg-white/5 text-stone-900 hover:bg-white/10"
+                      : "border-white/10 bg-white/5 text-stone-900 dark:text-white hover:bg-white/10"
                   }`}
                 >
                   <p className="text-base font-semibold">{option.kyrgyzName}</p>
-                  <p className="mt-1 text-xs text-stone-900/50">
+                  <p className="mt-1 text-xs text-stone-900 dark:text-white/50">
                     {option.togool}
                   </p>
                 </button>
@@ -658,7 +661,7 @@ export default function CalendarPage() {
 
                 <button
                   onClick={nextQuiz}
-                  className="mt-4 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-stone-900 transition hover:bg-white/20"
+                  className="mt-4 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-stone-900 dark:text-white transition hover:bg-white/20"
                 >
                   Next round
                 </button>
@@ -669,10 +672,10 @@ export default function CalendarPage() {
 
         <div className="space-y-6">
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <p className="text-xs uppercase tracking-[0.2em] text-stone-900/40">
+            <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-white/40">
               Selected date
             </p>
-            <h2 className="mt-2 text-3xl font-black text-stone-900">
+            <h2 className="mt-2 text-3xl font-black text-stone-900 dark:text-white">
               {selectedDate.getDate()}{" "}
               {months[selectedDate.getMonth()].russianName}
             </h2>
@@ -682,10 +685,10 @@ export default function CalendarPage() {
             </p>
 
             <div className="mt-5 rounded-3xl border border-white/10 bg-black/20 p-5">
-              <p className="text-xs uppercase tracking-wide text-stone-900/40">
+              <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/40">
                 Easy explanation
               </p>
-              <p className="mt-3 text-sm leading-7 text-stone-900/80">
+              <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-white/80">
                 {selectedMonthInfo.explanation}
               </p>
             </div>
@@ -704,14 +707,14 @@ export default function CalendarPage() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-xl font-bold text-stone-900">
+            <h3 className="text-xl font-bold text-stone-900 dark:text-white">
               Guide to the calendar
             </h3>
             <div className="mt-4 space-y-3">
               {calendarGuide.map((step, index) => (
                 <div
                   key={index}
-                  className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-7 text-stone-900/75"
+                  className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-7 text-stone-900 dark:text-white/75"
                 >
                   <span className="mr-2 font-bold text-amber-300">
                     {index + 1}.
@@ -723,7 +726,9 @@ export default function CalendarPage() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-xl font-bold text-stone-900">Glossary</h3>
+            <h3 className="text-xl font-bold text-stone-900 dark:text-white">
+              Glossary
+            </h3>
             <div className="mt-4 space-y-3">
               {calendarGlossary.map((item) => (
                 <div
@@ -733,11 +738,11 @@ export default function CalendarPage() {
                   <h4 className="text-base font-bold text-amber-200">
                     {item.term}
                   </h4>
-                  <p className="mt-2 text-sm leading-7 text-stone-900/75">
+                  <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/75">
                     {item.meaning}
                   </p>
-                  <p className="mt-2 text-sm leading-7 text-stone-900/55">
-                    <span className="font-semibold text-stone-900/70">
+                  <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/55">
+                    <span className="font-semibold text-stone-900 dark:text-white/70">
                       Просто:
                     </span>{" "}
                     {item.simple}
@@ -752,10 +757,10 @@ export default function CalendarPage() {
               <div className="rounded-2xl bg-white/5 p-3">
                 <RotateCcw size={18} />
               </div>
-              <h3 className="text-xl font-bold text-stone-900">Why this works</h3>
+              <h3 className="text-xl font-bold text-stone-900 dark:text-white">Why this works</h3>
             </div>
 
-            <div className="space-y-3 text-sm leading-7 text-stone-900/70">
+            <div className="space-y-3 text-sm leading-7 text-stone-900 dark:text-white/70">
               <p>1. Человек не теряется, потому что сначала видит русский месяц.</p>
               <p>2. Кыргызское название всё время рядом и повторяется.</p>
               <p>3. Календарь даёт визуальную привычку.</p>
@@ -765,8 +770,8 @@ export default function CalendarPage() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-xl font-bold text-stone-900">Why it matters</h3>
-            <p className="mt-4 text-sm leading-7 text-stone-900/70">
+            <h3 className="text-xl font-bold text-stone-900 dark:text-white">Why it matters</h3>
+            <p className="mt-4 text-sm leading-7 text-stone-900 dark:text-white/70">
               Такой формат лучше обычной справки: он помогает человеку сравнивать
               современный календарь с кыргызским, понимать названия месяцев,
               тогоол, цикличность и сезонность. Это прямо соответствует задаче

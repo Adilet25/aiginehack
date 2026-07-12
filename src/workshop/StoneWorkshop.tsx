@@ -103,8 +103,8 @@ const interpretationLibrary: Record<DetectedType, Interpretation> = {
 
 const confidenceStyles = {
   low: "border-red-400/20 bg-red-500/10 text-red-100",
-  medium: "border-amber-400/20 bg-amber-500/10 text-stone-900",
-  high: "border-emerald-400/20 bg-emerald-500/10 text-stone-900",
+  medium: "border-amber-400/20 bg-amber-500/10 text-stone-900 dark:text-white",
+  high: "border-emerald-400/20 bg-emerald-500/10 text-stone-900 dark:text-white",
 };
 
 export default function StoneWorkshop() {
@@ -400,10 +400,10 @@ export default function StoneWorkshop() {
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="space-y-4">
           <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h3 className="text-xl font-bold text-stone-900">
+            <h3 className="text-xl font-bold text-stone-900 dark:text-white">
               Режим резьбы по камню
             </h3>
-            <p className="mt-3 text-sm leading-7 text-stone-900/65">
+            <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-white/65">
               Здесь ты не просто рисуешь. Ты словно выбиваешь рисунок на камне:
               молоток оставляет плотные следы, зубило делает насечки, а мягкий
               инструмент помогает довести контур.
@@ -411,22 +411,24 @@ export default function StoneWorkshop() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-stone-900">Инструменты</h4>
+            <h4 className="text-lg font-bold text-stone-900 dark:text-white">
+              Инструменты
+            </h4>
 
             <div className="mt-4 grid gap-3">
               <button
                 onClick={() => setTool("hammer")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "hammer"
-                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900"
-                    : "border-white/10 bg-white/5 text-stone-900/80 hover:bg-white/10"
+                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
+                    : "border-white/10 bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Hammer size={18} />
                   <div>
                     <div className="font-semibold">Молоток</div>
-                    <div className="text-xs text-stone-900/50">
+                    <div className="text-xs text-stone-900 dark:text-white/50">
                       Грубые удары по камню
                     </div>
                   </div>
@@ -437,15 +439,15 @@ export default function StoneWorkshop() {
                 onClick={() => setTool("chisel")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "chisel"
-                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900"
-                    : "border-white/10 bg-white/5 text-stone-900/80 hover:bg-white/10"
+                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
+                    : "border-white/10 bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Sparkles size={18} />
                   <div>
                     <div className="font-semibold">Зубило</div>
-                    <div className="text-xs text-stone-900/50">
+                    <div className="text-xs text-stone-900 dark:text-white/50">
                       Точные насечки и форма
                     </div>
                   </div>
@@ -456,15 +458,15 @@ export default function StoneWorkshop() {
                 onClick={() => setTool("brush")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "brush"
-                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900"
-                    : "border-white/10 bg-white/5 text-stone-900/80 hover:bg-white/10"
+                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
+                    : "border-white/10 bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Brush size={18} />
                   <div>
                     <div className="font-semibold">Мягкий инструмент</div>
-                    <div className="text-xs text-stone-900/50">
+                    <div className="text-xs text-stone-900 dark:text-white/50">
                       Лёгкая проработка линий
                     </div>
                   </div>
@@ -474,7 +476,9 @@ export default function StoneWorkshop() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-stone-900">Шаблон</h4>
+            <h4 className="text-lg font-bold text-stone-900 dark:text-white">
+              Шаблон
+            </h4>
 
             <div className="mt-4 grid grid-cols-2 gap-3">
               {[
@@ -489,8 +493,8 @@ export default function StoneWorkshop() {
                   onClick={() => setTemplate(item.key as TemplateType)}
                   className={`rounded-2xl border px-3 py-3 text-sm font-semibold transition ${
                     template === item.key
-                      ? "border-amber-400/30 bg-amber-500/10 text-stone-900"
-                      : "border-white/10 bg-white/5 text-stone-900/80 hover:bg-white/10"
+                      ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
+                      : "border-white/10 bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
                   }`}
                 >
                   {item.label}
@@ -500,7 +504,9 @@ export default function StoneWorkshop() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-stone-900">Действия</h4>
+            <h4 className="text-lg font-bold text-stone-900 dark:text-white">
+              Действия
+            </h4>
 
             <div className="mt-4 grid gap-3">
               <button
@@ -513,7 +519,7 @@ export default function StoneWorkshop() {
 
               <button
                 onClick={clearCanvas}
-                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-stone-900 transition hover:bg-white/10"
+                className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-stone-900 dark:text-white transition hover:bg-white/10"
               >
                 <RotateCcw size={18} />
                 Очистить камень
@@ -521,7 +527,7 @@ export default function StoneWorkshop() {
 
               <button
                 onClick={saveImage}
-                className="flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-stone-900 transition hover:bg-emerald-500/20"
+                className="flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
               >
                 <Download size={18} />
                 Сохранить петроглиф
@@ -555,12 +561,17 @@ export default function StoneWorkshop() {
             )}
           </div>
 
-          <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-7 text-stone-900/65">
+          <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-7 text-stone-900 dark:text-white/65">
             Совет: начни с шаблона, выбери{" "}
-            <b className="text-stone-900">молоток</b> для грубой формы, потом
-            пройди <b className="text-stone-900">зубилом</b> по линиям, а в
-            конце используй
-            <b className="text-stone-900"> мягкий инструмент</b> для деталей.
+            <b className="text-stone-900 dark:text-white">молоток</b> для грубой
+            формы, потом пройди{" "}
+            <b className="text-stone-900 dark:text-white">зубилом</b> по линиям,
+            а в конце используй
+            <b className="text-stone-900 dark:text-white">
+              {" "}
+              мягкий инструмент
+            </b>{" "}
+            для деталей.
           </div>
         </div>
       </div>
@@ -571,10 +582,10 @@ export default function StoneWorkshop() {
             <div className="glow-card panel-ornament rounded-3xl p-6">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-stone-900/40">
+                  <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-white/40">
                     Interpretation
                   </p>
-                  <h3 className="mt-2 text-2xl font-black text-stone-900">
+                  <h3 className="mt-2 text-2xl font-black text-stone-900 dark:text-white">
                     {interpretation.title}
                   </h3>
                 </div>
@@ -588,10 +599,10 @@ export default function StoneWorkshop() {
 
               <div className="mt-5 space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-wide text-stone-900/40">
+                  <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/40">
                     Что система увидела
                   </p>
-                  <p className="mt-2 text-sm leading-7 text-stone-900/80">
+                  <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/80">
                     {interpretation.whatItShows}
                   </p>
                 </div>
@@ -608,10 +619,10 @@ export default function StoneWorkshop() {
             </div>
 
             <div className="glow-card panel-ornament rounded-3xl p-6">
-              <p className="text-xs uppercase tracking-[0.2em] text-stone-900/40">
+              <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-white/40">
                 Projection
               </p>
-              <h3 className="mt-2 text-2xl font-black text-stone-900">
+              <h3 className="mt-2 text-2xl font-black text-stone-900 dark:text-white">
                 Возможная сцена
               </h3>
 
@@ -621,7 +632,7 @@ export default function StoneWorkshop() {
                 </p>
               </div>
 
-              <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm leading-7 text-stone-900/60">
+              <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4 text-sm leading-7 text-stone-900 dark:text-white/60">
                 Это предварительная интерпретация для MVP. Она основана на
                 выбранном шаблоне или простой визуальной эвристике.
               </div>
@@ -634,10 +645,10 @@ export default function StoneWorkshop() {
                 <Upload size={18} />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-stone-900">
+                <h3 className="text-xl font-bold text-stone-900 dark:text-white">
                   Publish to Community
                 </h3>
-                <p className="text-sm text-stone-900/60">
+                <p className="text-sm text-stone-900 dark:text-white/60">
                   Опубликуй работу, чтобы другие могли её оценивать.
                 </p>
               </div>
@@ -648,13 +659,13 @@ export default function StoneWorkshop() {
                 value={publishTitle}
                 onChange={(e) => setPublishTitle(e.target.value)}
                 placeholder="Название работы"
-                className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 outline-none placeholder:text-stone-900/35"
+                className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
               />
               <input
                 value={publishAuthor}
                 onChange={(e) => setPublishAuthor(e.target.value)}
                 placeholder="Имя автора"
-                className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 outline-none placeholder:text-stone-900/35"
+                className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
               />
             </div>
 
@@ -663,25 +674,25 @@ export default function StoneWorkshop() {
               onChange={(e) => setPublishDescription(e.target.value)}
               placeholder="Короткое описание работы"
               rows={4}
-              className="mt-4 w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 outline-none placeholder:text-stone-900/35"
+              className="mt-4 w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
             />
 
             <div className="mt-5 flex flex-wrap gap-3">
               <button
                 onClick={handlePublish}
-                className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 transition hover:bg-emerald-500/20"
+                className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
               >
                 Publish artwork
               </button>
 
-              <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm text-stone-900">
+              <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm text-stone-900 dark:text-white">
                 1 место: шанс на физическое воплощение и процент от продажи по
                 правилам конкурса
               </div>
             </div>
 
             {publishMessage && (
-              <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-stone-900/80">
+              <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-stone-900 dark:text-white/80">
                 {publishMessage}
               </div>
             )}

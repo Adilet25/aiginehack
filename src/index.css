@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   color-scheme: light;
@@ -65,8 +66,16 @@ body,
 .dark body,
 .dark #root {
   background:
-    radial-gradient(ellipse at top left, rgba(96, 165, 250, 0.12), transparent 35%),
-    radial-gradient(ellipse at bottom right, rgba(148, 163, 184, 0.14), transparent 35%),
+    radial-gradient(
+      ellipse at top left,
+      rgba(96, 165, 250, 0.12),
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      rgba(148, 163, 184, 0.14),
+      transparent 35%
+    ),
     linear-gradient(160deg, var(--bg-0) 0%, var(--bg-1) 100%);
 }
 
@@ -100,7 +109,9 @@ body {
 }
 
 .dark .glow-card {
-  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* Ornament inner border */

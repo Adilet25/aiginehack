@@ -394,7 +394,7 @@ export default function MapPage() {
 
                         <button
                           onClick={() => addStopToRoute(location)}
-                          className="w-full rounded-xl bg-amber-500 px-3 py-2 font-semibold text-stone-900 transition hover:bg-amber-600"
+                          className="w-full rounded-xl bg-amber-500 px-3 py-2 font-semibold text-stone-900 dark:text-white transition hover:bg-amber-600"
                         >
                           Add to route
                         </button>
@@ -425,15 +425,17 @@ export default function MapPage() {
           />
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-2xl font-black text-stone-900">Trip Planner</h3>
-            <p className="mt-2 text-sm leading-7 text-stone-900/65">
+            <h3 className="text-2xl font-black text-stone-900 dark:text-white">
+              Trip Planner
+            </h3>
+            <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/65">
               Выбери точку A и точку B, а затем построй путь вручную или
               автоматически.
             </p>
 
             <div className="mt-5 space-y-4">
               <div>
-                <label className="mb-2 block text-sm font-semibold text-stone-900/80">
+                <label className="mb-2 block text-sm font-semibold text-stone-900 dark:text-white/80">
                   Point A
                 </label>
 
@@ -443,7 +445,7 @@ export default function MapPage() {
                     onChange={(e) =>
                       setStartMode(e.target.value as "user" | "location")
                     }
-                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 outline-none"
+                    className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none"
                   >
                     <option value="user">My location</option>
                     <option value="location">Choose location</option>
@@ -453,7 +455,7 @@ export default function MapPage() {
                     <select
                       value={startLocationId}
                       onChange={(e) => setStartLocationId(e.target.value)}
-                      className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 outline-none"
+                      className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none"
                     >
                       <option value="">Select point A</option>
                       {mapLocations.map((loc) => (
@@ -467,14 +469,14 @@ export default function MapPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-semibold text-stone-900/80">
+                <label className="mb-2 block text-sm font-semibold text-stone-900 dark:text-white/80">
                   Point B
                 </label>
 
                 <select
                   value={destinationId}
                   onChange={(e) => setDestinationId(e.target.value)}
-                  className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 outline-none"
+                  className="w-full rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none"
                 >
                   <option value="">Select point B</option>
                   {mapLocations.map((loc) => (
@@ -487,16 +489,16 @@ export default function MapPage() {
 
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <label className="block text-sm font-semibold text-stone-900/80">
+                  <label className="block text-sm font-semibold text-stone-900 dark:text-white/80">
                     Stops on the way
                   </label>
-                  <span className="text-xs text-stone-900/45">
+                  <span className="text-xs text-stone-900 dark:text-white/45">
                     Click “Add to route” or use auto route
                   </span>
                 </div>
 
                 {routeStops.length === 0 ? (
-                  <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-900/50">
+                  <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-900 dark:text-white/50">
                     No stops added yet
                   </div>
                 ) : (
@@ -507,10 +509,10 @@ export default function MapPage() {
                         className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
                       >
                         <div>
-                          <p className="text-sm font-semibold text-stone-900">
+                          <p className="text-sm font-semibold text-stone-900 dark:text-white">
                             {index + 1}. {stop.name}
                           </p>
-                          <p className="text-xs text-stone-900/50">
+                          <p className="text-xs text-stone-900 dark:text-white/50">
                             {stop.kind}
                           </p>
                         </div>
@@ -530,21 +532,21 @@ export default function MapPage() {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={buildRoute}
-                  className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-5 py-3 font-semibold text-stone-900 transition hover:bg-amber-500/20"
+                  className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-amber-500/20"
                 >
                   Build manually
                 </button>
 
                 <button
                   onClick={autoBuildRoute}
-                  className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 transition hover:bg-emerald-500/20"
+                  className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
                 >
                   Create route automatically
                 </button>
 
                 <button
                   onClick={clearRoute}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-stone-900 transition hover:bg-white/10"
+                  className="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-white/10"
                 >
                   Clear
                 </button>
@@ -552,17 +554,19 @@ export default function MapPage() {
 
               {autoSuggestions.length > 0 && (
                 <div className="rounded-3xl border border-blue-400/20 bg-blue-500/10 p-5">
-                  <h4 className="text-lg font-bold text-stone-900">
+                  <h4 className="text-lg font-bold text-stone-900 dark:text-white">
                     Suggested cultural stops
                   </h4>
                   <div className="mt-3 space-y-2">
                     {autoSuggestions.map((stop) => (
                       <div
                         key={stop.id}
-                        className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-900/80"
+                        className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-900 dark:text-white/80"
                       >
                         {stop.name}{" "}
-                        <span className="text-stone-900/40">• {stop.kind}</span>
+                        <span className="text-stone-900 dark:text-white/40">
+                          • {stop.kind}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -571,7 +575,7 @@ export default function MapPage() {
 
               {routeBuilt && routePoints.length > 1 && (
                 <div className="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-5">
-                  <h4 className="text-lg font-bold text-stone-900">
+                  <h4 className="text-lg font-bold text-stone-900 dark:text-white">
                     Route summary
                   </h4>
                   <div className="mt-3 space-y-2 text-sm text-emerald-50">

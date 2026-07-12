@@ -49,10 +49,10 @@ export default function LocationSidePanel({
 
         {location.culturalNote && (
           <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
-            <p className="text-xs uppercase tracking-wide text-stone-900/40">
+            <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/40">
               Cultural note
             </p>
-            <p className="mt-2 text-sm text-stone-900/80">
+            <p className="mt-2 text-sm text-stone-900 dark:text-white/80">
               {location.culturalNote}
             </p>
           </div>
@@ -86,7 +86,7 @@ export default function LocationSidePanel({
         )}
 
         {location.sourceLabel && (
-          <p className="mt-5 text-xs uppercase tracking-widest text-stone-900/35">
+          <p className="mt-5 text-xs uppercase tracking-widest text-stone-900 dark:text-white/35">
             Source: {location.sourceLabel}
           </p>
         )}

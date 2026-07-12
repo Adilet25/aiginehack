@@ -109,7 +109,7 @@ export default function PetroScanMock() {
       )}
 
       {message && (
-        <div className="mt-4 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-stone-900">
+        <div className="mt-4 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-stone-900 dark:text-white">
           {message}
         </div>
       )}

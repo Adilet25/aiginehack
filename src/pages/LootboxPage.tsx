@@ -7,7 +7,7 @@ import { useGame } from "../app/providers/GameProvider";
 import type { Artifact } from "../types";
 
 const rarityStyles = {
-  common: "border-white/10 bg-white/5 text-stone-900/80",
+  common: "border-white/10 bg-white/5 text-stone-900 dark:text-white/80",
   rare: "border-sky-400/30 bg-sky-500/10 text-sky-200",
   epic: "border-purple-400/30 bg-purple-500/10 text-purple-200",
 };
@@ -69,13 +69,13 @@ export default function LootboxPage() {
               }`}
             >
               <span
-                className={`text-xl font-black tracking-wide text-stone-900 ${isOpening ? "animate-pulse" : ""}`}
+                className={`text-xl font-black tracking-wide text-stone-900 dark:text-white ${isOpening ? "animate-pulse" : ""}`}
               >
                 {isOpening ? "OPENING..." : "CHÜKO BOX"}
               </span>
             </div>
 
-            <p className="max-w-md text-sm leading-7 text-stone-900/65">
+            <p className="max-w-md text-sm leading-7 text-stone-900 dark:text-white/65">
               Открывай коробку и получай случайный культурный артефакт. Если
               предмет уже есть в коллекции, ты получишь компенсацию очками.
             </p>
@@ -94,14 +94,16 @@ export default function LootboxPage() {
 
         <div className="space-y-4">
           <div className="glow-card rounded-3xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-lg font-bold text-stone-900">Drop Chances</h3>
+            <h3 className="text-lg font-bold text-stone-900 dark:text-white">
+              Drop Chances
+            </h3>
             <div className="mt-4 space-y-3">
               {chances.map((chance) => (
                 <div
                   key={chance.label}
                   className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
                 >
-                  <span className="text-sm text-stone-900/75">
+                  <span className="text-sm text-stone-900 dark:text-white/75">
                     {chance.label}
                   </span>
                   <span className="text-sm font-bold text-emerald-300">
@@ -113,10 +115,12 @@ export default function LootboxPage() {
           </div>
 
           <div className="glow-card min-h-[240px] rounded-3xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-lg font-bold text-stone-900">Latest Reward</h3>
+            <h3 className="text-lg font-bold text-stone-900 dark:text-white">
+              Latest Reward
+            </h3>
 
             {!result ? (
-              <p className="mt-4 text-sm text-stone-900/55">
+              <p className="mt-4 text-sm text-stone-900 dark:text-white/55">
                 Здесь появится результат открытия чүко.
               </p>
             ) : (
@@ -124,10 +128,10 @@ export default function LootboxPage() {
                 <div className="rounded-3xl border border-emerald-400/20 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h4 className="text-xl font-black text-stone-900">
+                      <h4 className="text-xl font-black text-stone-900 dark:text-white">
                         {result.name}
                       </h4>
-                      <p className="mt-2 text-sm text-stone-900/65">
+                      <p className="mt-2 text-sm text-stone-900 dark:text-white/65">
                         {result.description}
                       </p>
                     </div>
@@ -143,15 +147,19 @@ export default function LootboxPage() {
 
                   <div className="mt-4 grid grid-cols-2 gap-3">
                     <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                      <p className="text-xs text-stone-900/45">Points</p>
-                      <p className="mt-1 text-lg font-bold text-stone-900">
+                      <p className="text-xs text-stone-900 dark:text-white/45">
+                        Points
+                      </p>
+                      <p className="mt-1 text-lg font-bold text-stone-900 dark:text-white">
                         {result.points}
                       </p>
                     </div>
 
                     <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                      <p className="text-xs text-stone-900/45">Income</p>
-                      <p className="mt-1 text-lg font-bold text-stone-900">
+                      <p className="text-xs text-stone-900 dark:text-white/45">
+                        Income
+                      </p>
+                      <p className="mt-1 text-lg font-bold text-stone-900 dark:text-white">
                         +{result.income}
                       </p>
                     </div>

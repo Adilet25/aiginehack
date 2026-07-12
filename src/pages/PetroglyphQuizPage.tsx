@@ -252,10 +252,10 @@ function ArharLoader() {
         </div>
       </div>
 
-      <h3 className="text-2xl font-black text-stone-900">
+      <h3 className="text-2xl font-black text-stone-900 dark:text-white">
         Анализируем твой петроглиф...
       </h3>
-      <p className="mt-3 max-w-lg text-sm leading-7 text-stone-900/70">
+      <p className="mt-3 max-w-lg text-sm leading-7 text-stone-900 dark:text-white/70">
         Архар поднимается по склону, собирает символы и ищет твой архетип среди
         древних рисунков.
       </p>
@@ -334,11 +334,11 @@ export default function PetroglyphQuizPage() {
         <ArharLoader />
       ) : step < questions.length ? (
         <div className="mx-auto max-w-5xl glow-card panel-ornament rounded-3xl p-6">
-          <div className="mb-4 text-sm text-stone-900/50">
+          <div className="mb-4 text-sm text-stone-900 dark:text-white/50">
             Вопрос {step + 1} из {questions.length}
           </div>
 
-          <h2 className="text-2xl font-black text-stone-900">
+          <h2 className="text-2xl font-black text-stone-900 dark:text-white">
             {currentQuestion.text}
           </h2>
 
@@ -358,7 +358,7 @@ export default function PetroglyphQuizPage() {
                 </div>
 
                 <div className="p-4">
-                  <p className="text-base font-semibold text-stone-900">
+                  <p className="text-base font-semibold text-stone-900 dark:text-white">
                     {option.text}
                   </p>
                 </div>
@@ -372,26 +372,32 @@ export default function PetroglyphQuizPage() {
             <div className="text-sm uppercase tracking-[0.2em] text-amber-200">
               Твой результат
             </div>
-            <h2 className="mt-2 text-4xl font-black text-stone-900">
+            <h2 className="mt-2 text-4xl font-black text-stone-900 dark:text-white">
               {result.title}
             </h2>
-            <p className="mt-2 text-lg text-stone-900">{result.subtitle}</p>
+            <p className="mt-2 text-lg text-stone-900 dark:text-white">
+              {result.subtitle}
+            </p>
           </div>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             <div className="rounded-3xl border border-white/10 bg-black/20 p-5">
-              <h3 className="text-lg font-bold text-stone-900">Характер</h3>
-              <p className="mt-3 text-sm leading-7 text-stone-900/75">
+              <h3 className="text-lg font-bold text-stone-900 dark:text-white">
+                Характер
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-white/75">
                 {result.description}
               </p>
             </div>
 
             <div className="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-5">
-              <h3 className="text-lg font-bold text-stone-900">Куда пойти</h3>
+              <h3 className="text-lg font-bold text-stone-900 dark:text-white">
+                Куда пойти
+              </h3>
               <p className="mt-3 text-sm leading-7 text-emerald-50">
                 {result.recommendation}
               </p>
-              <p className="mt-3 text-sm leading-7 text-stone-900/85">
+              <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-white/85">
                 {result.why}
               </p>
               <div className="mt-4 inline-flex rounded-full border border-emerald-300/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-50">
@@ -402,7 +408,7 @@ export default function PetroglyphQuizPage() {
 
           <button
             onClick={restart}
-            className="mt-6 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-stone-900 transition hover:bg-white/10"
+            className="mt-6 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-white/10"
           >
             Пройти ещё раз
           </button>
