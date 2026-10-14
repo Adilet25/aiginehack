@@ -1,8 +1,12 @@
 import { useMemo } from "react";
 import PageHeader from "../components/shared/PageHeader";
+import ArtworkImage from "../components/shared/ArtworkImage";
+import PrototypeNotice from "../components/shared/PrototypeNotice";
 import { useGame } from "../app/providers/GameProvider";
+import { useLang } from "../app/providers/LanguageProvider";
 
 export default function LeaderboardPage() {
+  const { t } = useLang();
   const { artworks } = useGame();
 
   const topArtworks = useMemo(() => {
@@ -70,57 +74,57 @@ export default function LeaderboardPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Leaderboard"
-        subtitle="Лучшие работы и авторы сообщества."
+        title={t.leaderboardTitle}
+        subtitle={t.leaderboardSubtitle}
       />
+      <PrototypeNotice kind="community" />
 
-      <div className="rounded-3xl border border-amber-400/20 bg-amber-500/10 p-5 text-stone-900 dark:text-white">
+      <div className="rounded-3xl border border-gold bg-gold-soft p-5 text-ink ">
         <div className="text-sm uppercase tracking-[0.2em] opacity-75">
-          Grand Prize
+          {t.grandPrize}
         </div>
         <div className="mt-2 text-xl font-bold">
-          1 место — шанс на физическое воплощение работы и процент от продажи по
-          правилам конкурса
+          {t.grandPrizeDesc}
         </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="glow-card panel-ornament rounded-3xl p-6">
-          <h3 className="text-2xl font-black text-stone-900 dark:text-white">
-            Top Petroglyphs
+          <h3 className="text-2xl font-black text-ink ">
+            {t.topPetroglyphs}
           </h3>
 
           <div className="mt-5 space-y-3">
             {topArtworks.map((artwork, index) => (
               <div
                 key={artwork.id}
-                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 p-4"
+                className="flex items-center gap-4 rounded-2xl border border-line bg-wash p-4"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/15 font-black text-stone-900 dark:text-white">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-soft font-black text-ink ">
                   #{index + 1}
                 </div>
 
-                <img
+                <ArtworkImage
                   src={artwork.imageUrl}
-                  alt={artwork.title}
+                  title={artwork.title}
                   className="h-16 w-16 rounded-2xl object-cover"
                 />
 
                 <div className="min-w-0 flex-1">
-                  <h4 className="truncate font-bold text-stone-900 dark:text-white">
+                  <h4 className="truncate font-bold text-ink ">
                     {artwork.title}
                   </h4>
-                  <p className="text-sm text-stone-900 dark:text-white/55">
-                    by {artwork.author}
+                  <p className="text-sm text-ink ">
+                    {t.byAuthor} {artwork.author}
                   </p>
                 </div>
 
                 <div className="text-right">
-                  <p className="font-bold text-stone-900 dark:text-white">
+                  <p className="font-bold text-ink ">
                     {artwork.rating || "—"}★
                   </p>
-                  <p className="text-xs text-stone-900 dark:text-white/50">
-                    {artwork.votes} votes
+                  <p className="text-xs text-ink ">
+                    {artwork.votes} {t.votes}
                   </p>
                 </div>
               </div>
@@ -129,35 +133,35 @@ export default function LeaderboardPage() {
         </div>
 
         <div className="glow-card panel-ornament rounded-3xl p-6">
-          <h3 className="text-2xl font-black text-stone-900 dark:text-white">
-            Top Artists
+          <h3 className="text-2xl font-black text-ink ">
+            {t.topArtists}
           </h3>
 
           <div className="mt-5 space-y-3">
             {topAuthors.map((author, index) => (
               <div
                 key={author.author}
-                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 p-4"
+                className="flex items-center gap-4 rounded-2xl border border-line bg-wash p-4"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/15 font-black text-stone-900 dark:text-white">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sage-soft font-black text-ink ">
                   #{index + 1}
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <h4 className="truncate font-bold text-stone-900 dark:text-white">
+                  <h4 className="truncate font-bold text-ink ">
                     {author.author}
                   </h4>
-                  <p className="text-sm text-stone-900 dark:text-white/55">
-                    {author.works} works published
+                  <p className="text-sm text-ink ">
+                    {author.works} {t.worksPublished}
                   </p>
                 </div>
 
                 <div className="text-right">
-                  <p className="font-bold text-stone-900 dark:text-white">
+                  <p className="font-bold text-ink ">
                     {author.avgRating || "—"}★
                   </p>
-                  <p className="text-xs text-stone-900 dark:text-white/50">
-                    {author.totalVotes} votes
+                  <p className="text-xs text-ink ">
+                    {author.totalVotes} {t.votes}
                   </p>
                 </div>
               </div>

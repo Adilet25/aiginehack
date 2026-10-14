@@ -1,224 +1,80 @@
-import { Link } from "react-router-dom";
-import { Gamepad2, MapPinned, Sparkles, Trophy } from "lucide-react";
-import GlowButton from "../components/shared/GlowButton";
-import { useGame } from "../app/providers/GameProvider";
-import { useLang } from "../app/providers/LanguageProvider";
+import { ArrowDown, ArrowUpRight, ArrowRight, Hammer, Compass, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useGame } from '../app/providers/GameProvider';
+import { useLang } from '../app/providers/LanguageProvider';
+import { homeCopy } from '../data/home';
+import BrandMark from '../components/shared/BrandMark';
+import Reveal from '../components/shared/Reveal';
+import './HomePage.css';
+import './Exhibition.css';
 
-function PetroSun() {
-  return (
-    <div className="relative mx-auto flex h-[360px] w-[360px] items-center justify-center md:h-[420px] md:w-[420px]">
-      <div className="absolute inset-0 rounded-full bg-amber-300/20 blur-3xl dark:bg-amber-500/10" />
-
-      {/* Outer rotating ring */}
-      <div className="petro-rotate absolute h-[300px] w-[300px] rounded-full border border-amber-700/20 dark:border-amber-400/20 md:h-[360px] md:w-[360px]">
-        <div className="absolute left-1/2 top-0 h-8 w-[2px] -translate-x-1/2 bg-amber-700/40 dark:bg-amber-400/30" />
-        <div className="absolute bottom-0 left-1/2 h-8 w-[2px] -translate-x-1/2 bg-amber-700/40 dark:bg-amber-400/30" />
-        <div className="absolute left-0 top-1/2 h-[2px] w-8 -translate-y-1/2 bg-amber-700/40 dark:bg-amber-400/30" />
-        <div className="absolute right-0 top-1/2 h-[2px] w-8 -translate-y-1/2 bg-amber-700/40 dark:bg-amber-400/30" />
-        <div className="absolute left-[14%] top-[14%] h-6 w-[2px] rotate-[-45deg] bg-amber-700/30 dark:bg-amber-400/20" />
-        <div className="absolute right-[14%] top-[14%] h-6 w-[2px] rotate-[45deg] bg-amber-700/30 dark:bg-amber-400/20" />
-        <div className="absolute bottom-[14%] left-[14%] h-6 w-[2px] rotate-[45deg] bg-amber-700/30 dark:bg-amber-400/20" />
-        <div className="absolute bottom-[14%] right-[14%] h-6 w-[2px] rotate-[-45deg] bg-amber-700/30 dark:bg-amber-400/20" />
-      </div>
-
-      {/* Middle ring */}
-      <div className="absolute h-[210px] w-[210px] rounded-full border border-amber-600/25 bg-gradient-to-br from-amber-100/60 to-orange-100/60 shadow-[0_0_50px_rgba(180,120,40,0.14)] dark:border-amber-400/25 dark:from-amber-900/30 dark:to-black/20 dark:shadow-[0_0_50px_rgba(217,150,50,0.18)] md:h-[250px] md:w-[250px]">
-        <div className="absolute inset-[18px] rounded-full border border-amber-400/20" />
-        <div className="absolute inset-[34px] rounded-full border border-amber-500/20" />
-      </div>
-
-      {/* Center */}
-      <div className="absolute flex h-[120px] w-[120px] items-center justify-center rounded-full border border-amber-600/30 bg-amber-50/80 shadow-[0_0_30px_rgba(180,120,40,0.12)] dark:border-amber-400/30 dark:bg-black/50 dark:shadow-[0_0_30px_rgba(217,150,50,0.16)] md:h-[140px] md:w-[140px]">
-        <div className="text-center">
-          <div className="text-xs uppercase tracking-[0.3em] text-amber-700/60 dark:text-amber-400/60">
-            Stone
-          </div>
-          <div className="mt-2 text-xl font-black text-amber-900 dark:text-white md:text-2xl">
-            ТАМГА
-          </div>
-        </div>
-      </div>
-
-      {/* Floating stars */}
-      <div className="absolute left-[12%] top-[18%] text-amber-600/70 dark:text-amber-400/60 petro-float">
-        ✦
-      </div>
-      <div className="absolute right-[10%] top-[28%] text-amber-600/55 dark:text-amber-400/45 petro-float-delayed">
-        ✦
-      </div>
-      <div className="absolute bottom-[18%] left-[18%] text-amber-600/55 dark:text-amber-400/45 petro-float-delayed">
-        ✦
-      </div>
-      <div className="absolute bottom-[14%] right-[18%] text-amber-600/70 dark:text-amber-400/60 petro-float">
-        ✦
-      </div>
-
-      {/* Labels */}
-      <div className="absolute left-[5%] top-[46%] rounded-full border border-sage/30 bg-green-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-green-800 dark:border-emerald-400/20 dark:bg-emerald-950/50 dark:text-emerald-300">
-        Үркөр
-      </div>
-      <div className="absolute right-[2%] top-[58%] rounded-full border border-amber-400/30 bg-amber-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-amber-800 dark:border-amber-400/20 dark:bg-amber-950/50 dark:text-amber-300">
-        Тогоол
-      </div>
+function ExhibitLink({ number, title, description, to, action, index }: {
+  number: string; title: string; description: string; to: string; action: string; index: number;
+}) {
+  return <Link className="museum-exhibit" to={to}>
+    <div className={`museum-exhibit-art museum-exhibit-art--${index}`} aria-hidden="true">
+      {index < 2 ? <img src={index === 0 ? '/home/song-kol.jpg' : '/home/cholpon-ata.jpg'} alt="" loading="lazy" width="960" height="640" /> : <svg className="museum-sky-dial" viewBox="0 0 300 300" fill="none">
+        <circle cx="150" cy="150" r="120" /><circle cx="150" cy="150" r="106" /><circle cx="150" cy="150" r="70" />
+        {Array.from({ length: 12 }, (_, i) => <path key={i} d="M150 19v22M150 248v33" transform={`rotate(${i * 30} 150 150)`} />)}
+        <path d="M150 57v186M57 150h186M150 130l20 20-20 20-20-20Z" /><circle cx="150" cy="150" r="8" />
+        <circle cx="150" cy="80" r="9" fill="currentColor" /><path d="M215 144a10 10 0 1 0 0 12 8 8 0 0 1 0-12Z" fill="currentColor" />
+      </svg>}
+      <span className="museum-exhibit-number">{number}</span>
     </div>
-  );
+    <div className="museum-exhibit-copy"><h3>{title}</h3><p>{description}</p>
+    <span className="museum-text-link">{action}<ArrowUpRight size={19} aria-hidden="true" /></span>
+    </div>
+  </Link>;
 }
 
 export default function HomePage() {
   const { level, points, collection } = useGame();
-  const { t } = useLang();
-
-  return (
-    <div className="space-y-8">
-      {/* Hero section */}
-      <section className="relative overflow-hidden rounded-3xl border border-stone-200 bg-white/60 p-6 shadow-sm backdrop-blur dark:border-amber-500/10 dark:bg-black/30 md:p-10">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(196,146,79,0.10),transparent_40%),radial-gradient(ellipse_at_bottom_right,rgba(90,122,82,0.08),transparent_40%)] dark:bg-[radial-gradient(ellipse_at_top_left,rgba(217,150,50,0.16),transparent_40%),radial-gradient(ellipse_at_bottom_right,rgba(217,150,50,0.08),transparent_40%)]" />
+  const { lang } = useLang();
+  const c = homeCopy[lang];
+  return <div className="museum-home" lang={lang === 'kg' ? 'ky' : lang}>
+    <section className="museum-hero" aria-labelledby="museum-title">
+      <img className="museum-hero-image" src="/home/heritage-illustration.png" alt="" width="1672" height="941" fetchPriority="high" />
+      <div className="museum-hero-shade" />
+      <div className="museum-hero-copy">
+        <p className="museum-eyebrow">{c.eyebrow}</p>
+        <h1 id="museum-title">{c.title}<em>{c.titleAccent}</em></h1>
+        <p className="museum-hero-description">{c.intro}</p>
+        <div className="museum-actions">
+          <Link className="museum-button" to="/map">{c.explore}<ArrowUpRight size={18} aria-hidden="true" /></Link>
+          <Link className="museum-hero-link" to="/stone-workshop">{c.create}<ArrowRight size={18} aria-hidden="true" /></Link>
         </div>
-
-        <div className="relative grid items-center gap-8 lg:grid-cols-2">
-          {/* Left: text + stats */}
-          <div>
-            <p className="mb-3 inline-flex rounded-full border border-amber-500/30 bg-amber-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-amber-700 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-400">
-              {t.heroBadge}
-            </p>
-
-            <h1 className="text-4xl font-black leading-tight text-stone-900 dark:text-white md:text-6xl">
-              {t.heroTitleLine1}
-              <span className="block text-amber-700 dark:text-amber-400">
-                {t.heroTitleLine2}
-              </span>
-            </h1>
-
-            <p className="mt-4 max-w-xl text-sm leading-7 text-stone-600 dark:text-white/60 md:text-base">
-              {t.heroDesc}
-            </p>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/map">
-                <GlowButton>{t.startExploring}</GlowButton>
-              </Link>
-              <Link to="/stone-workshop">
-                <GlowButton className="border-stone-300 bg-stone-100 text-stone-700 shadow-none hover:bg-stone-200 dark:border-white/10 dark:bg-white/5 dark:text-white/80 dark:hover:bg-white/10">
-                  {t.openStoneLab}
-                </GlowButton>
-              </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="mt-8 grid max-w-xl gap-3 sm:grid-cols-3">
-              {[
-                {
-                  label: t.statLevel,
-                  value: level,
-                  color: "text-amber-800 dark:text-amber-400",
-                },
-                {
-                  label: t.statPoints,
-                  value: points,
-                  color: "text-stone-900 dark:text-white",
-                },
-                {
-                  label: t.statArtifacts,
-                  value: collection.length,
-                  color: "text-stone-900 dark:text-white",
-                },
-              ].map(({ label, value, color }) => (
-                <div
-                  key={label}
-                  className="rounded-2xl border border-stone-200 bg-white/80 p-4 shadow-sm dark:border-white/10 dark:bg-white/5"
-                >
-                  <p className="text-xs uppercase tracking-wide text-stone-400 dark:text-white/40">
-                    {label}
-                  </p>
-                  <p className={`mt-2 text-2xl font-black ${color}`}>{value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: decorative sun + feature cards */}
-          <div className="rounded-3xl border border-amber-200/60 bg-gradient-to-br from-amber-50/80 to-orange-50/60 p-6 dark:border-amber-500/10 dark:bg-gradient-to-br dark:from-amber-950/30 dark:to-black/20">
-            <PetroSun />
-
-            <div className="grid gap-4 sm:grid-cols-3">
-              {[
-                { icon: MapPinned, title: t.mapCardTitle, desc: t.mapCardDesc },
-                {
-                  icon: Trophy,
-                  title: t.challengeCardTitle,
-                  desc: t.challengeCardDesc,
-                },
-                {
-                  icon: Gamepad2,
-                  title: t.playCardTitle,
-                  desc: t.playCardDesc,
-                },
-              ].map(({ icon: Icon, title, desc }) => (
-                <div
-                  key={title}
-                  className="rounded-2xl border border-stone-200 bg-white/70 p-4 shadow-sm dark:border-white/10 dark:bg-white/5"
-                >
-                  <Icon
-                    className="mb-3 text-amber-700 dark:text-amber-400"
-                    size={20}
-                  />
-                  <h3 className="font-semibold text-stone-900 dark:text-white">
-                    {title}
-                  </h3>
-                  <p className="mt-1 text-xs text-stone-500 dark:text-white/50">
-                    {desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature cards */}
-      <section className="grid gap-4 md:grid-cols-3">
-        {[
-          {
-            icon: MapPinned,
-            title: t.discoverCultureTitle,
-            desc: t.discoverCultureDesc,
-            accent:
-              "bg-amber-50 border-amber-300/40 text-amber-700 dark:bg-amber-500/10 dark:border-amber-400/20 dark:text-amber-400",
-          },
-          {
-            icon: Sparkles,
-            title: t.readSymbolsTitle,
-            desc: t.readSymbolsDesc,
-            accent:
-              "bg-green-50 border-green-300/40 text-green-700 dark:bg-emerald-500/10 dark:border-emerald-400/20 dark:text-emerald-400",
-          },
-          {
-            icon: Trophy,
-            title: t.createCompeteTitle,
-            desc: t.createCompeteDesc,
-            accent:
-              "bg-orange-50 border-orange-300/40 text-orange-700 dark:bg-orange-500/10 dark:border-orange-400/20 dark:text-orange-400",
-          },
-        ].map(({ icon: Icon, title, desc, accent }) => (
-          <div
-            key={title}
-            className="rounded-3xl border border-stone-200 bg-white/70 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-white/10 dark:bg-white/5 dark:hover:shadow-amber-500/5"
-          >
-            <div
-              className={`mb-3 inline-flex rounded-2xl border p-3 ${accent}`}
-            >
-              <Icon size={18} />
-            </div>
-            <h3 className="text-lg font-bold text-stone-900 dark:text-white">
-              {title}
-            </h3>
-            <p className="mt-2 text-sm text-stone-500 dark:text-white/50">
-              {desc}
-            </p>
-          </div>
-        ))}
-      </section>
+      </div>
+      <div className="museum-hero-bottom"><a href="#museum-themes">{c.discover}<ArrowDown size={16} aria-hidden="true" /></a><span>{lang === 'en' ? 'Artistic illustration · AI-assisted' : lang === 'kg' ? 'Көркөм иллюстрация · ЖИ жардамы менен' : 'Художественная иллюстрация · с помощью ИИ'}</span></div>
+    </section>
+    <div className="museum-paper-body">
+    <div className="museum-divider" aria-hidden="true"><span /><BrandMark /><span /></div>
+    <Reveal><section className="museum-section museum-themes-section" id="museum-themes" aria-labelledby="themes-title">
+      <div className="museum-section-heading"><div><p className="museum-eyebrow">{c.chapterOne}</p><h2 id="themes-title">{c.themesTitle}</h2></div><p>{c.themesIntro}</p></div>
+      <div className="museum-exhibits">{c.themes.map((theme, i) => <ExhibitLink key={theme.title} index={i} number={`0${i + 1}`} {...theme} />)}</div>
+    </section></Reveal>
+    <Reveal className="museum-stone-wrap"><section className="museum-stone-story" aria-labelledby="stone-title">
+      <figure><img src="/home/cholpon-ata.jpg" alt={c.stoneAlt} width="960" height="640" loading="lazy" /><figcaption>{c.stoneCaption}<span>Bgag · CC0</span></figcaption></figure>
+      <div className="museum-story-copy"><p className="museum-eyebrow">{c.closeLook}</p><h2 id="stone-title">{c.stoneTitle}</h2><p>{c.stoneIntro}</p><p className="museum-preservation">{c.respect}</p><Link className="museum-text-link" to="/map">{c.openMap}<ArrowUpRight size={19} aria-hidden="true" /></Link><small>{c.mapNote}</small></div>
+    </section></Reveal>
+    <Reveal><section className="museum-section museum-making" aria-labelledby="experiences-title">
+      <div className="museum-section-heading"><div><p className="museum-eyebrow">{c.chapterTwo}</p><h2 id="experiences-title">{c.experiencesTitle}</h2></div><p>{c.experiencesIntro}</p></div>
+      <div className="museum-experience-grid">{c.experiences.map((experience, i) => {
+        const Icon = [Hammer, Sparkles, Compass][i];
+        return <Link key={experience.to} to={experience.to} className="museum-experience"><span className="museum-experience-number" aria-hidden="true">0{i + 1}</span><span className="museum-experience-seal"><Icon size={32} strokeWidth={1.1} aria-hidden="true" /></span><div className="museum-experience-copy"><h3>{experience.title}</h3><p>{experience.description}</p></div><span className="museum-text-link">{experience.action}<ArrowUpRight size={20} aria-hidden="true" /></span></Link>;
+      })}</div>
+      <div className="museum-community-note"><span>{c.communityNote}</span><Link className="museum-text-link" to="/leaderboard">{c.leaderboard}<ArrowUpRight size={16} aria-hidden="true" /></Link></div>
+    </section></Reveal>
+    <Reveal><section className="museum-journey" aria-labelledby="journey-title">
+      <BrandMark className="museum-journey-mark" />
+      <div><p className="museum-eyebrow">{c.yourJourney}</p><h2 id="journey-title">{c.journeyTitle}</h2><Link className="museum-text-link" to="/profile">{c.profile}<ArrowRight size={17} aria-hidden="true" /></Link></div>
+      <dl>{[{ label: c.level, value: level }, { label: c.points, value: points }, { label: c.artifacts, value: collection.length }].map(stat => <div key={stat.label}><dt>{stat.label}</dt><dd>{stat.value}</dd></div>)}</dl>
+    </section></Reveal>
+    <footer className="museum-footer"><div><Link to="/" className="museum-footer-brand"><BrandMark /><strong>МУРАС</strong></Link><p>{c.footer}</p></div><details><summary>{c.credits}</summary><p>{c.photoTreatment}</p>
+      <p><a href="https://commons.wikimedia.org/wiki/File:Song_K%C3%B6l_lake,_Kyrgyzstan_(29775175450).jpg">Song-Köl — Thomas Depenbusch</a> · <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a></p>
+      <p>{lang === 'en' ? 'Hero: artistic illustration based on the supplied design reference, created with ImageGen.' : lang === 'kg' ? 'Башкы иллюстрация: берилген үлгүнүн негизинде ImageGen менен түзүлгөн.' : 'Главная иллюстрация: создана в ImageGen по предоставленному референсу.'}</p>
+      <p><a href="https://commons.wikimedia.org/wiki/File:Petroglyph_Museum_of_Cholpon-Ata_10.jpg">Cholpon-Ata — Bgag</a> · <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></p>
+    </details></footer>
+    {lang === 'kg' && <p className="museum-locale-note">Башкы бет кыргызча. Башка бөлүмдөрдө которула элек тексттер орусча көрсөтүлөт.</p>}
     </div>
-  );
+  </div>;
 }

@@ -165,9 +165,9 @@ function getInterpretationLibrary(lang: Lang): Record<DetectedType, Interpretati
 }
 
 const confidenceStyles = {
-  low: "border-red-400/20 bg-red-500/10 text-red-100",
-  medium: "border-amber-400/20 bg-amber-500/10 text-stone-900 dark:text-white",
-  high: "border-emerald-400/20 bg-emerald-500/10 text-stone-900 dark:text-white",
+  low: "border-danger bg-danger-soft text-danger",
+  medium: "border-gold bg-gold-soft text-ink ",
+  high: "border-sage bg-sage-soft text-ink ",
 };
 
 export default function StoneWorkshop() {
@@ -323,7 +323,7 @@ export default function StoneWorkshop() {
     window.setTimeout(() => setImpactPulse(null), 180);
   };
 
-  const getPointerPos = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const getPointerPos = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current!;
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
@@ -354,13 +354,16 @@ export default function StoneWorkshop() {
     }
   };
 
-  const handleDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!e.isPrimary || e.button !== 0) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
     setIsDrawing(true);
     const { x, y } = getPointerPos(e);
     addStoneMark(x, y);
   };
 
-  const handleMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
+    if (!e.isPrimary) return;
     if (!isDrawing) return;
     const { x, y } = getPointerPos(e);
     addStoneMark(x, y);
@@ -483,16 +486,16 @@ export default function StoneWorkshop() {
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="space-y-4">
           <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h3 className="text-xl font-bold text-stone-900 dark:text-white">
+            <h3 className="text-xl font-bold text-ink ">
               {t.carvingMode}
             </h3>
-            <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-stone-600 dark:text-white/65">
+            <p className="mt-3 text-sm leading-7 text-ink  ">
               {t.carvingModeDesc}
             </p>
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-stone-900 dark:text-white">
+            <h4 className="text-lg font-bold text-ink ">
               {t.tools}
             </h4>
 
@@ -501,15 +504,15 @@ export default function StoneWorkshop() {
                 onClick={() => setTool("hammer")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "hammer"
-                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
-                    : "border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
+                    ? "border-gold bg-gold-soft text-ink "
+                    : "border-line  bg-surface  text-ink  hover:bg-surface"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Hammer size={18} />
                   <div>
                     <div className="font-semibold">{t.hammer}</div>
-                    <div className="text-xs text-stone-900 dark:text-stone-500 dark:text-white/50">
+                    <div className="text-xs text-ink  ">
                       {t.hammerDesc}
                     </div>
                   </div>
@@ -520,15 +523,15 @@ export default function StoneWorkshop() {
                 onClick={() => setTool("chisel")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "chisel"
-                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
-                    : "border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
+                    ? "border-gold bg-gold-soft text-ink "
+                    : "border-line  bg-surface  text-ink  hover:bg-surface"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Sparkles size={18} />
                   <div>
                     <div className="font-semibold">{t.chisel}</div>
-                    <div className="text-xs text-stone-900 dark:text-stone-500 dark:text-white/50">
+                    <div className="text-xs text-ink  ">
                       {t.chiselDesc}
                     </div>
                   </div>
@@ -539,15 +542,15 @@ export default function StoneWorkshop() {
                 onClick={() => setTool("brush")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "brush"
-                    ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
-                    : "border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
+                    ? "border-gold bg-gold-soft text-ink "
+                    : "border-line  bg-surface  text-ink  hover:bg-surface"
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Brush size={18} />
                   <div>
                     <div className="font-semibold">{t.softTool}</div>
-                    <div className="text-xs text-stone-900 dark:text-stone-500 dark:text-white/50">
+                    <div className="text-xs text-ink  ">
                       {t.softToolDesc}
                     </div>
                   </div>
@@ -557,7 +560,7 @@ export default function StoneWorkshop() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-stone-900 dark:text-white">
+            <h4 className="text-lg font-bold text-ink ">
               {t.template}
             </h4>
 
@@ -568,8 +571,8 @@ export default function StoneWorkshop() {
                   onClick={() => setTemplate(item.key as TemplateType)}
                   className={`rounded-2xl border px-3 py-3 text-sm font-semibold transition ${
                     template === item.key
-                      ? "border-amber-400/30 bg-amber-500/10 text-stone-900 dark:text-white"
-                      : "border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 text-stone-900 dark:text-white/80 hover:bg-white/10"
+                      ? "border-gold bg-gold-soft text-ink "
+                      : "border-line  bg-surface  text-ink  hover:bg-surface"
                   }`}
                 >
                   {item.label}
@@ -579,14 +582,14 @@ export default function StoneWorkshop() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-stone-900 dark:text-white">
+            <h4 className="text-lg font-bold text-ink ">
               {t.actions}
             </h4>
 
             <div className="mt-4 grid gap-3">
               <button
                 onClick={interpretDrawing}
-                className="flex items-center gap-3 rounded-2xl border border-blue-400/20 bg-blue-500/10 px-4 py-3 text-blue-100 transition hover:bg-blue-500/20"
+                className="flex items-center gap-3 rounded-2xl border border-sky bg-sky-soft px-4 py-3 text-sky transition hover:bg-sky-soft"
               >
                 <Search size={18} />
                 {t.interpretDrawing}
@@ -594,7 +597,7 @@ export default function StoneWorkshop() {
 
               <button
                 onClick={clearCanvas}
-                className="flex items-center gap-3 rounded-2xl border border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 px-4 py-3 text-stone-900 dark:text-stone-900 dark:text-white transition hover:bg-white/10"
+                className="flex items-center gap-3 rounded-2xl border border-line  bg-surface  px-4 py-3 text-ink   transition hover:bg-surface"
               >
                 <RotateCcw size={18} />
                 {t.clearStone}
@@ -602,7 +605,7 @@ export default function StoneWorkshop() {
 
               <button
                 onClick={saveImage}
-                className="flex items-center gap-3 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-stone-900 dark:text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
+                className="flex items-center gap-3 rounded-2xl border border-sage bg-sage-soft px-4 py-3 text-ink   transition hover:bg-sage-soft"
               >
                 <Download size={18} />
                 {t.savePetroglyph}
@@ -612,21 +615,23 @@ export default function StoneWorkshop() {
         </div>
 
         <div className="glow-card panel-ornament rounded-3xl p-5">
-          <div className="relative overflow-hidden rounded-3xl border border-stone-200 dark:border-white/10 bg-[#231d17]">
+          <div className="relative overflow-hidden rounded-3xl border border-line  bg-[#231d17]">
             <canvas
               ref={canvasRef}
               width={900}
               height={620}
-              className="w-full cursor-crosshair"
-              onMouseDown={handleDown}
-              onMouseMove={handleMove}
-              onMouseUp={handleUp}
-              onMouseLeave={handleUp}
+              className="w-full cursor-crosshair touch-none"
+              aria-label={t.carvingMode}
+              onPointerDown={handleDown}
+              onPointerMove={handleMove}
+              onPointerUp={handleUp}
+              onPointerCancel={handleUp}
+              onLostPointerCapture={handleUp}
             />
 
             {impactPulse && (
               <div
-                className="pointer-events-none absolute h-14 w-14 rounded-full border border-amber-300/30 bg-amber-200/10 animate-ping"
+                className="pointer-events-none absolute h-14 w-14 rounded-full border border-gold bg-gold-soft animate-ping"
                 style={{
                   left: `${(impactPulse.x / 900) * 100}%`,
                   top: `${(impactPulse.y / 620) * 100}%`,
@@ -636,7 +641,7 @@ export default function StoneWorkshop() {
             )}
           </div>
 
-          <div className="mt-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-3 text-sm leading-7 text-stone-900 dark:text-stone-600 dark:text-white/65">
+          <div className="mt-4 rounded-2xl border border-line  bg-wash  px-4 py-3 text-sm leading-7 text-ink  ">
             {t.workshopTip}
           </div>
         </div>
@@ -648,10 +653,10 @@ export default function StoneWorkshop() {
             <div className="glow-card panel-ornament rounded-3xl p-6">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-stone-400 dark:text-white/40">
+                  <p className="text-xs uppercase tracking-[0.2em] text-ink  ">
                     {t.interpretation}
                   </p>
-                  <h3 className="mt-2 text-2xl font-black text-stone-900 dark:text-white">
+                  <h3 className="mt-2 text-2xl font-black text-ink ">
                     {interpretation.title}
                   </h3>
                 </div>
@@ -664,20 +669,20 @@ export default function StoneWorkshop() {
               </div>
 
               <div className="mt-5 space-y-4">
-                <div className="rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 p-4">
-                  <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-stone-400 dark:text-white/40">
+                <div className="rounded-2xl border border-line  bg-wash  p-4">
+                  <p className="text-xs uppercase tracking-wide text-ink  ">
                     {t.whatSystemSaw}
                   </p>
-                  <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-stone-800 dark:text-white/80">
+                  <p className="mt-2 text-sm leading-7 text-ink  ">
                     {interpretation.whatItShows}
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4">
-                  <p className="text-xs uppercase tracking-wide text-blue-100/60">
+                <div className="rounded-2xl border border-sky bg-sky-soft p-4">
+                  <p className="text-xs uppercase tracking-wide text-sky">
                     {t.possibleMeaning}
                   </p>
-                  <p className="mt-2 text-sm leading-7 text-blue-50/90">
+                  <p className="mt-2 text-sm leading-7 text-sky">
                     {interpretation.meaning}
                   </p>
                 </div>
@@ -685,20 +690,20 @@ export default function StoneWorkshop() {
             </div>
 
             <div className="glow-card panel-ornament rounded-3xl p-6">
-              <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-stone-400 dark:text-white/40">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink  ">
                 {t.projection}
               </p>
-              <h3 className="mt-2 text-2xl font-black text-stone-900 dark:text-white">
+              <h3 className="mt-2 text-2xl font-black text-ink ">
                 {t.possibleScene}
               </h3>
 
-              <div className="mt-5 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-5">
-                <p className="text-sm leading-8 text-amber-50">
+              <div className="mt-5 rounded-2xl border border-gold bg-gold-soft p-5">
+                <p className="text-sm leading-8 text-gold">
                   {interpretation.projection}
                 </p>
               </div>
 
-              <div className="mt-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 p-4 text-sm leading-7 text-stone-900 dark:text-stone-600 dark:text-white/60">
+              <div className="mt-4 rounded-2xl border border-line  bg-wash  p-4 text-sm leading-7 text-ink  ">
                 {t.mvpNote}
               </div>
             </div>
@@ -706,14 +711,14 @@ export default function StoneWorkshop() {
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
             <div className="mb-4 flex items-center gap-3">
-              <div className="rounded-2xl bg-emerald-500/15 p-3">
+              <div className="rounded-2xl bg-sage-soft p-3">
                 <Upload size={18} />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-stone-900 dark:text-white">
+                <h3 className="text-xl font-bold text-ink ">
                   {t.publishToCommunity}
                 </h3>
-                <p className="text-sm text-stone-900 dark:text-stone-600 dark:text-white/60">
+                <p className="text-sm text-ink  ">
                   {t.publishDesc}
                 </p>
               </div>
@@ -724,13 +729,13 @@ export default function StoneWorkshop() {
                 value={publishTitle}
                 onChange={(e) => setPublishTitle(e.target.value)}
                 placeholder={t.workTitle}
-                className="rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
+                className="rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
               />
               <input
                 value={publishAuthor}
                 onChange={(e) => setPublishAuthor(e.target.value)}
                 placeholder={t.authorName}
-                className="rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
+                className="rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
               />
             </div>
 
@@ -739,24 +744,24 @@ export default function StoneWorkshop() {
               onChange={(e) => setPublishDescription(e.target.value)}
               placeholder={t.shortDescription}
               rows={4}
-              className="mt-4 w-full rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-3 text-stone-900 dark:text-white outline-none placeholder:text-stone-900 dark:text-white/35"
+              className="mt-4 w-full rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
             />
 
             <div className="mt-5 flex flex-wrap gap-3">
               <button
                 onClick={handlePublish}
-                className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
+                className="rounded-2xl border border-sage bg-sage-soft px-5 py-3 font-semibold text-ink   transition hover:bg-sage-soft"
               >
                 {t.publishArtwork}
               </button>
 
-              <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm text-stone-900 dark:text-white">
+              <div className="rounded-2xl border border-gold bg-gold-soft px-4 py-3 text-sm text-ink ">
                 {t.firstPlacePrize}
               </div>
             </div>
 
             {publishMessage && (
-              <div className="mt-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-white/80 dark:bg-white/5 px-4 py-3 text-sm text-stone-900 dark:text-stone-800 dark:text-white/80">
+              <div className="mt-4 rounded-2xl border border-line  bg-surface  px-4 py-3 text-sm text-ink  ">
                 {publishMessage}
               </div>
             )}

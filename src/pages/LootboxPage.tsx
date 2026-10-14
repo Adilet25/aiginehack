@@ -5,14 +5,16 @@ import { artifacts } from "../data/artifacts";
 import { rollLootbox } from "../utils/loot";
 import { useGame } from "../app/providers/GameProvider";
 import type { Artifact } from "../types";
+import { useLang } from "../app/providers/LanguageProvider";
 
 const rarityStyles = {
-  common: "border-white/10 bg-white/5 text-stone-900 dark:text-white/80",
-  rare: "border-sky-400/30 bg-sky-500/10 text-sky-200",
-  epic: "border-purple-400/30 bg-purple-500/10 text-purple-200",
+  common: "border-line bg-surface text-ink ",
+  rare: "border-sky bg-sky-soft text-sky",
+  epic: "border-sky bg-sky-soft text-sky",
 };
 
 export default function LootboxPage() {
+  const { t } = useLang();
   const { addArtifact } = useGame();
 
   const [isOpening, setIsOpening] = useState(false);
@@ -54,30 +56,29 @@ export default function LootboxPage() {
   return (
     <div>
       <PageHeader
-        title="Chüko Lootbox"
-        subtitle="Открывай чүко, получай случайные артефакты и усиливай свой цифровой музей."
+        title={t.lootboxTitle}
+        subtitle={t.lootboxSubtitle}
       />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
-        <div className="glow-card rounded-3xl border border-white/10 bg-white/5 p-8">
+        <div className="glow-card rounded-3xl border border-line bg-surface p-8">
           <div className="mx-auto flex max-w-xl flex-col items-center text-center">
             <div
-              className={`mb-6 flex h-52 w-52 items-center justify-center rounded-[2rem] border text-center transition-all duration-500 ${
+              className={`heritage-loot-stone mb-6 flex h-52 w-52 items-center justify-center rounded-[2rem] border text-center transition-all duration-500 ${
                 isOpening
-                  ? "scale-105 border-emerald-300/60 bg-emerald-500/20 shadow-[0_0_60px_rgba(16,185,129,0.35)]"
-                  : "border-emerald-400/30 bg-gradient-to-br from-emerald-500/20 to-cyan-500/10 shadow-[0_0_40px_rgba(16,185,129,0.15)]"
+                  ? "scale-105 border-sage bg-sage-soft shadow-sm"
+                  : "border-sage bg-gradient-to-br from-sage-soft to-sky-soft shadow-sm"
               }`}
             >
               <span
-                className={`text-xl font-black tracking-wide text-stone-900 dark:text-white ${isOpening ? "animate-pulse" : ""}`}
+                className={`text-xl font-black tracking-wide text-ink  ${isOpening ? "animate-pulse" : ""}`}
               >
-                {isOpening ? "OPENING..." : "CHÜKO BOX"}
+                {isOpening ? t.opening : t.lootbox}
               </span>
             </div>
 
-            <p className="max-w-md text-sm leading-7 text-stone-900 dark:text-white/65">
-              Открывай коробку и получай случайный культурный артефакт. Если
-              предмет уже есть в коллекции, ты получишь компенсацию очками.
+            <p className="max-w-md text-sm leading-7 text-ink ">
+              {t.lootboxSubtitle}
             </p>
 
             <div className="mt-6">
@@ -86,27 +87,27 @@ export default function LootboxPage() {
                 disabled={isOpening}
                 className={isOpening ? "cursor-not-allowed opacity-70" : ""}
               >
-                {isOpening ? "Opening..." : "Open Chuko"}
+                {isOpening ? t.opening : t.openChuko}
               </GlowButton>
             </div>
           </div>
         </div>
 
         <div className="space-y-4">
-          <div className="glow-card rounded-3xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-lg font-bold text-stone-900 dark:text-white">
-              Drop Chances
+          <div className="glow-card rounded-3xl border border-line bg-surface p-6">
+            <h3 className="text-lg font-bold text-ink ">
+              {t.dropChances}
             </h3>
             <div className="mt-4 space-y-3">
               {chances.map((chance) => (
                 <div
                   key={chance.label}
-                  className="flex items-center justify-between rounded-2xl border border-white/10 bg-black/20 px-4 py-3"
+                  className="flex items-center justify-between rounded-2xl border border-line bg-wash px-4 py-3"
                 >
-                  <span className="text-sm text-stone-900 dark:text-white/75">
+                  <span className="text-sm text-ink ">
                     {chance.label}
                   </span>
-                  <span className="text-sm font-bold text-emerald-300">
+                  <span className="text-sm font-bold text-sage">
                     {chance.value}
                   </span>
                 </div>
@@ -114,24 +115,24 @@ export default function LootboxPage() {
             </div>
           </div>
 
-          <div className="glow-card min-h-[240px] rounded-3xl border border-white/10 bg-white/5 p-6">
-            <h3 className="text-lg font-bold text-stone-900 dark:text-white">
-              Latest Reward
+          <div className="glow-card min-h-[240px] rounded-3xl border border-line bg-surface p-6">
+            <h3 className="text-lg font-bold text-ink ">
+              {t.latestReward}
             </h3>
 
             {!result ? (
-              <p className="mt-4 text-sm text-stone-900 dark:text-white/55">
-                Здесь появится результат открытия чүко.
+              <p className="mt-4 text-sm text-ink ">
+                {t.noRewardYet}
               </p>
             ) : (
               <div className="mt-4 space-y-4">
-                <div className="rounded-3xl border border-emerald-400/20 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 p-5">
+                <div className="rounded-3xl border border-sage bg-gradient-to-br from-sage-soft to-sky-soft p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h4 className="text-xl font-black text-stone-900 dark:text-white">
+                      <h4 className="text-xl font-black text-ink ">
                         {result.name}
                       </h4>
-                      <p className="mt-2 text-sm text-stone-900 dark:text-white/65">
+                      <p className="mt-2 text-sm text-ink ">
                         {result.description}
                       </p>
                     </div>
@@ -146,20 +147,20 @@ export default function LootboxPage() {
                   </div>
 
                   <div className="mt-4 grid grid-cols-2 gap-3">
-                    <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                      <p className="text-xs text-stone-900 dark:text-white/45">
-                        Points
+                    <div className="rounded-2xl border border-line bg-wash p-4">
+                      <p className="text-xs text-ink ">
+                        {t.points}
                       </p>
-                      <p className="mt-1 text-lg font-bold text-stone-900 dark:text-white">
+                      <p className="mt-1 text-lg font-bold text-ink ">
                         {result.points}
                       </p>
                     </div>
 
-                    <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                      <p className="text-xs text-stone-900 dark:text-white/45">
-                        Income
+                    <div className="rounded-2xl border border-line bg-wash p-4">
+                      <p className="text-xs text-ink ">
+                        {t.income}
                       </p>
-                      <p className="mt-1 text-lg font-bold text-stone-900 dark:text-white">
+                      <p className="mt-1 text-lg font-bold text-ink ">
                         +{result.income}
                       </p>
                     </div>
@@ -169,13 +170,13 @@ export default function LootboxPage() {
                 <div
                   className={`rounded-2xl border px-4 py-3 text-sm ${
                     isDuplicate
-                      ? "border-amber-400/25 bg-amber-500/10 text-amber-200"
-                      : "border-emerald-400/25 bg-emerald-500/10 text-emerald-200"
+                      ? "border-gold bg-gold-soft text-gold"
+                      : "border-sage bg-sage-soft text-sage"
                   }`}
                 >
                   {isDuplicate
-                    ? "Duplicate item: artifact already exists in your collection. Compensation points were added."
-                    : "New artifact collected successfully and added to your museum."}
+                    ? t.duplicateMsg
+                    : t.newArtifactMsg}
                 </div>
               </div>
             )}

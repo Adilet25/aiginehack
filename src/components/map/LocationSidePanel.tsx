@@ -24,7 +24,7 @@ export default function LocationSidePanel({
   return (
     <div className="space-y-4">
       {nearbyWarning && (
-        <div className="rounded-2xl border border-red-400/25 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+        <div className="rounded-2xl border border-danger bg-danger-soft px-4 py-3 text-sm text-danger">
           {nearbyWarning}
         </div>
       )}
@@ -48,22 +48,22 @@ export default function LocationSidePanel({
         <p className="text-sm leading-7 text-muted">{location.description}</p>
 
         {location.culturalNote && (
-          <div className="mt-4 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 p-4">
-            <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-stone-400 dark:text-white/40">
+          <div className="mt-4 rounded-2xl border border-line  bg-wash  p-4">
+            <p className="text-xs uppercase tracking-wide text-ink  ">
               {t.culturalNote}
             </p>
-            <p className="mt-2 text-sm text-stone-900 dark:text-stone-800 dark:text-white/80">
+            <p className="mt-2 text-sm text-ink  ">
               {location.culturalNote}
             </p>
           </div>
         )}
 
         {location.analysisSummary && (
-          <div className="mt-4 rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4">
-            <p className="text-xs uppercase tracking-wide text-blue-100/60">
+          <div className="mt-4 rounded-2xl border border-sky bg-sky-soft p-4">
+            <p className="text-xs uppercase tracking-wide text-sky">
               {t.analysis}
             </p>
-            <p className="mt-2 text-sm text-blue-50">
+            <p className="mt-2 text-sm text-sky">
               {location.analysisSummary}
             </p>
           </div>
@@ -76,7 +76,7 @@ export default function LocationSidePanel({
               {location.rules.map((rule) => (
                 <div
                   key={rule.id}
-                  className="rounded-2xl border border-red-400/15 bg-red-500/8 px-4 py-3 text-sm text-red-50"
+                  className="rounded-2xl border border-danger bg-danger-soft px-4 py-3 text-sm text-danger"
                 >
                   {rule.text}
                 </div>
@@ -86,7 +86,7 @@ export default function LocationSidePanel({
         )}
 
         {location.sourceLabel && (
-          <p className="mt-5 text-xs uppercase tracking-widest text-stone-900 dark:text-white/35">
+          <p className="mt-5 text-xs uppercase tracking-widest text-ink ">
             {t.source}: {location.sourceLabel}
           </p>
         )}

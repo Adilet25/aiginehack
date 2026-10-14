@@ -66,7 +66,7 @@ export default function PetroScanMock() {
   return (
     <div className="glow-card panel-ornament rounded-3xl p-5">
       <div className="mb-4 flex items-center gap-3">
-        <div className="rounded-2xl bg-amber-500/15 p-3">
+        <div className="rounded-2xl bg-gold-soft p-3">
           <ScanSearch size={18} />
         </div>
         <div>
@@ -77,7 +77,7 @@ export default function PetroScanMock() {
         </div>
       </div>
 
-      <label className="flex cursor-pointer items-center justify-center gap-3 rounded-2xl border border-stone-200 dark:border-white/10 bg-stone-100 dark:bg-black/20 px-4 py-4 text-sm hover:bg-white/80 dark:bg-white/5">
+      <label className="flex cursor-pointer items-center justify-center gap-3 rounded-2xl border border-line  bg-wash  px-4 py-4 text-sm hover:bg-surface ">
         <Camera size={18} />
         <span>{t.openCamera}</span>
         <input
@@ -90,7 +90,7 @@ export default function PetroScanMock() {
       </label>
 
       {preview && (
-        <div className="mt-4 overflow-hidden rounded-2xl border border-stone-200 dark:border-white/10">
+        <div className="mt-4 overflow-hidden rounded-2xl border border-line ">
           <img
             src={preview}
             alt={t.stonePreview}
@@ -100,13 +100,13 @@ export default function PetroScanMock() {
       )}
 
       {isAnalyzing && (
-        <div className="mt-4 rounded-2xl border border-blue-400/20 bg-blue-500/10 px-4 py-3 text-sm text-blue-100">
+        <div className="mt-4 rounded-2xl border border-sky bg-sky-soft px-4 py-3 text-sm text-sky">
           {t.analyzingPhoto}
         </div>
       )}
 
       {message && (
-        <div className="mt-4 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-stone-900 dark:text-white">
+        <div className="mt-4 rounded-2xl border border-sage bg-sage-soft px-4 py-3 text-sm text-ink ">
           {message}
         </div>
       )}

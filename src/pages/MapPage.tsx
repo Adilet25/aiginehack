@@ -14,6 +14,7 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 import PageHeader from "../components/shared/PageHeader";
+import PrototypeNotice from "../components/shared/PrototypeNotice";
 import LocationSidePanel from "../components/map/LocationSidePanel";
 import PetroScanMock from "../components/map/PetroScanMock";
 import MySubmissions from "../components/map/MySubmissions";
@@ -32,6 +33,10 @@ L.Icon.Default.mergeOptions({
 });
 
 const center: [number, number] = [41.4, 75.5];
+const heritageIcons = {
+  sacred: L.divIcon({ className: 'heritage-map-pin heritage-map-pin--sacred', html: '<span aria-hidden="true">•</span>', iconSize: [26, 26], iconAnchor: [13, 26] }),
+  petroglyph: L.divIcon({ className: 'heritage-map-pin heritage-map-pin--petroglyph', html: '<span aria-hidden="true">◇</span>', iconSize: [26, 26], iconAnchor: [13, 26] }),
+};
 
 type PlannerPoint =
   | { type: "user"; name: string; lat: number; lng: number }
@@ -323,10 +328,12 @@ export default function MapPage() {
         title={t.mapTitle}
         subtitle={t.mapSubtitle}
       />
+      <PrototypeNotice kind="map" />
+      <div className="flex flex-wrap gap-5 text-sm text-muted"><span>● {t.kindSacred}</span><span>◇ {t.kindPetroglyph}</span></div>
 
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="glow-card panel-ornament overflow-hidden rounded-3xl p-3">
-          <div className="h-[620px] overflow-hidden rounded-2xl border border-stone-200 dark:border-white/10">
+          <div className="heritage-map-surface overflow-hidden rounded-2xl border border-line ">
             <MapContainer
               center={center}
               zoom={7}
@@ -364,6 +371,9 @@ export default function MapPage() {
               {mapLocations.map((location) => (
                 <div key={location.id}>
                   <Marker
+                    icon={heritageIcons[location.kind]}
+                    title={location.name}
+                    alt={location.name}
                     position={[location.lat, location.lng]}
                     eventHandlers={{
                       click: () => setSelected(location),
@@ -372,10 +382,10 @@ export default function MapPage() {
                     <Popup>
                       <div className="min-w-[240px] space-y-3 text-sm">
                         <div>
-                          <h3 className="font-bold text-black">
+                          <h3 className="font-bold text-ink">
                             {location.name}
                           </h3>
-                          <p className="text-black/70">
+                          <p className="text-ink">
                             {location.description}
                           </p>
                         </div>
@@ -384,8 +394,8 @@ export default function MapPage() {
                           <span
                             className={`rounded-full px-2 py-1 text-[10px] font-semibold uppercase ${
                               location.kind === "sacred"
-                                ? "bg-red-100 text-red-700"
-                                : "bg-blue-100 text-blue-700"
+                                ? "bg-danger-soft text-danger"
+                                : "bg-sky-soft text-sky"
                             }`}
                           >
                             {location.kind === "sacred" ? t.kindSacred : t.kindPetroglyph}
@@ -394,7 +404,7 @@ export default function MapPage() {
 
                         <button
                           onClick={() => addStopToRoute(location)}
-                          className="w-full rounded-xl bg-amber-500 px-3 py-2 font-semibold text-stone-900 dark:text-white transition hover:bg-amber-600"
+                          className="w-full rounded-xl bg-gold-soft px-3 py-2 font-semibold text-ink  transition hover:bg-gold-soft"
                         >
                           {t.addToRoute}
                         </button>
@@ -425,16 +435,16 @@ export default function MapPage() {
           />
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-2xl font-black text-stone-900 dark:text-white">
+            <h3 className="text-2xl font-black text-ink ">
               {t.tripPlanner}
             </h3>
-            <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/65">
+            <p className="mt-2 text-sm leading-7 text-ink ">
               {t.tripPlannerDesc}
             </p>
 
             <div className="mt-5 space-y-4">
               <div>
-                <label className="mb-2 block text-sm font-semibold text-stone-900 dark:text-white/80">
+                <label className="mb-2 block text-sm font-semibold text-ink ">
                   {t.pointA}
                 </label>
 
@@ -444,7 +454,7 @@ export default function MapPage() {
                     onChange={(e) =>
                       setStartMode(e.target.value as "user" | "location")
                     }
-                    className="rounded-2xl border border-stone-200 bg-white/80 px-4 py-3 text-stone-900 dark:border-white/10 dark:bg-black/20 dark:text-white outline-none"
+                    className="rounded-2xl border border-line bg-surface px-4 py-3 text-ink    outline-none"
                   >
                     <option value="user">{t.myLocation}</option>
                     <option value="location">{t.chooseLocation}</option>
@@ -454,7 +464,7 @@ export default function MapPage() {
                     <select
                       value={startLocationId}
                       onChange={(e) => setStartLocationId(e.target.value)}
-                      className="rounded-2xl border border-stone-200 bg-white/80 px-4 py-3 text-stone-900 dark:border-white/10 dark:bg-black/20 dark:text-white outline-none"
+                      className="rounded-2xl border border-line bg-surface px-4 py-3 text-ink    outline-none"
                     >
                       <option value="">{t.selectPointA}</option>
                       {mapLocations.map((loc) => (
@@ -468,14 +478,14 @@ export default function MapPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-semibold text-stone-900 dark:text-white/80">
+                <label className="mb-2 block text-sm font-semibold text-ink ">
                   {t.pointB}
                 </label>
 
                 <select
                   value={destinationId}
                   onChange={(e) => setDestinationId(e.target.value)}
-                  className="w-full rounded-2xl border border-stone-200 bg-white/80 px-4 py-3 text-stone-900 dark:border-white/10 dark:bg-black/20 dark:text-white outline-none"
+                  className="w-full rounded-2xl border border-line bg-surface px-4 py-3 text-ink    outline-none"
                 >
                   <option value="">{t.selectPointB}</option>
                   {mapLocations.map((loc) => (
@@ -488,16 +498,16 @@ export default function MapPage() {
 
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <label className="block text-sm font-semibold text-stone-900 dark:text-white/80">
+                  <label className="block text-sm font-semibold text-ink ">
                     {t.stopsOnWay}
                   </label>
-                  <span className="text-xs text-stone-900 dark:text-white/45">
+                  <span className="text-xs text-ink ">
                     {t.stopsHint}
                   </span>
                 </div>
 
                 {routeStops.length === 0 ? (
-                  <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-900 dark:text-white/50">
+                  <div className="rounded-2xl border border-line bg-wash px-4 py-3 text-sm text-ink ">
                     {t.noStops}
                   </div>
                 ) : (
@@ -505,20 +515,20 @@ export default function MapPage() {
                     {routeStops.map((stop, index) => (
                       <div
                         key={stop.id}
-                        className="flex items-center justify-between rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 dark:border-white/10 dark:bg-black/20"
+                        className="flex items-center justify-between rounded-2xl border border-line bg-surface px-4 py-3  "
                       >
                         <div>
-                          <p className="text-sm font-semibold text-stone-900 dark:text-white">
+                          <p className="text-sm font-semibold text-ink ">
                             {index + 1}. {stop.name}
                           </p>
-                          <p className="text-xs text-stone-900 dark:text-white/50">
+                          <p className="text-xs text-ink ">
                             {stop.kind === "sacred" ? t.kindSacred : t.kindPetroglyph}
                           </p>
                         </div>
 
                         <button
                           onClick={() => removeStop(stop.id)}
-                          className="rounded-xl border border-red-400/20 bg-red-500/10 px-3 py-1 text-xs font-semibold text-red-100 hover:bg-red-500/20"
+                          className="rounded-xl border border-danger bg-danger-soft px-3 py-1 text-xs font-semibold text-danger hover:bg-danger-soft"
                         >
                           {t.remove}
                         </button>
@@ -531,39 +541,39 @@ export default function MapPage() {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={buildRoute}
-                  className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-amber-500/20"
+                  className="rounded-2xl border border-gold bg-gold-soft px-5 py-3 font-semibold text-ink  transition hover:bg-gold-soft"
                 >
                   {t.buildManually}
                 </button>
 
                 <button
                   onClick={autoBuildRoute}
-                  className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-emerald-500/20"
+                  className="rounded-2xl border border-sage bg-sage-soft px-5 py-3 font-semibold text-ink  transition hover:bg-sage-soft"
                 >
                   {t.buildAuto}
                 </button>
 
                 <button
                   onClick={clearRoute}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-white/10"
+                  className="rounded-2xl border border-line bg-surface px-5 py-3 font-semibold text-ink  transition hover:bg-surface"
                 >
                   {t.clear}
                 </button>
               </div>
 
               {autoSuggestions.length > 0 && (
-                <div className="rounded-3xl border border-blue-400/20 bg-blue-500/10 p-5">
-                  <h4 className="text-lg font-bold text-stone-900 dark:text-white">
+                <div className="rounded-3xl border border-sky bg-sky-soft p-5">
+                  <h4 className="text-lg font-bold text-ink ">
                     {t.suggestedStops}
                   </h4>
                   <div className="mt-3 space-y-2">
                     {autoSuggestions.map((stop) => (
                       <div
                         key={stop.id}
-                        className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-900 dark:text-white/80"
+                        className="rounded-2xl border border-line bg-wash px-4 py-3 text-sm text-ink "
                       >
                         {stop.name}{" "}
-                        <span className="text-stone-900 dark:text-white/40">
+                        <span className="text-ink ">
                           • {stop.kind === "sacred" ? t.kindSacred : t.kindPetroglyph}
                         </span>
                       </div>
@@ -573,11 +583,11 @@ export default function MapPage() {
               )}
 
               {routeBuilt && routePoints.length > 1 && (
-                <div className="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-5">
-                  <h4 className="text-lg font-bold text-stone-900 dark:text-white">
+                <div className="rounded-3xl border border-sage bg-sage-soft p-5">
+                  <h4 className="text-lg font-bold text-ink ">
                     {t.routeSummary}
                   </h4>
-                  <div className="mt-3 space-y-2 text-sm text-emerald-50">
+                  <div className="mt-3 space-y-2 text-sm text-sage">
                     <p>
                       <span className="font-semibold">{t.routeStart}:</span>{" "}
                       {getPointName(routePoints[0])}
@@ -592,7 +602,7 @@ export default function MapPage() {
                     </p>
                     <p>
                       <span className="font-semibold">{t.routeDistance}:</span>{" "}
-                      {formatDistance(totalDistance, lang)}
+                      {formatDistance(totalDistance, lang === "kg" ? "ru" : lang)}
                     </p>
                   </div>
                 </div>

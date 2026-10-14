@@ -1,23 +1,25 @@
 import type { ReactNode } from "react";
 import Navbar from "./Navbar";
+import { Link, useLocation } from "react-router-dom";
+import { useLang } from "../../app/providers/LanguageProvider";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const { pathname } = useLocation();
+  const { lang, t } = useLang();
+  const isHome = pathname === '/';
   return (
-    <div className="min-h-screen text-stone-900 dark:text-white">
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.08),transparent_25%),radial-gradient(circle_at_right,rgba(148,163,184,0.07),transparent_25%)]" />
-        <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:40px_40px]" />
-      </div>
-
+    <div className="heritage-shell">
+      <a className="heritage-skip" href="#main-content">{lang === 'en' ? 'Skip to content' : lang === 'kg' ? 'Мазмунга өтүү' : 'Перейти к содержимому'}</a>
       <Navbar />
-
-      <main className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-10">
+      <main id="main-content" className={`heritage-main ${isHome ? 'heritage-main--home' : ''}`}>
+        {!isHome && lang === 'kg' && <p className="mb-4 text-xs text-muted">Которула элек маданий материалдар орусча көрсөтүлөт.</p>}
         {children}
       </main>
+      {!isHome && <footer className="heritage-footer"><span>МУРАС · {lang === 'en' ? 'Discover. Understand. Preserve.' : lang === 'kg' ? 'Ачуу. Түшүнүү. Сактоо.' : 'Открывать. Понимать. Беречь.'}</span><div className="flex gap-5"><Link to="/map">{t.map}</Link><Link to="/stone-workshop">{t.stoneLab}</Link><Link to="/community-gallery">{t.gallery}</Link></div></footer>}
     </div>
   );
 }

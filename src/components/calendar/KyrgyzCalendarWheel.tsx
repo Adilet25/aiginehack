@@ -8,7 +8,7 @@ type RingArc = {
   color: string;
 };
 
-function getMonthLabels(lang: "ru" | "en") {
+function getMonthLabels(lang: "ru" | "en" | "kg") {
   return lang === "en"
     ? ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     : ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"];
@@ -39,19 +39,19 @@ function getSpecialRings(t: {
       label: t.legendKyshChilde,
       startDay: 8, // Jan 8
       endDay: 49, // Feb 18
-      color: "#22d3ee",
+      color: "var(--sky)",
     },
     {
       label: t.legendZhayChilde,
       startDay: 189, // Jul 8
       endDay: 230, // Aug 18
-      color: "#f59e0b",
+      color: "var(--clay)",
     },
     {
       label: t.legendTokson,
       startDay: 347, // Dec 13
       endDay: 72, // Mar 13 (cross-year)
-      color: "#60a5fa",
+      color: "var(--sage)",
     },
   ];
 }
@@ -118,10 +118,10 @@ export default function KyrgyzCalendarWheel() {
   return (
     <div className="glow-card panel-ornament rounded-3xl p-6">
       <div className="mb-4">
-        <h3 className="text-2xl font-black text-stone-900 dark:text-white">
+        <h3 className="text-2xl text-ink">
           {t.wheelTitle}
         </h3>
-        <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-stone-600 dark:text-white/65">
+        <p className="mt-2 text-sm leading-7 text-muted">
           {t.wheelDesc}
         </p>
       </div>
@@ -129,15 +129,15 @@ export default function KyrgyzCalendarWheel() {
       <div className="overflow-x-auto">
         <svg
           viewBox={`0 0 ${SIZE} ${SIZE}`}
-          className="mx-auto h-[760px] w-[760px] max-w-full"
+          className="heritage-calendar-wheel mx-auto" role="img" aria-label={t.wheelTitle}
         >
           {/* outer background */}
           <circle
             cx={CENTER}
             cy={CENTER}
             r={300}
-            fill="rgba(255,255,255,0.02)"
-            stroke="rgba(255,255,255,0.08)"
+            fill="var(--panel)"
+            stroke="var(--line)"
             strokeWidth="2"
           />
 
@@ -186,10 +186,10 @@ export default function KyrgyzCalendarWheel() {
                   d={path}
                   fill={
                     index % 2 === 0
-                      ? "rgba(255,255,255,0.04)"
-                      : "rgba(255,255,255,0.02)"
+                      ? "var(--wash)"
+                      : "var(--panel)"
                   }
-                  stroke="rgba(255,255,255,0.08)"
+                  stroke="var(--line)"
                   strokeWidth="1.2"
                 />
 
@@ -198,7 +198,7 @@ export default function KyrgyzCalendarWheel() {
                   y={labelPos.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fill="white"
+                  fill="var(--text)"
                   fontSize="14"
                   fontWeight="700"
                 >
@@ -210,7 +210,7 @@ export default function KyrgyzCalendarWheel() {
                   y={kyrgyzPos.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fill="rgba(255,255,255,0.7)"
+                  fill="var(--muted)"
                   fontSize="10"
                 >
                   {kyrgyzLabels[index]}
@@ -271,16 +271,16 @@ export default function KyrgyzCalendarWheel() {
             cx={CENTER}
             cy={CENTER}
             r={118}
-            fill="rgba(255,255,255,0.03)"
-            stroke="rgba(255,255,255,0.08)"
+            fill="var(--panel)"
+            stroke="var(--line)"
             strokeWidth="2"
           />
           <circle
             cx={CENTER}
             cy={CENTER}
             r={84}
-            fill="rgba(0,0,0,0.2)"
-            stroke="rgba(255,255,255,0.06)"
+            fill="var(--wash)"
+            stroke="var(--line)"
             strokeWidth="1"
           />
 
@@ -289,7 +289,7 @@ export default function KyrgyzCalendarWheel() {
             x={CENTER}
             y={CENTER - 18}
             textAnchor="middle"
-            fill="white"
+            fill="var(--text)"
             fontSize="22"
             fontWeight="800"
           >
@@ -299,7 +299,7 @@ export default function KyrgyzCalendarWheel() {
             x={CENTER}
             y={CENTER + 10}
             textAnchor="middle"
-            fill="white"
+            fill="var(--text)"
             fontSize="22"
             fontWeight="800"
           >
@@ -309,7 +309,7 @@ export default function KyrgyzCalendarWheel() {
             x={CENTER}
             y={CENTER + 38}
             textAnchor="middle"
-            fill="rgba(255,255,255,0.6)"
+            fill="var(--muted)"
             fontSize="11"
           >
             Ай • Үркөр • Чилде
@@ -317,18 +317,18 @@ export default function KyrgyzCalendarWheel() {
 
           {/* legend */}
           <g transform={`translate(${CENTER - 120}, ${CENTER + 150})`}>
-            <rect x="0" y="0" width="14" height="14" rx="4" fill="#22d3ee" />
-            <text x="24" y="11" fill="white" fontSize="12">
+            <rect x="0" y="0" width="14" height="14" rx="4" fill="var(--sky)" />
+            <text x="24" y="11" fill="var(--text)" fontSize="12">
               {t.legendKyshChilde}
             </text>
 
-            <rect x="0" y="26" width="14" height="14" rx="4" fill="#f59e0b" />
-            <text x="24" y="37" fill="white" fontSize="12">
+            <rect x="0" y="26" width="14" height="14" rx="4" fill="var(--clay)" />
+            <text x="24" y="37" fill="var(--text)" fontSize="12">
               {t.legendZhayChilde}
             </text>
 
-            <rect x="0" y="52" width="14" height="14" rx="4" fill="#60a5fa" />
-            <text x="24" y="63" fill="white" fontSize="12">
+            <rect x="0" y="52" width="14" height="14" rx="4" fill="var(--sage)" />
+            <text x="24" y="63" fill="var(--text)" fontSize="12">
               {t.legendTokson}
             </text>
           </g>

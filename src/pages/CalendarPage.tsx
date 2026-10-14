@@ -37,7 +37,7 @@ function getMonths(lang: Lang) {
           "January in this system is tied to the moment when, after the Moon renews, 9 days pass and the Moon approaches Ürkör. That is why the month is called “Birdin aiy 9 togool”. This is one of the harshest winter phases.",
         funFact:
           "The document also says that if the new moon falls on January 9–19, “Arsar ai” may begin, and if it falls on January 20–31, “Zhalgan kuran 7 togool” begins.",
-        color: "from-cyan-500/20 to-sky-500/10",
+        color: "from-sky-soft to-sky-soft",
       },
       {
         month: 1,
@@ -48,7 +48,7 @@ function getMonths(lang: Lang) {
           "The name comes from the fact that during this period hunters had difficulty telling male and female roe deer apart: they looked alike, so the month was called the “false kuran”.",
         funFact:
           "The source says that without “Zhalgan kuran 7 togool” the Kyrgyz new year in this system does not begin.",
-        color: "from-sky-500/20 to-blue-500/10",
+        color: "from-sky-soft to-sky-soft",
       },
       {
         month: 2,
@@ -59,7 +59,7 @@ function getMonths(lang: Lang) {
           "After “Zhalgan kuran”, hunters could clearly tell kuran and elik apart. That is why March becomes the “true kuran” — Chyn kuran.",
         funFact:
           "The document says that tokson ends on March 13, and the spring equinox and Nooruz fall on March 21.",
-        color: "from-emerald-500/20 to-lime-500/10",
+        color: "from-sage-soft to-sage-soft",
       },
       {
         month: 3,
@@ -70,7 +70,7 @@ function getMonths(lang: Lang) {
           "April is explained through the cycle of animals: bugu, maral, kuran, elik and others. The month is also closely tied to Ürkör and sowing logic.",
         funFact:
           "The source explicitly explains that after the full moon it is better to sow root crops, and at the new moon — crops that yield above the ground.",
-        color: "from-green-500/20 to-emerald-500/10",
+        color: "from-sage-soft to-sage-soft",
       },
       {
         month: 4,
@@ -81,7 +81,7 @@ function getMonths(lang: Lang) {
           "The name is connected with the cycle of arkhars and kulja. This is the time when nature gains strength, and Ürkör “descends to the earth” in the traditional understanding.",
         funFact:
           "The text emphasizes the value of “uuz kymyz” and the connection of this period with strengthening health.",
-        color: "from-emerald-500/20 to-teal-500/10",
+        color: "from-sage-soft to-sage-soft",
       },
       {
         month: 5,
@@ -92,7 +92,7 @@ function getMonths(lang: Lang) {
           "The name of June is tied to the cycle of mountain goats and too teke. This is a time of long days, mountain life and observation of nature.",
         funFact:
           "The source says that June 22 is the longest day and the shortest night.",
-        color: "from-amber-500/20 to-yellow-500/10",
+        color: "from-gold-soft to-gold-soft",
       },
       {
         month: 6,
@@ -102,7 +102,7 @@ function getMonths(lang: Lang) {
         explanation:
           "“Bash oona” means the beginning of the shift, the beginning of the decrease in day length. From this moment, the day gradually shortens.",
         funFact: "The material separately highlights the days of Sumbula — from July 19 to 25.",
-        color: "from-orange-500/20 to-amber-500/10",
+        color: "from-clay-soft to-gold-soft",
       },
       {
         month: 7,
@@ -113,7 +113,7 @@ function getMonths(lang: Lang) {
           "If “Bash oona” is the beginning of the shift, then “Ayak oona” is the further shift. This is explained even through how the sunbeam falls in a boz uy.",
         funFact:
           "The source connects the name with how sunlight through the tündük shifts away from the hearth and “moves toward the feet”.",
-        color: "from-orange-500/20 to-red-500/10",
+        color: "from-clay-soft to-danger-soft",
       },
       {
         month: 8,
@@ -124,7 +124,7 @@ function getMonths(lang: Lang) {
           "This is a month of abundance, maturity of nature and good condition of livestock. It is connected with the idea of fullness and wealth.",
         funFact:
           "The source says that in September, livestock and property were often given in “nines”.",
-        color: "from-yellow-500/20 to-orange-500/10",
+        color: "from-gold-soft to-clay-soft",
       },
       {
         month: 9,
@@ -135,7 +135,7 @@ function getMonths(lang: Lang) {
           "October is the moment when the breath of winter is already felt: the first snow and ice appear, and a person must prepare.",
         funFact:
           "The source includes lines about how one should not prepare poorly for winter, otherwise it will “ask strictly”.",
-        color: "from-stone-500/20 to-orange-500/10",
+        color: "from-wash to-clay-soft",
       },
       {
         month: 10,
@@ -146,7 +146,7 @@ function getMonths(lang: Lang) {
           "In November, the day becomes noticeably shorter, and winter truly enters life.",
         funFact:
           "The source connects this month with stronger wind, cold and kysh kamyldasy.",
-        color: "from-stone-500/20 to-zinc-500/10",
+        color: "from-wash to-wash",
       },
       {
         month: 11,
@@ -157,7 +157,7 @@ function getMonths(lang: Lang) {
           "This is a fully winter month. It is from it, on December 13, that tokson begins — the 90-day harsh period.",
         funFact:
           "The source directly explains that tokson lasts from December 13 to March 13.",
-        color: "from-cyan-500/20 to-slate-500/10",
+        color: "from-sky-soft to-wash",
       },
     ];
   }
@@ -172,7 +172,7 @@ function getMonths(lang: Lang) {
         "Январь в этой системе связан с моментом, когда после обновления Луны проходит 9 дней, и Луна приближается к Үркөр. Поэтому месяц и называется “Бирдин айы 9 тогоол”. Это одна из самых суровых зимних фаз.",
       funFact:
         "В документе также сказано, что если новолуние приходится на 9–19 января, может наступать “Арсар ай”, а если на 20–31 января — начинается “Жалган куран 7 тогоол”.",
-      color: "from-cyan-500/20 to-sky-500/10",
+      color: "from-sky-soft to-sky-soft",
     },
     {
       month: 1,
@@ -183,7 +183,7 @@ function getMonths(lang: Lang) {
         "Название связано с тем, что в этот период охотникам было трудно различать самцов и самок косули: внешне они были похожи, поэтому месяц называли “ложным кураном”.",
       funFact:
         "В источнике говорится, что без “Жалган куран 7 тогоол” кыргызский новый год по этой системе не начинается.",
-      color: "from-sky-500/20 to-blue-500/10",
+      color: "from-sky-soft to-sky-soft",
     },
     {
       month: 2,
@@ -194,7 +194,7 @@ function getMonths(lang: Lang) {
         "После “Жалган куран” охотники уже могли ясно различать куран и элик. Поэтому март становится “истинным кураном” — Чын куран.",
       funFact:
         "В документе сказано, что 13 марта завершается токсон, а 21 марта наступает весеннее равноденствие и Нооруз.",
-      color: "from-emerald-500/20 to-lime-500/10",
+      color: "from-sage-soft to-sage-soft",
     },
     {
       month: 3,
@@ -205,7 +205,7 @@ function getMonths(lang: Lang) {
         "Апрель объясняется через цикл животных: бугу, марал, куран, элик и других. Также месяц тесно связан с Үркөр и посевной логикой.",
       funFact:
         "В источнике отдельно объясняется, что после полнолуния лучше сеять корнеплоды, а при новолунии — культуры, дающие урожай над землёй.",
-      color: "from-green-500/20 to-emerald-500/10",
+      color: "from-sage-soft to-sage-soft",
     },
     {
       month: 4,
@@ -216,7 +216,7 @@ function getMonths(lang: Lang) {
         "Название связано с циклом архаров и кулжа. Это время, когда природа набирает силу, а Үркөр “опускается на землю” в традиционном понимании.",
       funFact:
         "В тексте подчёркивается ценность “ууз кымыза” и связь этого периода с укреплением здоровья.",
-      color: "from-emerald-500/20 to-teal-500/10",
+      color: "from-sage-soft to-sage-soft",
     },
     {
       month: 5,
@@ -227,7 +227,7 @@ function getMonths(lang: Lang) {
         "Название июня связано с циклом горных козлов и тоо теке. Это время длинных дней, горной жизни и наблюдения за природой.",
       funFact:
         "В источнике сказано, что 22 июня — самый длинный день и самая короткая ночь.",
-      color: "from-amber-500/20 to-yellow-500/10",
+      color: "from-gold-soft to-gold-soft",
     },
     {
       month: 6,
@@ -237,7 +237,7 @@ function getMonths(lang: Lang) {
       explanation:
         "“Баш оона” означает начало смещения, начало убывания длины дня. С этого момента день понемногу сокращается.",
       funFact: "В материале отдельно выделяются дни Сумбула — с 19 по 25 июля.",
-      color: "from-orange-500/20 to-amber-500/10",
+      color: "from-clay-soft to-gold-soft",
     },
     {
       month: 7,
@@ -248,7 +248,7 @@ function getMonths(lang: Lang) {
         "Если “Баш оона” — начало смещения, то “Аяк оона” — дальнейшее смещение. Это объясняется даже через то, как солнечный луч падает в боз үй.",
       funFact:
         "Источник связывает название с тем, как солнечный свет через түндүк смещается от очага и “уходит к ногам”.",
-      color: "from-orange-500/20 to-red-500/10",
+      color: "from-clay-soft to-danger-soft",
     },
     {
       month: 8,
@@ -259,7 +259,7 @@ function getMonths(lang: Lang) {
         "Это месяц достатка, зрелости природы и хорошего состояния скота. Он связан с идеей полноты и богатства.",
       funFact:
         "В источнике говорится, что в сентябре скот и имущество часто дарили “девятками”.",
-      color: "from-yellow-500/20 to-orange-500/10",
+      color: "from-gold-soft to-clay-soft",
     },
     {
       month: 9,
@@ -270,7 +270,7 @@ function getMonths(lang: Lang) {
         "Октябрь — это момент, когда уже ощущается дыхание зимы: появляется первый снег и лёд, а человек должен готовиться.",
       funFact:
         "В источнике приводятся строки о том, что нельзя плохо готовиться к зиме, иначе она “спросит строго”.",
-      color: "from-stone-500/20 to-orange-500/10",
+      color: "from-wash to-clay-soft",
     },
     {
       month: 10,
@@ -281,7 +281,7 @@ function getMonths(lang: Lang) {
         "В ноябре день становится заметно короче, а зима уже по-настоящему входит в жизнь.",
       funFact:
         "Источник связывает этот месяц с усилением ветра, холодом и кыш камылгасы.",
-      color: "from-stone-500/20 to-zinc-500/10",
+      color: "from-wash to-wash",
     },
     {
       month: 11,
@@ -292,7 +292,7 @@ function getMonths(lang: Lang) {
         "Это полностью зимний месяц. Именно с него, 13 декабря, начинается токсон — 90-дневный тяжёлый период.",
       funFact:
         "Источник прямо объясняет, что токсон длится с 13 декабря до 13 марта.",
-      color: "from-cyan-500/20 to-slate-500/10",
+      color: "from-sky-soft to-wash",
     },
   ];
 }
@@ -376,11 +376,11 @@ function isSameDate(a: Date, b: Date) {
 }
 
 const markerStyles = {
-  togool: "bg-amber-500/15 text-stone-900 dark:text-white border-amber-400/20",
-  cold: "bg-cyan-500/15 text-cyan-100 border-cyan-400/20",
+  togool: "bg-gold-soft text-ink  border-gold",
+  cold: "bg-sky-soft text-sky border-sky",
   season:
-    "bg-emerald-500/15 text-stone-900 dark:text-white border-emerald-400/20",
-  sky: "bg-violet-500/15 text-violet-100 border-violet-400/20",
+    "bg-sage-soft text-ink  border-sage",
+  sky: "bg-sky-soft text-sky border-sky",
 };
 
 function getCalendarGlossary(lang: Lang) {
@@ -582,21 +582,22 @@ export default function CalendarPage() {
           <div className="glow-card panel-ornament rounded-3xl p-5 md:p-6">
             <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-white/40">
+                <p className="text-xs uppercase tracking-[0.2em] text-ink ">
                   {t.calendarView}
                 </p>
-                <h2 className="mt-1 text-3xl font-black text-stone-900 dark:text-white">
+                <h2 className="mt-1 text-3xl font-black text-ink ">
                   {monthInfo.russianName} {year}
                 </h2>
-                <p className="mt-2 text-sm text-amber-700 dark:text-amber-200">
+                <p className="mt-2 text-sm text-gold ">
                   {lang === "en" ? "Kyrgyz" : "Кыргызча"}: {monthInfo.kyrgyzName} • {monthInfo.togool}
                 </p>
               </div>
 
               <div className="flex items-center gap-3">
                 <button
+                  aria-label={lang === "en" ? "Previous month" : lang === "kg" ? "Мурунку ай" : "Предыдущий месяц"}
                   onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-3 text-stone-900 dark:text-white transition hover:bg-white/10"
+                  className="rounded-2xl border border-line bg-surface p-3 text-ink  transition hover:bg-surface"
                 >
                   <ChevronLeft size={18} />
                 </button>
@@ -608,14 +609,15 @@ export default function CalendarPage() {
                     );
                     setSelectedDate(today);
                   }}
-                  className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm font-semibold text-stone-900 dark:text-white transition hover:bg-amber-500/20"
+                  className="rounded-2xl border border-gold bg-gold-soft px-4 py-3 text-sm font-semibold text-ink  transition hover:bg-gold-soft"
                 >
                   {t.today}
                 </button>
 
                 <button
+                  aria-label={lang === "en" ? "Next month" : lang === "kg" ? "Кийинки ай" : "Следующий месяц"}
                   onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
-                  className="rounded-2xl border border-white/10 bg-white/5 p-3 text-stone-900 dark:text-white transition hover:bg-white/10"
+                  className="rounded-2xl border border-line bg-surface p-3 text-ink  transition hover:bg-surface"
                 >
                   <ChevronRight size={18} />
                 </button>
@@ -623,38 +625,38 @@ export default function CalendarPage() {
             </div>
 
             <div
-              className={`mb-6 rounded-3xl border border-white/10 bg-gradient-to-br ${monthInfo.color} p-5`}
+              className={`mb-6 rounded-3xl border border-line bg-gradient-to-br ${monthInfo.color} p-5`}
             >
               <div className="flex items-start gap-4">
-                <div className="rounded-2xl bg-stone-100 dark:bg-black/20 p-3">
+                <div className="rounded-2xl bg-wash  p-3">
                   <MoonStar size={20} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-stone-900 dark:text-white">
+                  <h3 className="text-xl font-bold text-ink ">
                     {monthInfo.russianName} = {monthInfo.kyrgyzName}
                   </h3>
-                  <p className="mt-2 text-sm font-semibold text-stone-900 dark:text-white">
+                  <p className="mt-2 text-sm font-semibold text-ink ">
                     {monthInfo.togool}
                   </p>
-                  <p className="mt-3 max-w-2xl text-sm leading-7 text-stone-900 dark:text-white/85">
+                  <p className="mt-3 max-w-2xl text-sm leading-7 text-ink ">
                     {monthInfo.explanation}
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="mb-3 grid grid-cols-7 gap-2">
+            <div className="mb-3 heritage-calendar-grid grid grid-cols-7 gap-2">
               {weekdays.map((day) => (
                 <div
                   key={day}
-                  className="rounded-2xl border border-white/10 bg-white/5 px-2 py-3 text-center text-xs font-semibold uppercase tracking-wide text-stone-900 dark:text-white/55"
+                  className="rounded-2xl border border-line bg-surface px-2 py-3 text-center text-xs font-semibold uppercase tracking-wide text-ink "
                 >
                   {day}
                 </div>
               ))}
             </div>
 
-            <div className="grid grid-cols-7 gap-2">
+            <div className="heritage-calendar-grid grid grid-cols-7 gap-2">
               {days.map((item, index) => {
                 const isToday = item.date
                   ? isSameDate(item.date, today)
@@ -667,26 +669,28 @@ export default function CalendarPage() {
                   <button
                     key={index}
                     disabled={!item.date}
+                    aria-pressed={isSelected}
+                    aria-label={item.date?.toLocaleDateString(lang === "kg" ? "ky-KG" : lang, { dateStyle: "full" })}
                     onClick={() => item.date && setSelectedDate(item.date)}
-                    className={`min-h-[110px] rounded-3xl border p-3 text-left transition-all ${
+                    className={`heritage-calendar-day min-h-[110px] rounded-3xl border p-3 text-left transition-all ${
                       !item.date
                         ? "cursor-default border-transparent bg-transparent opacity-0"
                         : isSelected
-                          ? "border-amber-400/30 bg-amber-100 shadow-[0_0_20px_rgba(197,139,72,0.10)] dark:bg-amber-500/10"
-                          : "border-stone-200 bg-white/60 hover:border-stone-300 hover:bg-stone-50 dark:border-white/10 dark:bg-black/20 dark:hover:border-white/20 dark:hover:bg-white/5"
+                          ? "border-gold bg-gold-soft shadow-sm "
+                          : "border-line bg-surface hover:border-line hover:bg-surface    "
                     }`}
                   >
                     {item.date && (
                       <div className="flex h-full flex-col">
                         <div className="mb-2 flex items-center justify-between">
                           <span
-                            className={`text-sm font-bold ${isToday ? "text-emerald-300" : "text-stone-900 dark:text-white"}`}
+                            className={`text-sm font-bold ${isToday ? "text-sage" : "text-ink "}`}
                           >
                             {item.dayNumber}
                           </span>
 
                           {isToday && (
-                            <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold uppercase text-stone-900 dark:text-white">
+                            <span className="heritage-calendar-today rounded-full border border-sage bg-sage-soft px-2 py-1 text-[10px] font-semibold uppercase text-ink ">
                               {t.today}
                             </span>
                           )}
@@ -696,7 +700,7 @@ export default function CalendarPage() {
                           {item.markers.slice(0, 2).map((marker, i) => (
                             <span
                               key={`${marker.label}-${i}`}
-                              className={`rounded-full border px-2 py-1 text-[10px] font-semibold ${markerStyles[marker.type]}`}
+                              className={`heritage-calendar-marker rounded-full border px-2 py-1 text-[10px] font-semibold ${markerStyles[marker.type]}`}
                             >
                               {marker.label}
                             </span>
@@ -713,43 +717,43 @@ export default function CalendarPage() {
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
             <div className="mb-4 flex items-center gap-3">
-              <div className="rounded-2xl bg-amber-500/15 p-3">
+              <div className="rounded-2xl bg-gold-soft p-3">
                 <Trophy size={18} />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-stone-900 dark:text-white">
+                <h3 className="text-xl font-bold text-ink ">
                   {t.learnPlay}
                 </h3>
-                <p className="text-sm text-stone-900 dark:text-white/60">
+                <p className="text-sm text-ink ">
                   {t.learnPlayDesc}
                 </p>
               </div>
             </div>
 
             <div className="mb-5 grid gap-4 md:grid-cols-3">
-              <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4 dark:border-white/10 dark:bg-black/20">
-                <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/40">
+              <div className="rounded-2xl border border-line bg-surface p-4  ">
+                <p className="text-xs uppercase tracking-wide text-ink ">
                   {t.russianMonth}
                 </p>
-                <p className="mt-2 text-lg font-bold text-stone-900 dark:text-white">
+                <p className="mt-2 text-lg font-bold text-ink ">
                   {quizMonth.russianName}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-amber-400/20 bg-amber-50 p-4 dark:bg-amber-500/10">
-                <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/60">
+              <div className="rounded-2xl border border-gold bg-gold-soft p-4 ">
+                <p className="text-xs uppercase tracking-wide text-ink ">
                   {t.score}
                 </p>
-                <p className="mt-2 text-lg font-bold text-stone-900 dark:text-white">
+                <p className="mt-2 text-lg font-bold text-ink ">
                   {score}
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-emerald-400/20 bg-emerald-50 p-4 dark:bg-emerald-500/10">
-                <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/60">
+              <div className="rounded-2xl border border-sage bg-sage-soft p-4 ">
+                <p className="text-xs uppercase tracking-wide text-ink ">
                   {t.streak}
                 </p>
-                <p className="mt-2 text-lg font-bold text-stone-900 dark:text-white">
+                <p className="mt-2 text-lg font-bold text-ink ">
                   {streak}
                 </p>
               </div>
@@ -762,12 +766,12 @@ export default function CalendarPage() {
                   onClick={() => handleQuizAnswer(option)}
                   className={`rounded-2xl border p-4 text-left transition ${
                     showAnswer && option.month === quizMonth.month
-                      ? "border-emerald-400/30 bg-emerald-500/15 text-emerald-50"
-                      : "border-white/10 bg-white/5 text-stone-900 dark:text-white hover:bg-white/10"
+                      ? "border-sage bg-sage-soft text-sage"
+                      : "border-line bg-surface text-ink  hover:bg-surface"
                   }`}
                 >
                   <p className="text-base font-semibold">{option.kyrgyzName}</p>
-                  <p className="mt-1 text-xs text-stone-900 dark:text-white/50">
+                  <p className="mt-1 text-xs text-ink ">
                     {option.togool}
                   </p>
                 </button>
@@ -775,20 +779,20 @@ export default function CalendarPage() {
             </div>
 
             {showAnswer && (
-              <div className="mt-5 rounded-3xl border border-blue-400/20 bg-blue-500/10 p-5">
-                <p className="text-xs uppercase tracking-wide text-blue-100/60">
+              <div className="mt-5 rounded-3xl border border-sky bg-sky-soft p-5">
+                <p className="text-xs uppercase tracking-wide text-sky">
                   {t.correctAnswer}
                 </p>
-                <h4 className="mt-2 text-xl font-bold text-blue-50">
+                <h4 className="mt-2 text-xl font-bold text-sky">
                   {quizMonth.russianName} = {quizMonth.kyrgyzName}
                 </h4>
-                <p className="mt-3 text-sm leading-7 text-blue-50/90">
+                <p className="mt-3 text-sm leading-7 text-sky">
                   {quizMonth.funFact}
                 </p>
 
                 <button
                   onClick={nextQuiz}
-                  className="mt-4 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-stone-900 dark:text-white transition hover:bg-white/20"
+                  className="mt-4 rounded-2xl border border-line bg-surface px-4 py-3 text-sm font-semibold text-ink  transition hover:bg-surface"
                 >
                   {t.nextRound}
                 </button>
@@ -799,39 +803,39 @@ export default function CalendarPage() {
 
         <div className="space-y-6">
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <p className="text-xs uppercase tracking-[0.2em] text-stone-900 dark:text-white/40">
+            <p className="text-xs uppercase tracking-[0.2em] text-ink ">
               {t.selectedDate}
             </p>
-            <h2 className="mt-2 text-3xl font-black text-stone-900 dark:text-white">
+            <h2 className="mt-2 text-3xl font-black text-ink ">
               {selectedDate.getDate()}{" "}
               {months[selectedDate.getMonth()].russianName}
             </h2>
-            <p className="mt-2 text-sm font-semibold text-amber-700 dark:text-amber-200">
+            <p className="mt-2 text-sm font-semibold text-gold ">
               {lang === "en" ? "Kyrgyz" : "Кыргызча"}: {selectedMonthInfo.kyrgyzName} •{" "}
               {selectedMonthInfo.togool}
             </p>
 
-            <div className="mt-5 rounded-3xl border border-white/10 bg-black/20 p-5">
-              <p className="text-xs uppercase tracking-wide text-stone-900 dark:text-white/40">
+            <div className="mt-5 rounded-3xl border border-line bg-wash p-5">
+              <p className="text-xs uppercase tracking-wide text-ink ">
                 {t.easyExplanation}
               </p>
-              <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-white/80">
+              <p className="mt-3 text-sm leading-7 text-ink ">
                 {selectedMonthInfo.explanation}
               </p>
             </div>
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-xl font-bold text-stone-900 dark:text-white">
+            <h3 className="text-xl font-bold text-ink ">
               {t.guideTitle}
             </h3>
             <div className="mt-4 space-y-3">
               {calendarGuide.map((step, index) => (
                 <div
                   key={index}
-                  className="rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm leading-7 text-stone-900 dark:border-white/10 dark:bg-black/20 dark:text-white/75"
+                  className="rounded-2xl border border-line bg-surface px-4 py-3 text-sm leading-7 text-ink   "
                 >
-                  <span className="mr-2 font-bold text-amber-300">
+                  <span className="mr-2 font-bold text-gold">
                     {index + 1}.
                   </span>
                   {step}
@@ -841,23 +845,23 @@ export default function CalendarPage() {
           </div>
 
           <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-xl font-bold text-stone-900 dark:text-white">
+            <h3 className="text-xl font-bold text-ink ">
               {t.glossaryTitle}
             </h3>
             <div className="mt-4 space-y-3">
               {calendarGlossary.map((item) => (
                 <div
                   key={item.term}
-                  className="rounded-2xl border border-stone-200 bg-stone-50 p-4 dark:border-white/10 dark:bg-black/20"
+                  className="rounded-2xl border border-line bg-surface p-4  "
                 >
-                  <h4 className="text-base font-bold text-amber-700 dark:text-amber-200">
+                  <h4 className="text-base font-bold text-gold ">
                     {item.term}
                   </h4>
-                  <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/75">
+                  <p className="mt-2 text-sm leading-7 text-ink ">
                     {item.meaning}
                   </p>
-                  <p className="mt-2 text-sm leading-7 text-stone-900 dark:text-white/55">
-                    <span className="font-semibold text-stone-900 dark:text-white/70">
+                  <p className="mt-2 text-sm leading-7 text-ink ">
+                    <span className="font-semibold text-ink ">
                       {t.simply}
                     </span>{" "}
                     {item.simple}

@@ -1,6 +1,7 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -497,10 +498,30 @@ const dictionary = {
   },
 } as const;
 
+// Translate shared navigation; existing cultural text retains an explicit RU fallback.
+const kyrgyzDictionary = {
+  ...dictionary.ru,
+  home: 'Башкы бет', map: 'Карта', museum: 'Музей', lootbox: 'Чүкө',
+  profile: 'Профиль', calendar: 'Календарь', petroQuiz: 'Петроглиф тести',
+  stoneLab: 'Таш устаканасы', gallery: 'Галерея', leaderboard: 'Рейтинг',
+  groupExplore: 'Изилдөө', groupPlay: 'Чыгармачылык', groupCommunity: 'Коомчулук',
+  account: 'Аккаунт', menu: 'Меню', themeLight: 'Жарык тема', themeDark: 'Караңгы тема',
+  stoneWorkshopTitle: 'Таш устаканасы',
+  stoneWorkshopSubtitle: 'Өз сүрөтүңүздү жаратып, коомчулук менен бөлүшүңүз.',
+  profileTitle: 'Сиздин профилиңиз', profileSubtitle: 'Деңгээл, упайлар жана жетишкендиктер.',
+  statLevel: 'Деңгээл', statPoints: 'Упайлар', statArtifacts: 'Артефакттар',
+  xpProgress: 'XP өсүшү', xpUntilNext: 'кийинки деңгээлге чейин', achievements: 'Жетишкендиктер',
+  noAchievements: 'Азырынча жетишкендик жок. Картаны изилдеп баштаңыз.',
+  galleryTitle: 'Коомчулуктун галереясы', leaderboardTitle: 'Рейтинг',
+  museumTitle: 'Санарип музей', museumSubtitle: 'Сиз чогулткан артефакттар.',
+  museumEmpty: 'Музей бош', museumEmptyDesc: 'Азырынча артефакт жок. Картаны изилдеңиз же чүкө ачыңыз.',
+  points: 'Упайлар', income: 'Киреше',
+};
+
 type LanguageContextType = {
   lang: Lang;
   setLang: (lang: Lang) => void;
-  t: typeof dictionary['ru'] | typeof dictionary['en'];
+  t: { [Key in keyof typeof dictionary.ru]: string };
 };
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
@@ -508,7 +529,7 @@ const LanguageContext = createContext<LanguageContextType | null>(null);
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(() => {
     const stored = window.localStorage.getItem("lang");
-    return stored === "en" ? "en" : "ru";
+    return stored === "en" || stored === "kg" ? stored : "ru";
   });
 
   const setLang = (next: Lang) => {
@@ -516,11 +537,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     window.localStorage.setItem("lang", next);
   };
 
+  useEffect(() => { document.documentElement.lang = lang === 'kg' ? 'ky' : lang; }, [lang]);
+
   const value = useMemo(
     () => ({
       lang,
       setLang,
-      t: dictionary[lang],
+      // The homepage has full KG copy; other sections keep the existing RU fallback.
+      t: lang === 'kg' ? kyrgyzDictionary : dictionary[lang],
     }),
     [lang],
   );

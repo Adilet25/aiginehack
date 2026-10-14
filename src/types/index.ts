@@ -1,5 +1,5 @@
 export type Rarity = "common" | "rare" | "epic";
-export type Lang = "ru" | "en";
+export type Lang = "ru" | "en" | "kg";
 export type LocationKind = "sacred" | "petroglyph";
 export type SubmissionStatus = "pending" | "approved" | "rejected";
 

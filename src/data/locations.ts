@@ -64,7 +64,7 @@ function generateLocation(id: number, lang: Lang): HeritageLocation {
     kind: type,
     description,
     culturalNote,
-    district: region.name[lang],
+    district: region.name[lang === "kg" ? "ru" : lang],
 
     lat: region.lat + random(-0.6, 0.6),
     lng: region.lng + random(-0.6, 0.6),

@@ -277,24 +277,24 @@ function getResults(lang: Lang): Record<Archetype, ResultInfo> {
 function ArharLoader() {
   const { t } = useLang();
   return (
-    <div className="mx-auto flex max-w-3xl flex-col items-center justify-center rounded-3xl border border-amber-400/20 bg-gradient-to-br from-amber-500/10 to-orange-500/10 px-6 py-12 text-center">
+    <div className="mx-auto flex max-w-3xl flex-col items-center justify-center rounded-3xl border border-gold bg-gradient-to-br from-gold-soft to-clay-soft px-6 py-12 text-center">
       <div className="relative mb-6 h-28 w-28">
-        <div className="absolute inset-0 animate-ping rounded-full bg-amber-400/10" />
-        <div className="absolute inset-0 rounded-full border border-amber-300/20" />
+        <div className="absolute inset-0 animate-ping rounded-full bg-gold-soft" />
+        <div className="absolute inset-0 rounded-full border border-gold" />
         <div className="absolute inset-0 flex items-center justify-center text-6xl animate-[bounce_1.1s_infinite]">
           🐏
         </div>
       </div>
 
-      <h3 className="text-2xl font-black text-stone-900 dark:text-white">
+      <h3 className="text-2xl font-black text-ink ">
         {t.quizAnalyzing}
       </h3>
-      <p className="mt-3 max-w-lg text-sm leading-7 text-stone-900 dark:text-white/70">
+      <p className="mt-3 max-w-lg text-sm leading-7 text-ink ">
         {t.quizAnalyzingDesc}
       </p>
 
-      <div className="mt-6 h-3 w-full max-w-md overflow-hidden rounded-full bg-white/10">
-        <div className="h-full animate-[loader_5s_linear_forwards] rounded-full bg-gradient-to-r from-amber-400 to-orange-400" />
+      <div className="mt-6 h-3 w-full max-w-md overflow-hidden rounded-full bg-surface">
+        <div className="h-full animate-[loader_5s_linear_forwards] rounded-full bg-gradient-to-r from-gold-soft to-clay-soft" />
       </div>
     </div>
   );
@@ -371,11 +371,11 @@ export default function PetroglyphQuizPage() {
         <ArharLoader />
       ) : step < questions.length ? (
         <div className="mx-auto max-w-5xl glow-card panel-ornament rounded-3xl p-6">
-          <div className="mb-4 text-sm text-stone-900 dark:text-white/50">
+          <div className="mb-4 text-sm text-ink ">
             {t.quizQuestion} {step + 1} {t.quizOf} {questions.length}
           </div>
 
-          <h2 className="text-2xl font-black text-stone-900 dark:text-white">
+          <h2 className="text-2xl font-black text-ink ">
             {currentQuestion.text}
           </h2>
 
@@ -384,7 +384,7 @@ export default function PetroglyphQuizPage() {
               <button
                 key={option.text}
                 onClick={() => handleAnswer(option)}
-                className="group overflow-hidden rounded-3xl border border-white/10 bg-white/5 text-left transition hover:border-amber-400/30 hover:bg-amber-500/5"
+                className="group overflow-hidden rounded-3xl border border-line bg-surface text-left transition hover:border-gold hover:bg-gold-soft"
               >
                 <div className="overflow-hidden">
                   <img
@@ -395,7 +395,7 @@ export default function PetroglyphQuizPage() {
                 </div>
 
                 <div className="p-4">
-                  <p className="text-base font-semibold text-stone-900 dark:text-white">
+                  <p className="text-base font-semibold text-ink ">
                     {option.text}
                   </p>
                 </div>
@@ -405,39 +405,39 @@ export default function PetroglyphQuizPage() {
         </div>
       ) : (
         <div className="mx-auto max-w-4xl glow-card panel-ornament rounded-3xl p-6">
-          <div className="rounded-3xl border border-amber-400/20 bg-gradient-to-br from-amber-500/15 to-orange-500/10 p-6">
-            <div className="text-sm uppercase tracking-[0.2em] text-amber-200">
+          <div className="rounded-3xl border border-gold bg-gradient-to-br from-gold-soft to-clay-soft p-6">
+            <div className="text-sm uppercase tracking-[0.2em] text-gold">
               {t.quizResult}
             </div>
-            <h2 className="mt-2 text-4xl font-black text-stone-900 dark:text-white">
+            <h2 className="mt-2 text-4xl font-black text-ink ">
               {result.title}
             </h2>
-            <p className="mt-2 text-lg text-stone-900 dark:text-white">
+            <p className="mt-2 text-lg text-ink ">
               {result.subtitle}
             </p>
           </div>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
-            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5 dark:border-white/10 dark:bg-black/20">
-              <h3 className="text-lg font-bold text-stone-900 dark:text-white">
+            <div className="rounded-3xl border border-line bg-surface p-5  ">
+              <h3 className="text-lg font-bold text-ink ">
                 {t.quizCharacter}
               </h3>
-              <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-white/75">
+              <p className="mt-3 text-sm leading-7 text-ink ">
                 {result.description}
               </p>
             </div>
 
-            <div className="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-5">
-              <h3 className="text-lg font-bold text-stone-900 dark:text-white">
+            <div className="rounded-3xl border border-sage bg-sage-soft p-5">
+              <h3 className="text-lg font-bold text-ink ">
                 {t.quizWhereTo}
               </h3>
-              <p className="mt-3 text-sm leading-7 text-emerald-50">
+              <p className="mt-3 text-sm leading-7 text-sage">
                 {result.recommendation}
               </p>
-              <p className="mt-3 text-sm leading-7 text-stone-900 dark:text-white/85">
+              <p className="mt-3 text-sm leading-7 text-ink ">
                 {result.why}
               </p>
-              <div className="mt-4 inline-flex rounded-full border border-emerald-300/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-50">
+              <div className="mt-4 inline-flex rounded-full border border-sage bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wide text-sage">
                 {result.placeTag}
               </div>
             </div>
@@ -445,7 +445,7 @@ export default function PetroglyphQuizPage() {
 
           <button
             onClick={restart}
-            className="mt-6 rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-stone-900 dark:text-white transition hover:bg-white/10"
+            className="mt-6 rounded-2xl border border-line bg-surface px-5 py-3 font-semibold text-ink  transition hover:bg-surface"
           >
             {t.quizRestart}
           </button>

@@ -9,6 +9,7 @@ import {
 import type {
   Artifact,
   UserState,
+  Lang,
   PetroSubmission,
   HeritageLocation,
   WorkshopArtwork,
@@ -45,7 +46,7 @@ const initialState: UserState = {
   achievements: [],
 }
 
-function getInitialArtworks(lang: 'ru' | 'en'): WorkshopArtwork[] {
+function getInitialArtworks(lang: Lang): WorkshopArtwork[] {
   return [
     {
       id: 1001,
