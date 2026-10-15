@@ -1,0 +1,254 @@
+/* Shared interior language: a museum catalogue with practical work surfaces. */
+.muras-route { animation: muras-page-in .45s ease; }
+.muras-route [hidden] { display: none !important; }
+.muras-route :where(section, article, aside, div) { min-width: 0; }
+.muras-route :where(button, input, select) { min-height: 44px; }
+.muras-route :where(input:not([type='file']), select, textarea) { max-width: 100%; border-radius: 3px; }
+.muras-route :where(input:not([type='file']), textarea):focus { border-color: var(--clay); }
+.muras-route :where(button) { transition: background-color .2s, border-color .2s, color .2s, box-shadow .2s; }
+.muras-route button:disabled { opacity: .45; cursor: not-allowed; }
+.muras-route .glow-card { box-shadow: none; border-radius: 3px; border-color: var(--line); }
+.muras-route .panel-ornament { border-top-width: 1px; }
+.muras-route .rounded-3xl, .muras-route .rounded-2xl { border-radius: 4px; }
+.muras-page-header { margin-bottom: 2.5rem; }
+.muras-breadcrumb { display: flex; align-items: center; gap: 1rem; color: var(--muted); font-size: .75rem; margin-bottom: 2rem; }
+.muras-breadcrumb a { display: inline-flex; align-items: center; gap: .5rem; color: var(--clay); padding-block: .4rem; }
+.muras-page-title { display: flex; justify-content: space-between; gap: 3rem; align-items: center; padding-bottom: 2.5rem; }
+.muras-page-title h1 { font-size: clamp(2.4rem,4.6vw,4.6rem); line-height: 1.06; text-wrap: balance; max-width: 980px; }
+.muras-page-title p { max-width: 720px; color: var(--muted); font-size: 1rem; line-height: 1.8; margin-top: 1.2rem; text-wrap: pretty; }
+.muras-page-title > svg { flex: 0 0 100px; width: 100px; height: 110px; padding: 24px; border: 1px solid var(--line); border-radius: 50% 50% 0 0; color: var(--clay); }
+.muras-map .muras-page-title h1, .muras-calendar .muras-page-title h1, .muras-workshop .muras-page-title h1 { font-size: clamp(2.4rem,3.7vw,3.7rem); }
+.muras-upload:focus-within { outline: 2px solid var(--clay); outline-offset: 4px; }
+.muras-page-nav { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; border-block: 1px solid var(--line); min-height: 60px; }
+.muras-page-nav nav { display: flex; flex-wrap: wrap; column-gap: 1.8rem; }
+.muras-page-nav nav a { padding: 1.1rem 0; font-size: .85rem; color: var(--muted); position: relative; }
+.muras-page-nav nav a[aria-current] { color: var(--clay); }
+.muras-page-nav nav a[aria-current]::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--clay); }
+.muras-link { display: inline-flex; align-items: center; gap: .65rem; color: var(--clay); font-size: .85rem; font-weight: 600; min-height: 44px; text-underline-offset: 5px; }
+.muras-link:hover { text-decoration: underline; }
+.muras-link svg { transition: transform .25s; }
+.muras-link:hover svg { transform: translate(2px,-2px); }
+.muras-panel { padding: clamp(1.25rem,3vw,2.5rem); background: var(--panel); border: 1px solid var(--line); }
+.muras-caption { font-size: .8rem; color: var(--muted); line-height: 1.8; margin-block: .7rem 1.5rem; }
+.muras-result-count { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--clay); padding-block: .6rem; }
+.muras-empty { padding: clamp(2rem,6vw,5rem) 1.5rem; text-align: center; background: radial-gradient(ellipse at 50% 30%,var(--wash),transparent 70%); border-block: 1px solid var(--line); }
+.muras-empty > svg { color: var(--clay); width: 35px; margin: 0 auto 1.5rem; opacity: .65; }
+.muras-empty h2 { font-size: clamp(1.8rem,3vw,2.5rem); }
+.muras-empty p { max-width: 520px; margin: 1rem auto; color: var(--muted); line-height: 1.8; }
+.muras-empty-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; }
+.muras-search-row, .muras-map-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.muras-search-row input, .muras-map-toolbar > input { flex: 1 1 240px; min-width: 0; border: 1px solid var(--line); background: var(--panel); padding: .85rem 1rem; color: var(--text); font-size: .9rem; }
+.muras-search-row select { border: 1px solid var(--line); padding: .85rem 1rem; background: var(--panel); color: var(--text); font-size: .85rem; }
+.muras-filters { display: flex; flex-wrap: wrap; gap: .5rem; }
+.muras-filters button, .muras-view-switch button { border: 1px solid transparent; background: transparent; color: var(--muted); padding: .65rem 1rem; font-size: .85rem; font-weight: 400; border-radius: 2px; }
+.muras-filters button:hover, .muras-view-switch button:hover { background: var(--wash); }
+.muras-filters button[aria-pressed='true'], .muras-view-switch button[aria-pressed='true'] { border-color: var(--clay); background: var(--clay-soft); color: var(--clay); }
+.muras-disclosure { border-block: 1px solid var(--line); background: var(--panel); }
+.muras-disclosure summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem; font: 1.35rem var(--heading-font); color: var(--text); }
+.muras-disclosure summary::-webkit-details-marker { display: none; }
+.muras-disclosure summary::after { content: '+'; font-family: inherit; color: var(--clay); }
+.muras-disclosure[open] > summary::after { content: '−'; }
+.muras-disclosure-body { padding: 0 1.25rem 1.5rem; animation: muras-page-in .3s ease; }
+
+/* The map stays on screen while its compact notebook can expand. */
+.muras-map-layout { display: grid; grid-template-columns: minmax(0,1fr) 340px; gap: 1.5rem; align-items: start; }
+.muras-map-frame { position: sticky; top: 110px; border: 1px solid var(--line); padding: 8px; background: var(--panel); }
+.muras-map-frame .heritage-map-surface { height: clamp(430px,68vh,760px); border-radius: 0; }
+.muras-map-sidebar { display: grid; gap: 1.25rem; }
+.muras-map-sidebar .glow-card { padding: 1.25rem; }
+.muras-place-browser { border-bottom: 1px solid var(--line); padding-bottom: 1rem; }
+.muras-place-browser .muras-caption { margin: 0 0 .6rem; }
+.muras-place-list { max-height: 230px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.muras-place-list button { display: flex; flex-direction: column; text-align: left; width: 100%; padding: .75rem .8rem; border-bottom: 1px solid var(--line); }
+.muras-place-list button span { font: 1.05rem var(--heading-font); }
+.muras-place-list button small { color: var(--muted); margin-top: .3rem; }
+.muras-place-list button:hover { background: var(--wash); }
+.muras-place-list button[aria-pressed='true'] { background: var(--clay-soft); border-left: 3px solid var(--clay); }
+.muras-planner select { width: 100%; font-size: .85rem; }
+.muras-planner label + span { max-width: 130px; text-align: right; }
+.muras-planner button { font-size: .8rem; }
+.muras-discovery-section { padding-top: 2.5rem; border-top: 1px solid var(--line); }
+.muras-discovery-section > h2 { font-size: 2.4rem; margin-bottom: 1.5rem; }
+.muras-discovery-grid { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: 2rem; }
+
+/* Calendar modes prevent a long stack of competing interactive panels. */
+.muras-view-switch { display: flex; flex-wrap: wrap; gap: .5rem; padding-block: .5rem 1.5rem; }
+.muras-calendar-layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; gap: 2rem; align-items: start; }
+.muras-calendar-day-story { position: sticky; top: 110px; }
+.muras-calendar-day-story .glow-card { border: 0; border-left: 1px solid var(--line); background: transparent; padding: 1.5rem; }
+.muras-calendar-day-story h2 { font-size: 2.4rem; }
+.muras-calendar-day-story .bg-wash { background: transparent; border: 0; padding: 0; }
+.muras-calendar .heritage-calendar-grid > div { background: transparent; border: 0; }
+.muras-calendar-day-story p { line-height: 1.8; }
+.muras-wheel-stage { max-width: 1000px; margin: auto; }
+.muras-wheel-stage > .glow-card { padding: clamp(1rem,3vw,3rem); background: radial-gradient(ellipse,var(--panel),var(--wash)); }
+.muras-calendar-quiz { max-width: 900px; margin: auto; }
+.muras-calendar-reference { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; margin-top: 2.5rem; }
+.muras-view-panel:not([hidden]) { animation: muras-page-in .35s ease; }
+
+/* Studio: broad canvas, one tool column, and a separate finishing step. */
+.muras-studio-layout { display: grid; grid-template-columns: minmax(0,1fr) 285px; gap: 2rem; align-items: start; }
+.muras-studio-tools { grid-column: 2; grid-row: 1; display: grid; gap: 1rem; }
+.muras-studio-tools .glow-card { background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: 0 0 1.2rem; }
+.muras-studio-tools .glow-card:first-child p { font-size: .8rem; line-height: 1.7; margin-top: .5rem; }
+.muras-studio-tools h3, .muras-studio-tools h4 { font-size: 1.2rem; }
+.muras-studio-help summary { font-family: var(--heading-font); font-size: 1.2rem; line-height: 1.5; padding-block: .5rem; }
+.muras-studio-tools button { padding: .65rem .8rem; font-size: .85rem; }
+.muras-studio-tools button[aria-pressed='true'] { border-color: var(--clay); background: var(--clay-soft); color: var(--clay); box-shadow: inset 3px 0 var(--clay); }
+.muras-studio-canvas { grid-column: 1; grid-row: 1; position: sticky; top: 110px; padding: clamp(1rem,2vw,2rem); border: 1px solid var(--line); background: var(--panel); }
+.muras-studio-caption { display: flex; justify-content: space-between; gap: 1rem; align-items: end; margin-bottom: 1.5rem; }
+.muras-studio-caption h2 { font-size: 1.7rem; }
+.muras-studio-caption p { max-width: 300px; font-size: .8rem; color: var(--muted); line-height: 1.7; }
+.muras-studio-result { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line); animation: muras-page-in .4s ease; }
+.muras-studio-result > h2 { font-size: clamp(1.8rem,3vw,2.7rem); margin-bottom: 1.5rem; }
+.muras-interpretation-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+
+/* Community gallery and rankings use exhibition labels instead of dashboards. */
+.muras-gallery-toolbar { display: grid; gap: 1.2rem; padding-block: .5rem 1.5rem; border-bottom: 1px solid var(--line); }
+.muras-gallery-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 3rem; align-items: start; }
+.muras-artwork { border-bottom: 1px solid var(--line); padding-bottom: 1rem; animation: muras-page-in .4s ease; }
+.muras-artwork > .heritage-gallery-image { aspect-ratio: 4/3; border: 10px solid var(--panel); outline: 1px solid var(--line); }
+.muras-artwork > div.p-5 { padding: 1.5rem 0 0; }
+.muras-artwork h3 { font-size: 1.8rem; }
+.muras-artwork-stats { display: flex; gap: 2rem; padding-block: 1rem; margin-top: 1rem; border-block: 1px solid var(--line); }
+.muras-artwork-stats > div { padding: 0; border: 0; background: transparent; }
+.muras-artwork-stats .text-lg { font: 1.5rem var(--heading-font); }
+.muras-vote-stars { display: flex; flex-wrap: wrap; gap: .5rem; }
+.muras-vote-stars button { min-width: 44px; border: 1px solid var(--line); padding: .5rem; color: var(--clay); background: var(--panel); }
+.muras-vote-stars button:hover { background: var(--clay-soft); border-color: var(--clay); }
+.muras-vote-feedback { color: var(--sage); font-size: .75rem; min-height: 1.5rem; margin-top: .6rem; }
+.muras-prize-note { border-left: 2px solid var(--clay); padding: 1rem 1.5rem; background: var(--wash); }
+.muras-prize-note .text-xl { font: 1.25rem var(--heading-font); }
+.muras-rank-layout { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); gap: 3rem; }
+.muras-rank-section { padding-top: 1rem; }
+.muras-rank-section h3 { border-bottom: 1px solid var(--line); padding-bottom: 1rem; }
+.muras-ranking-row { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.muras-ranking-row > div:first-child { flex-shrink: 0; background: transparent; color: var(--clay); font: 1.4rem var(--heading-font); }
+.muras-ranking-row .heritage-art-placeholder { flex-shrink: 0; }
+.muras-ranking-row h4 { font-size: 1.2rem; }
+
+/* A personal travel record and the playful collection. */
+.muras-passport { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; align-items: center; padding: clamp(1.5rem,4vw,3rem); background: #382b20; color: #f5e4c6; border: 1px solid #725638; outline: 1px solid #a9885b44; outline-offset: -9px; }
+.muras-passport-stats { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.muras-passport .heritage-stat { padding: .5rem 1.25rem; background: transparent; border: 0; border-right: 1px solid #a9885b66; }
+.muras-passport .heritage-stat-label { color: #cfb99b; }
+.muras-passport .heritage-stat-value { font-size: 3.5rem; }
+.muras-passport .text-ink, .muras-passport .text-sage { color: #f5e4c6; }
+.muras-passport-progress h3 { font-size: 1.5rem; }
+.muras-passport-progress p { font-size: .8rem; }
+.muras-passport .heritage-progress { background: #67523a; }
+.muras-passport .heritage-progress-fill { background: #d9b889; }
+.muras-profile-body { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+.muras-profile-body h2, .muras-profile-body h3 { font-size: 1.8rem; }
+.muras-next-steps a { display: flex; gap: 1rem; align-items: center; border-bottom: 1px solid var(--line); padding: 1.3rem 0; }
+.muras-next-steps a span { color: var(--clay); font: 1rem var(--heading-font); }
+.muras-next-steps a svg { margin-left: auto; color: var(--clay); }
+.muras-collection-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2rem; margin-top: 2rem; }
+.muras-collection-item { padding: 1.5rem; border-bottom: 1px solid var(--line); background: linear-gradient(180deg,var(--panel),transparent); }
+.muras-collection-seal { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; height: 200px; border: 1px solid var(--line); border-radius: 50% 50% 0 0; color: var(--clay); margin-bottom: 1.5rem; background: radial-gradient(ellipse,var(--gold-soft),transparent); }
+.muras-collection-seal > svg { width: 50px; height: 60px; opacity: .55; }
+.muras-collection-seal span { font: .8rem var(--heading-font); letter-spacing: .15em; }
+.muras-collection-item h3 { font-size: 1.7rem; }
+.muras-collection-item > .grid > div { border: 0; padding: .8rem 0; background: transparent; border-top: 1px solid var(--line); }
+.muras-reward-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; }
+.muras-reward-stage { padding: clamp(2rem,4vw,4rem); background: radial-gradient(ellipse at 50% 35%,var(--panel),var(--wash)); border: 1px solid var(--line); }
+.muras-reward-stage .heritage-loot-stone { width: 230px; height: 270px; border-radius: 50% 50% 2px 2px; flex-direction: column; gap: 1.5rem; border-color: var(--clay); background: transparent; box-shadow: inset 0 0 0 8px var(--panel); }
+.muras-reward-mark { color: var(--clay); width: 50px; height: 60px; }
+.muras-reward-side { display: flex; flex-direction: column; gap: 2rem; }
+.muras-reward-result { order: -1; border-top: 1px solid var(--line); padding-top: 1.5rem; min-height: 200px; }
+.muras-reward-result h3, .muras-reward-odds h3 { font-size: 1.8rem; }
+.muras-reward-result > div { animation: muras-page-in .4s ease; }
+.muras-reward-odds { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+.muras-reward-odds .space-y-3 { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; }
+.muras-reward-odds .space-y-3 > div { display: flex; flex-direction: column; gap: .6rem; padding: 1rem .5rem; margin: 0; background: transparent; border: 0; border-left: 1px solid var(--line); }
+
+/* One question at a time, with a calm visual anchor. */
+.muras-question-layout { display: grid; grid-template-columns: .8fr 1.2fr; gap: 0; border: 1px solid var(--line); background: var(--panel); }
+.muras-quiz-visual { position: relative; min-height: 460px; overflow: hidden; background: var(--wash); }
+.muras-quiz-visual img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; filter: sepia(.55) saturate(.65); }
+.muras-quiz-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg,#382315bb,transparent 70%); }
+.muras-quiz-visual > span { position: absolute; bottom: 2.5rem; left: 2rem; z-index: 1; color: #fff0d4; font: 2.8rem var(--heading-font); }
+.muras-question { padding: clamp(1.5rem,4vw,3rem); animation: muras-page-in .3s ease; }
+.muras-question-title { font-size: clamp(1.8rem,3vw,2.5rem); line-height: 1.25; }
+.muras-question-progress { height: 3px; background: var(--wash); margin-bottom: 1.5rem; }
+.muras-question-progress span { display: block; height: 100%; background: var(--clay); transition: width .4s; }
+.muras-quiz-options { display: grid; gap: .75rem; margin: 2rem 0 1rem; }
+.muras-quiz-option { display: flex; text-align: left; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--line); background: transparent; }
+.muras-quiz-option > span:first-child { color: var(--clay); font: .85rem var(--heading-font); }
+.muras-quiz-option > span:last-child { margin-left: auto; color: var(--clay); }
+.muras-quiz-option:hover { background: var(--clay-soft); border-color: var(--clay); }
+.muras-quiz-result { max-width: 1000px; margin: auto; animation: muras-page-in .5s ease; }
+.muras-loading-ring { border-style: dashed; animation: muras-turn 8s linear infinite; }
+.muras-review-list { display: grid; gap: 2rem; }
+.muras-review-item { display: grid; grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr); gap: 2rem; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid var(--line); animation: muras-page-in .3s ease; }
+.muras-review-item h3 { font-size: 1.8rem; }
+.muras-submission-dialog { position: fixed; inset: 0; margin: auto; padding: 0; width: min(1080px,calc(100% - 2rem)); max-height: calc(100dvh - 2rem); overflow: auto; border: 1px solid var(--line); color: var(--text); background: var(--panel); }
+.muras-submission-dialog::backdrop { background: #24180ed9; backdrop-filter: blur(4px); }
+.muras-submission-dialog[open] { animation: muras-page-in .25s ease; }
+@keyframes muras-page-in { from { opacity: .2; } to { opacity: 1; } }
+@keyframes muras-turn { to { transform: rotate(360deg); } }
+@media(max-width:1023px) {
+  .muras-map-layout { grid-template-columns: minmax(0,1fr) 300px; }
+  .muras-calendar-layout { grid-template-columns: 1fr; }
+  .muras-calendar-day-story { position: static; }
+  .muras-calendar-day-story .glow-card { border: 1px solid var(--line); background: var(--panel); }
+  .muras-studio-layout { grid-template-columns: 1fr; }
+  .muras-studio-tools { grid-column: 1; grid-row: 1; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .muras-studio-tools .glow-card:first-child { grid-column: 1 / -1; }
+  .muras-studio-tools .glow-card:last-child { grid-column: 1 / -1; }
+  .muras-studio-tools .glow-card:last-child > div { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .muras-studio-canvas { grid-row: 2; position: static; }
+  .muras-passport { grid-template-columns: 1fr; gap: 2rem; }
+  .muras-rank-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .muras-collection-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:767px) {
+  .muras-page-title { gap: 1rem; padding-bottom: 1.75rem; }
+  .muras-page-title > svg { display: none; }
+  .muras-page-title h1 { font-size: 2.4rem; }
+  .muras-page-title p { font-size: .9rem; }
+  .muras-page-nav { gap: .25rem; padding-block: .25rem; }
+  .muras-page-nav nav { gap: 1rem; }
+  .muras-page-nav nav a { font-size: .8rem; padding-block: .8rem; }
+  .muras-breadcrumb { gap: .65rem; margin-bottom: 1.4rem; }
+  .muras-map-layout, .muras-discovery-grid, .muras-gallery-grid, .muras-profile-body, .muras-reward-layout, .muras-question-layout, .muras-review-item, .muras-interpretation-grid, .muras-calendar-reference { grid-template-columns: 1fr; gap: 1.5rem; }
+  .muras-map-frame { position: static; }
+  .muras-map-frame .heritage-map-surface { height: 420px; }
+  .muras-place-list { max-height: 220px; }
+  .muras-quiz-visual { min-height: 180px; }
+  .muras-quiz-visual > span { bottom: 1.2rem; left: 1.5rem; font-size: 2rem; }
+  .muras-question-layout { gap: 0; }
+  .muras-collection-grid { grid-template-columns: 1fr; }
+  .muras-passport { padding: 1.5rem; }
+  .muras-passport .heritage-stat { padding: .5rem .7rem; }
+  .muras-passport .heritage-stat-value { font-size: 2.6rem; }
+  .muras-passport .heritage-stat-label { font-size: .6rem; letter-spacing: .06em; }
+  .muras-studio-caption { display: block; }
+  .muras-studio-layout { display: flex; flex-direction: column; }
+  .muras-studio-layout > *, .muras-studio-tools > * { width: 100%; }
+  .muras-studio-tools { display: contents; }
+  .muras-studio-tools > :first-child { order: 0; }
+  .muras-studio-tools > :nth-child(2) { order: 1; }
+  .muras-studio-canvas { order: 2; }
+  .muras-studio-tools > :nth-child(3) { order: 3; }
+  .muras-studio-tools > :nth-child(4) { order: 4; }
+  .muras-studio-tools > :nth-child(2) > div { grid-template-columns: repeat(3,minmax(0,1fr)); gap: .5rem; }
+  .muras-studio-tools > :nth-child(2) button { font-size: .75rem; padding: .7rem .4rem; }
+  .muras-studio-tools > :nth-child(2) button > div { flex-direction: column; gap: .4rem; text-align: center; }
+  .muras-studio-tools > :nth-child(2) .text-xs { display: none; }
+  .muras-studio-caption p { margin-top: .7rem; max-width: none; }
+  .muras-gallery-grid { gap: 2rem; }
+  .muras-artwork-stats { gap: 1.3rem; }
+  .muras-ranking-row { gap: .65rem; }
+  .muras-ranking-row .h-16 { width: 48px; height: 48px; }
+  .muras-search-row select { width: 100%; }
+}
+@media(max-width:420px) {
+  .muras-studio-tools { grid-template-columns: 1fr; }
+  .muras-studio-tools .glow-card:last-child > div { grid-template-columns: 1fr; }
+  .muras-filters button, .muras-view-switch button { padding-inline: .7rem; }
+  .muras-reward-stage { padding-inline: 1rem; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .muras-route *, .muras-route *::before, .muras-route *::after, .muras-route { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

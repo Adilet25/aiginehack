@@ -1,7 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import PageHeader from "../components/shared/PageHeader";
 import { useLang } from "../app/providers/LanguageProvider";
 import type { Lang } from "../types";
+import { Link } from 'react-router-dom';
+import BrandMark from '../components/shared/BrandMark';
+import { useInterfaceCopy } from '../data/interface';
 
 type Archetype = "goat" | "deer" | "hunter" | "rider" | "sun" | "ritual";
 
@@ -279,10 +282,9 @@ function ArharLoader() {
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-center justify-center rounded-3xl border border-gold bg-gradient-to-br from-gold-soft to-clay-soft px-6 py-12 text-center">
       <div className="relative mb-6 h-28 w-28">
-        <div className="absolute inset-0 animate-ping rounded-full bg-gold-soft" />
-        <div className="absolute inset-0 rounded-full border border-gold" />
-        <div className="absolute inset-0 flex items-center justify-center text-6xl animate-[bounce_1.1s_infinite]">
-          🐏
+        <div className="absolute inset-0 rounded-full border border-gold muras-loading-ring" />
+        <div className="absolute inset-0 flex items-center justify-center text-clay">
+          <BrandMark />
         </div>
       </div>
 
@@ -302,10 +304,14 @@ function ArharLoader() {
 
 export default function PetroglyphQuizPage() {
   const { t, lang } = useLang();
+  const c = useInterfaceCopy();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const [history, setHistory] = useState<Record<Archetype, number>[]>([]);
   const questions = useMemo(() => getQuestions(lang), [lang]);
   const results = useMemo(() => getResults(lang), [lang]);
 
   const [step, setStep] = useState(0);
+  useEffect(() => { if (step > 0) headingRef.current?.focus(); }, [step]);
   const [isLoading, setIsLoading] = useState(false);
   const [scores, setScores] = useState<Record<Archetype, number>>({
     goat: 0,
@@ -326,6 +332,7 @@ export default function PetroglyphQuizPage() {
   const result = results[resultKey];
 
   const handleAnswer = (option: Option) => {
+    setHistory(previous => [...previous, scores]);
     setScores((prev) => {
       const next = { ...prev };
       for (const [key, value] of Object.entries(option.scores)) {
@@ -348,6 +355,7 @@ export default function PetroglyphQuizPage() {
   };
 
   const restart = () => {
+    setHistory([]);
     setStep(0);
     setIsLoading(false);
     setScores({
@@ -361,55 +369,49 @@ export default function PetroglyphQuizPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="muras-quiz space-y-6">
       <PageHeader
         title={t.quizTitle}
         subtitle={t.quizSubtitle}
       />
+      <p className="muras-caption">{c.quizNote}</p>
 
       {isLoading ? (
         <ArharLoader />
       ) : step < questions.length ? (
-        <div className="mx-auto max-w-5xl glow-card panel-ornament rounded-3xl p-6">
-          <div className="mb-4 text-sm text-ink ">
+        <div className="muras-question-layout">
+          <div className="muras-quiz-visual" aria-hidden="true"><img src={currentQuestion.options[0].image} alt="" /><span>{String(step + 1).padStart(2, '0')} / {String(questions.length).padStart(2, '0')}</span></div>
+          <div className="muras-question" key={step}>
+          <div className="muras-question-progress" role="progressbar" aria-label={t.quizQuestion} aria-valuenow={step + 1} aria-valuemin={0} aria-valuemax={questions.length}><span style={{ width: `${((step + 1) / questions.length) * 100}%` }} /></div>
+          <div className="mb-4 text-sm text-muted">
             {t.quizQuestion} {step + 1} {t.quizOf} {questions.length}
           </div>
 
-          <h2 className="text-2xl font-black text-ink ">
+          <h2 ref={headingRef} tabIndex={-1} className="muras-question-title">
             {currentQuestion.text}
           </h2>
 
-          <div className="mt-6 grid gap-4 md:grid-cols-2">
-            {currentQuestion.options.map((option) => (
+          <div className="muras-quiz-options">
+            {currentQuestion.options.map((option, index) => (
               <button
                 key={option.text}
                 onClick={() => handleAnswer(option)}
-                className="group overflow-hidden rounded-3xl border border-line bg-surface text-left transition hover:border-gold hover:bg-gold-soft"
+                className="muras-quiz-option"
               >
-                <div className="overflow-hidden">
-                  <img
-                    src={option.image}
-                    alt={option.text}
-                    className="h-48 w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-                  />
-                </div>
-
-                <div className="p-4">
-                  <p className="text-base font-semibold text-ink ">
-                    {option.text}
-                  </p>
-                </div>
+                <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><span>{option.text}</span><span aria-hidden="true">↗</span>
               </button>
             ))}
           </div>
+          {step > 0 && <button className="muras-link" onClick={() => { setScores(history[history.length - 1]); setHistory(previous => previous.slice(0, -1)); setStep(previous => previous - 1); }}>← {c.back}</button>}
+          </div>
         </div>
       ) : (
-        <div className="mx-auto max-w-4xl glow-card panel-ornament rounded-3xl p-6">
+        <div className="muras-quiz-result muras-panel">
           <div className="rounded-3xl border border-gold bg-gradient-to-br from-gold-soft to-clay-soft p-6">
             <div className="text-sm uppercase tracking-[0.2em] text-gold">
               {t.quizResult}
             </div>
-            <h2 className="mt-2 text-4xl font-black text-ink ">
+            <h2 ref={headingRef} tabIndex={-1} className="mt-2 text-4xl font-black text-ink ">
               {result.title}
             </h2>
             <p className="mt-2 text-lg text-ink ">
@@ -449,6 +451,7 @@ export default function PetroglyphQuizPage() {
           >
             {t.quizRestart}
           </button>
+          <Link className="muras-link ml-5" to="/map">{t.map} ↗</Link>
         </div>
       )}
     </div>

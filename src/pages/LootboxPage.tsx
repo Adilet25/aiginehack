@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import BrandMark from '../components/shared/BrandMark';
+import { useInterfaceCopy } from '../data/interface';
 import { useMemo, useState } from "react";
 import PageHeader from "../components/shared/PageHeader";
 import GlowButton from "../components/shared/GlowButton";
@@ -15,6 +18,7 @@ const rarityStyles = {
 
 export default function LootboxPage() {
   const { t } = useLang();
+  const c = useInterfaceCopy();
   const { addArtifact } = useGame();
 
   const [isOpening, setIsOpening] = useState(false);
@@ -54,14 +58,15 @@ export default function LootboxPage() {
   };
 
   return (
-    <div>
+    <div className="muras-loot">
       <PageHeader
         title={t.lootboxTitle}
         subtitle={t.lootboxSubtitle}
+        action={{ to: "/museum", label: c.viewCollection }}
       />
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
-        <div className="glow-card rounded-3xl border border-line bg-surface p-8">
+      <div className="muras-reward-layout">
+        <div className="muras-reward-stage">
           <div className="mx-auto flex max-w-xl flex-col items-center text-center">
             <div
               className={`heritage-loot-stone mb-6 flex h-52 w-52 items-center justify-center rounded-[2rem] border text-center transition-all duration-500 ${
@@ -70,6 +75,7 @@ export default function LootboxPage() {
                   : "border-sage bg-gradient-to-br from-sage-soft to-sky-soft shadow-sm"
               }`}
             >
+              <BrandMark className="muras-reward-mark" />
               <span
                 className={`text-xl font-black tracking-wide text-ink  ${isOpening ? "animate-pulse" : ""}`}
               >
@@ -78,7 +84,7 @@ export default function LootboxPage() {
             </div>
 
             <p className="max-w-md text-sm leading-7 text-ink ">
-              {t.lootboxSubtitle}
+              {c.rewardHint}
             </p>
 
             <div className="mt-6">
@@ -93,8 +99,8 @@ export default function LootboxPage() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="glow-card rounded-3xl border border-line bg-surface p-6">
+        <div className="muras-reward-side">
+          <div className="muras-reward-odds">
             <h3 className="text-lg font-bold text-ink ">
               {t.dropChances}
             </h3>
@@ -115,7 +121,7 @@ export default function LootboxPage() {
             </div>
           </div>
 
-          <div className="glow-card min-h-[240px] rounded-3xl border border-line bg-surface p-6">
+          <div className="muras-reward-result" aria-live="polite" aria-busy={isOpening}>
             <h3 className="text-lg font-bold text-ink ">
               {t.latestReward}
             </h3>
@@ -178,6 +184,7 @@ export default function LootboxPage() {
                     ? t.duplicateMsg
                     : t.newArtifactMsg}
                 </div>
+                <Link className="muras-link" to="/museum">{c.viewCollection} →</Link>
               </div>
             )}
           </div>

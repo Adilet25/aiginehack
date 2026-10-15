@@ -77,14 +77,15 @@ export default function PetroScanMock() {
         </div>
       </div>
 
-      <label className="flex cursor-pointer items-center justify-center gap-3 rounded-2xl border border-line  bg-wash  px-4 py-4 text-sm hover:bg-surface ">
+      <label className="muras-upload flex cursor-pointer items-center justify-center gap-3 rounded-2xl border border-line bg-wash px-4 py-4 text-sm hover:bg-surface">
         <Camera size={18} />
         <span>{t.openCamera}</span>
         <input
           type="file"
           accept="image/*"
           capture="environment"
-          className="hidden"
+          className="sr-only"
+          disabled={isAnalyzing}
           onChange={(e) => handleFile(e.target.files?.[0])}
         />
       </label>
@@ -100,13 +101,13 @@ export default function PetroScanMock() {
       )}
 
       {isAnalyzing && (
-        <div className="mt-4 rounded-2xl border border-sky bg-sky-soft px-4 py-3 text-sm text-sky">
+        <div role="status" className="mt-4 rounded-2xl border border-sky bg-sky-soft px-4 py-3 text-sm text-sky">
           {t.analyzingPhoto}
         </div>
       )}
 
       {message && (
-        <div className="mt-4 rounded-2xl border border-sage bg-sage-soft px-4 py-3 text-sm text-ink ">
+        <div role="status" className="mt-4 rounded-2xl border border-sage bg-sage-soft px-4 py-3 text-sm text-ink ">
           {message}
         </div>
       )}

@@ -1,6 +1,10 @@
 import PageHeader from "../components/shared/PageHeader";
 import { useGame } from "../app/providers/GameProvider";
 import { useLang } from "../app/providers/LanguageProvider";
+import { Link } from 'react-router-dom';
+import BrandMark from '../components/shared/BrandMark';
+import EmptyState from '../components/shared/EmptyState';
+import { useInterfaceCopy } from '../data/interface';
 
 const rarityStyles = {
   common: "border-line bg-surface text-ink ",
@@ -10,31 +14,27 @@ const rarityStyles = {
 
 export default function MuseumPage() {
   const { t } = useLang();
+  const c = useInterfaceCopy();
   const { collection } = useGame();
 
   return (
-    <div>
+    <div className="muras-museum">
       <PageHeader
         title={t.museumTitle}
         subtitle={t.museumSubtitle}
+        action={{ to: '/lootbox', label: t.openChuko }}
       />
-
+      <p className="muras-caption">{c.collectionNote}</p>
       {collection.length === 0 ? (
-        <div className="glow-card rounded-3xl border border-line bg-surface p-8 text-center">
-          <h3 className="text-xl font-bold text-ink ">
-            {t.museumEmpty}
-          </h3>
-          <p className="mt-3 text-sm text-ink ">
-            {t.museumEmptyDesc}
-          </p>
-        </div>
+        <EmptyState title={t.museumEmpty} description={t.museumEmptyDesc}><Link className="heritage-button" to="/lootbox">{c.emptyCollectionAction}</Link></EmptyState>
       ) : (
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {collection.map((artifact) => (
+        <div className="muras-collection-grid">
+          {collection.map((artifact, index) => (
             <div
               key={artifact.id}
-              className="glow-card rounded-3xl border border-line bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-sage"
+              className="muras-collection-item"
             >
+              <div className="muras-collection-seal" aria-hidden="true"><BrandMark /><span>{String(index + 1).padStart(2, '0')}</span></div>
               <div className="mb-4 flex items-start justify-between gap-3">
                 <div>
                   <h3 className="text-xl font-bold text-ink ">

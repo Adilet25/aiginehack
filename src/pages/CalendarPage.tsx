@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useInterfaceCopy } from '../data/interface';
+import { useMemo, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -509,7 +510,22 @@ function getCalendarGuide(lang: Lang) {
   ];
 }
 
+function createCalendarRound() {
+  const shuffle = (values: number[]) => {
+    const result = [...values];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result;
+  };
+  const candidates = shuffle(Array.from({ length: 12 }, (_, index) => index)).slice(0, 4);
+  return { answer: candidates[0], options: shuffle(candidates) };
+}
+
 export default function CalendarPage() {
+  const c = useInterfaceCopy();
+  const [view, setView] = useState<'month' | 'wheel' | 'learn'>('month');
   const { t, lang } = useLang();
   const months = useMemo(() => getMonths(lang), [lang]);
   const weekdays = useMemo(() => getWeekdays(lang), [lang]);
@@ -523,15 +539,8 @@ export default function CalendarPage() {
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
 
-  const [quizMonth, setQuizMonth] = useState(() => {
-    return months[Math.floor(Math.random() * months.length)];
-  });
-
-  // Re-roll quiz month when language changes
-  useEffect(() => {
-    setQuizMonth(months[Math.floor(Math.random() * months.length)]);
-    setShowAnswer(false);
-  }, [months]);
+  const [round, setRound] = useState(createCalendarRound);
+  const quizMonth = months[round.answer];
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -540,18 +549,11 @@ export default function CalendarPage() {
 
   const selectedMonthInfo = months[selectedDate.getMonth()];
 
-  const quizOptions = useMemo(() => {
-    const shuffled = [...months]
-      .sort(() => Math.random() - 0.5)
-      .filter((m) => m.month !== quizMonth.month)
-      .slice(0, 3);
-
-    return [...shuffled, quizMonth].sort(() => Math.random() - 0.5);
-  }, [quizMonth, months]);
+  const quizOptions = round.options.map(index => months[index]);
 
   const nextQuiz = () => {
     setShowAnswer(false);
-    setQuizMonth(months[Math.floor(Math.random() * months.length)]);
+    setRound(createCalendarRound());
   };
 
   const handleQuizAnswer = (option: KyrgyzMonthInfo) => {
@@ -571,15 +573,12 @@ export default function CalendarPage() {
   const calendarGuide = useMemo(() => getCalendarGuide(lang), [lang]);
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title={t.calendarTitle}
-        subtitle={t.calendarSubtitle}
-      />
-
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="space-y-6">
-          <div className="glow-card panel-ornament rounded-3xl p-5 md:p-6">
+    <div className="muras-calendar">
+      <PageHeader title={t.calendarTitle} subtitle={t.calendarSubtitle} />
+      <p className="muras-caption">{c.calendarNote}</p>
+      <div className="muras-view-switch" role="group" aria-label={t.calendarView}>{(['month', 'wheel', 'learn'] as const).map(mode => <button key={mode} aria-pressed={view === mode} aria-controls={`calendar-${mode}`} onClick={() => setView(mode)}>{c[mode]}</button>)}</div>
+      <section id="calendar-month" hidden={view !== 'month'} className="muras-calendar-layout muras-view-panel" aria-label={c.month}>
+        <div className="glow-card panel-ornament rounded-3xl p-5 md:p-6">
             <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-ink ">
@@ -713,9 +712,31 @@ export default function CalendarPage() {
               })}
             </div>
           </div>
-          <KyrgyzCalendarWheel />
+        <aside className="muras-calendar-day-story"><div className="glow-card panel-ornament rounded-3xl p-6">
+            <p className="text-xs uppercase tracking-[0.2em] text-ink ">
+              {t.selectedDate}
+            </p>
+            <h2 className="mt-2 text-3xl font-black text-ink ">
+              {selectedDate.getDate()}{" "}
+              {months[selectedDate.getMonth()].russianName}
+            </h2>
+            <p className="mt-2 text-sm font-semibold text-gold ">
+              {lang === "en" ? "Kyrgyz" : "Кыргызча"}: {selectedMonthInfo.kyrgyzName} •{" "}
+              {selectedMonthInfo.togool}
+            </p>
 
-          <div className="glow-card panel-ornament rounded-3xl p-6">
+            <div className="mt-5 rounded-3xl border border-line bg-wash p-5">
+              <p className="text-xs uppercase tracking-wide text-ink ">
+                {t.easyExplanation}
+              </p>
+              <p className="mt-3 text-sm leading-7 text-ink ">
+                {selectedMonthInfo.explanation}
+              </p>
+            </div>
+          </div></aside>
+      </section>
+      <section id="calendar-wheel" hidden={view !== 'wheel'} className="muras-wheel-stage muras-view-panel" aria-label={c.wheel}><KyrgyzCalendarWheel /></section>
+      <section id="calendar-learn" hidden={view !== 'learn'} className="muras-calendar-quiz muras-view-panel" aria-label={c.learn}><div className="glow-card panel-ornament rounded-3xl p-6">
             <div className="mb-4 flex items-center gap-3">
               <div className="rounded-2xl bg-gold-soft p-3">
                 <Trophy size={18} />
@@ -798,37 +819,10 @@ export default function CalendarPage() {
                 </button>
               </div>
             )}
-          </div>
-        </div>
+          </div></section>
+      <div className="muras-calendar-reference">
+        <details className="muras-disclosure"><summary>{t.guideTitle}</summary><div className="muras-disclosure-body">
 
-        <div className="space-y-6">
-          <div className="glow-card panel-ornament rounded-3xl p-6">
-            <p className="text-xs uppercase tracking-[0.2em] text-ink ">
-              {t.selectedDate}
-            </p>
-            <h2 className="mt-2 text-3xl font-black text-ink ">
-              {selectedDate.getDate()}{" "}
-              {months[selectedDate.getMonth()].russianName}
-            </h2>
-            <p className="mt-2 text-sm font-semibold text-gold ">
-              {lang === "en" ? "Kyrgyz" : "Кыргызча"}: {selectedMonthInfo.kyrgyzName} •{" "}
-              {selectedMonthInfo.togool}
-            </p>
-
-            <div className="mt-5 rounded-3xl border border-line bg-wash p-5">
-              <p className="text-xs uppercase tracking-wide text-ink ">
-                {t.easyExplanation}
-              </p>
-              <p className="mt-3 text-sm leading-7 text-ink ">
-                {selectedMonthInfo.explanation}
-              </p>
-            </div>
-          </div>
-
-          <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-xl font-bold text-ink ">
-              {t.guideTitle}
-            </h3>
             <div className="mt-4 space-y-3">
               {calendarGuide.map((step, index) => (
                 <div
@@ -842,12 +836,9 @@ export default function CalendarPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </div></details>
+        <details className="muras-disclosure"><summary>{t.glossaryTitle}</summary><div className="muras-disclosure-body">
 
-          <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-xl font-bold text-ink ">
-              {t.glossaryTitle}
-            </h3>
             <div className="mt-4 space-y-3">
               {calendarGlossary.map((item) => (
                 <div
@@ -869,8 +860,7 @@ export default function CalendarPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
+          </div></details>
       </div>
     </div>
   );

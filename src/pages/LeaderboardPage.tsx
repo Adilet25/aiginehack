@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom';
+import EmptyState from '../components/shared/EmptyState';
+import { useInterfaceCopy } from '../data/interface';
 import { useMemo } from "react";
 import PageHeader from "../components/shared/PageHeader";
 import ArtworkImage from "../components/shared/ArtworkImage";
@@ -7,6 +10,7 @@ import { useLang } from "../app/providers/LanguageProvider";
 
 export default function LeaderboardPage() {
   const { t } = useLang();
+  const c = useInterfaceCopy();
   const { artworks } = useGame();
 
   const topArtworks = useMemo(() => {
@@ -72,14 +76,15 @@ export default function LeaderboardPage() {
   }, [artworks]);
 
   return (
-    <div className="space-y-6">
+    <div className="muras-leaderboard space-y-6">
       <PageHeader
         title={t.leaderboardTitle}
         subtitle={t.leaderboardSubtitle}
+        action={{ to: "/community-gallery", label: c.browse }}
       />
       <PrototypeNotice kind="community" />
 
-      <div className="rounded-3xl border border-gold bg-gold-soft p-5 text-ink ">
+      <div className="muras-prize-note">
         <div className="text-sm uppercase tracking-[0.2em] opacity-75">
           {t.grandPrize}
         </div>
@@ -88,17 +93,18 @@ export default function LeaderboardPage() {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="glow-card panel-ornament rounded-3xl p-6">
+      <div className="muras-rank-layout">
+        <div className="muras-rank-section">
           <h3 className="text-2xl font-black text-ink ">
             {t.topPetroglyphs}
           </h3>
 
           <div className="mt-5 space-y-3">
+            {topArtworks.length === 0 && <EmptyState title={c.noResults}><Link className="muras-link" to="/stone-workshop">{c.createWork}</Link></EmptyState>}
             {topArtworks.map((artwork, index) => (
               <div
                 key={artwork.id}
-                className="flex items-center gap-4 rounded-2xl border border-line bg-wash p-4"
+                className="muras-ranking-row"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-soft font-black text-ink ">
                   #{index + 1}
@@ -132,7 +138,7 @@ export default function LeaderboardPage() {
           </div>
         </div>
 
-        <div className="glow-card panel-ornament rounded-3xl p-6">
+        <div className="muras-rank-section">
           <h3 className="text-2xl font-black text-ink ">
             {t.topArtists}
           </h3>
@@ -141,7 +147,7 @@ export default function LeaderboardPage() {
             {topAuthors.map((author, index) => (
               <div
                 key={author.author}
-                className="flex items-center gap-4 rounded-2xl border border-line bg-wash p-4"
+                className="muras-ranking-row"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sage-soft font-black text-ink ">
                   #{index + 1}

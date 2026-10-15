@@ -6,6 +6,7 @@ import {
   Popup,
   Polyline,
   TileLayer,
+  useMap,
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -21,6 +22,15 @@ import MySubmissions from "../components/map/MySubmissions";
 import { useLang } from "../app/providers/LanguageProvider";
 import { useGame } from "../app/providers/GameProvider";
 import type { HeritageLocation } from "../types";
+import { useInterfaceCopy } from '../data/interface';
+
+function FocusPlace({ location }: { location: HeritageLocation | null }) {
+  const map = useMap();
+  useEffect(() => {
+    if (location) map.setView([location.lat, location.lng], Math.max(map.getZoom(), 10), { animate: !window.matchMedia('(prefers-reduced-motion: reduce)').matches });
+  }, [location, map]);
+  return null;
+}
 
 // Fix Leaflet default markers in Vite
 delete (L.Icon.Default.prototype as L.Icon.Default & { _getIconUrl?: unknown })
@@ -113,12 +123,15 @@ function pointToSegmentDistance(
 export default function MapPage() {
   const { t, lang } = useLang();
   const { mapLocations } = useGame();
+  const c = useInterfaceCopy();
+  const [query, setQuery] = useState('');
+  const [kind, setKind] = useState<'all' | 'sacred' | 'petroglyph'>('all');
+  const filteredLocations = useMemo(() => mapLocations.filter(location => (kind === 'all' || location.kind === kind) && `${location.name} ${location.district}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())), [mapLocations, kind, query]);
 
   const [selected, setSelected] = useState<HeritageLocation | null>(null);
   const [userPosition, setUserPosition] = useState<[number, number] | null>(
     null,
   );
-  const [nearbyWarning, setNearbyWarning] = useState<string | null>(null);
 
   const [startMode, setStartMode] = useState<"user" | "location">("user");
   const [startLocationId, setStartLocationId] = useState<string>("");
@@ -149,13 +162,9 @@ export default function MapPage() {
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
-  useEffect(() => {
-    if (!userPosition) {
-      setNearbyWarning(null);
-      return;
-    }
-
-    const nearby = mapLocations.find((loc) => {
+  const nearby = useMemo(() => {
+    if (!userPosition) return null;
+    return mapLocations.find((loc) => {
       const dist = distanceMeters(
         userPosition[0],
         userPosition[1],
@@ -163,27 +172,12 @@ export default function MapPage() {
         loc.lng,
       );
       return dist <= loc.radiusMeters;
-    });
-
-    if (!nearby) {
-      setNearbyWarning(null);
-      return;
-    }
-
-    if (nearby.kind === "sacred") {
-      setNearbyWarning(
-        `${t.nearbyWarning}: ${nearby.name}`,
-      );
-
-      if ("vibrate" in navigator) {
-        navigator.vibrate?.([150, 80, 150]);
-      }
-    } else {
-      setNearbyWarning(
-        t.petroglyphNearby.replace("{name}", nearby.name),
-      );
-    }
-  }, [mapLocations, t.nearbyWarning, t.petroglyphNearby, userPosition]);
+    }) ?? null;
+  }, [mapLocations, userPosition]);
+  const nearbyWarning = !nearby ? null : nearby.kind === 'sacred' ? `${t.nearbyWarning}: ${nearby.name}` : t.petroglyphNearby.replace('{name}', nearby.name);
+  useEffect(() => {
+    if (nearby?.kind === 'sacred' && 'vibrate' in navigator) navigator.vibrate?.([150, 80, 150]);
+  }, [nearby]);
 
   const destinationLocation = useMemo(
     () => mapLocations.find((loc) => String(loc.id) === destinationId) ?? null,
@@ -323,16 +317,16 @@ export default function MapPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="muras-map space-y-6">
       <PageHeader
         title={t.mapTitle}
         subtitle={t.mapSubtitle}
       />
       <PrototypeNotice kind="map" />
-      <div className="flex flex-wrap gap-5 text-sm text-muted"><span>● {t.kindSacred}</span><span>◇ {t.kindPetroglyph}</span></div>
+      <div className="muras-map-toolbar"><input type="search" aria-label={c.searchPlaces} placeholder={c.searchPlaces} value={query} onChange={e => setQuery(e.target.value)} /><div className="muras-filters">{(['all', 'sacred', 'petroglyph'] as const).map(value => <button key={value} aria-pressed={kind === value} onClick={() => setKind(value)}>{value === 'all' ? t.filterAll : value === 'sacred' ? `● ${t.kindSacred}` : `◇ ${t.kindPetroglyph}`}</button>)}</div></div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="glow-card panel-ornament overflow-hidden rounded-3xl p-3">
+      <div className="muras-map-layout">
+        <div className="muras-map-frame">
           <div className="heritage-map-surface overflow-hidden rounded-2xl border border-line ">
             <MapContainer
               center={center}
@@ -340,6 +334,7 @@ export default function MapPage() {
               scrollWheelZoom
               className="h-full w-full"
             >
+              <FocusPlace location={selected} />
               <TileLayer
                 attribution="&copy; OpenStreetMap contributors"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -361,14 +356,14 @@ export default function MapPage() {
                 <Polyline
                   positions={polylinePositions}
                   pathOptions={{
-                    color: "#f59e0b",
+                    color: "#9c4327",
                     weight: 5,
                     opacity: 0.85,
                   }}
                 />
               )}
 
-              {mapLocations.map((location) => (
+              {filteredLocations.map((location) => (
                 <div key={location.id}>
                   <Marker
                     icon={heritageIcons[location.kind]}
@@ -428,19 +423,20 @@ export default function MapPage() {
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="muras-map-sidebar">
+          <div className="muras-place-browser"><p className="muras-result-count" role="status">{c.results}: {filteredLocations.length}</p><p className="muras-caption">{c.choosePlace}</p><div className="muras-place-list">{filteredLocations.map(location => <button key={location.id} aria-pressed={selected?.id === location.id} onClick={() => setSelected(location)}><span>{location.name}</span><small>{location.district}</small></button>)}</div>{filteredLocations.length === 0 && <button className="muras-link" onClick={() => { setQuery(''); setKind('all'); }}>{c.reset}</button>}</div>
           <LocationSidePanel
             location={selected}
             nearbyWarning={nearbyWarning}
           />
 
-          <div className="glow-card panel-ornament rounded-3xl p-6">
-            <h3 className="text-2xl font-black text-ink ">
-              {t.tripPlanner}
-            </h3>
+          <details className="muras-disclosure muras-planner">
+            <summary>{t.tripPlanner}</summary>
+            <div className="muras-disclosure-body">
             <p className="mt-2 text-sm leading-7 text-ink ">
               {t.tripPlannerDesc}
             </p>
+            <p className="muras-caption">{c.planHint}</p>
 
             <div className="mt-5 space-y-4">
               <div>
@@ -450,6 +446,7 @@ export default function MapPage() {
 
                 <div className="grid gap-3">
                   <select
+                    aria-label={t.pointA}
                     value={startMode}
                     onChange={(e) =>
                       setStartMode(e.target.value as "user" | "location")
@@ -462,6 +459,7 @@ export default function MapPage() {
 
                   {startMode === "location" && (
                     <select
+                      aria-label={t.selectPointA}
                       value={startLocationId}
                       onChange={(e) => setStartLocationId(e.target.value)}
                       className="rounded-2xl border border-line bg-surface px-4 py-3 text-ink    outline-none"
@@ -483,6 +481,7 @@ export default function MapPage() {
                 </label>
 
                 <select
+                  aria-label={t.pointB}
                   value={destinationId}
                   onChange={(e) => setDestinationId(e.target.value)}
                   className="w-full rounded-2xl border border-line bg-surface px-4 py-3 text-ink    outline-none"
@@ -541,6 +540,7 @@ export default function MapPage() {
               <div className="flex flex-wrap gap-3">
                 <button
                   onClick={buildRoute}
+                  disabled={!startPoint || !destinationLocation}
                   className="rounded-2xl border border-gold bg-gold-soft px-5 py-3 font-semibold text-ink  transition hover:bg-gold-soft"
                 >
                   {t.buildManually}
@@ -548,6 +548,7 @@ export default function MapPage() {
 
                 <button
                   onClick={autoBuildRoute}
+                  disabled={!startPoint || !destinationLocation}
                   className="rounded-2xl border border-sage bg-sage-soft px-5 py-3 font-semibold text-ink  transition hover:bg-sage-soft"
                 >
                   {t.buildAuto}
@@ -560,6 +561,7 @@ export default function MapPage() {
                   {t.clear}
                 </button>
               </div>
+              {startMode === 'user' && !userPosition && <p className="muras-caption" role="status">{c.locationHint}</p>}
 
               {autoSuggestions.length > 0 && (
                 <div className="rounded-3xl border border-sky bg-sky-soft p-5">
@@ -608,16 +610,17 @@ export default function MapPage() {
                 </div>
               )}
             </div>
-          </div>
+            </div>
+          </details>
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <section className="muras-discovery-section"><h2>{c.discoveries}</h2><div className="muras-discovery-grid">
         <PetroScanMock />
-        <div className="col-start-2 col-end-4 h-full">
+        <div className="min-w-0">
           <MySubmissions />
         </div>
-      </div>
+      </div></section>
     </div>
   );
 }

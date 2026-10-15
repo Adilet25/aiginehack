@@ -1,3 +1,4 @@
+import { useInterfaceCopy } from '../data/interface';
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Hammer,
@@ -174,6 +175,7 @@ export default function StoneWorkshop() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { publishArtwork } = useGame();
   const { t, lang } = useLang();
+  const c = useInterfaceCopy();
 
   const interpretationLibrary = useMemo(
     () => getInterpretationLibrary(lang),
@@ -204,9 +206,6 @@ export default function StoneWorkshop() {
   }, [tool]);
 
   useEffect(() => {
-    drawCanvas();
-  }, [strokes, template]);
-
   const getCtx = () => {
     const canvas = canvasRef.current;
     if (!canvas) return null;
@@ -317,6 +316,8 @@ export default function StoneWorkshop() {
     drawTemplateOverlay(ctx);
     drawStrokes(ctx);
   };
+    drawCanvas();
+  }, [strokes, template]);
 
   const createImpact = (x: number, y: number) => {
     setImpactPulse({ x, y });
@@ -483,16 +484,16 @@ export default function StoneWorkshop() {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="space-y-4">
-          <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h3 className="text-xl font-bold text-ink ">
+      <div className="muras-studio-layout">
+        <aside className="muras-studio-tools">
+          <details className="glow-card muras-studio-help">
+            <summary className="text-xl text-ink">
               {t.carvingMode}
-            </h3>
+            </summary>
             <p className="mt-3 text-sm leading-7 text-ink  ">
               {t.carvingModeDesc}
             </p>
-          </div>
+          </details>
 
           <div className="glow-card panel-ornament rounded-3xl p-5">
             <h4 className="text-lg font-bold text-ink ">
@@ -501,6 +502,7 @@ export default function StoneWorkshop() {
 
             <div className="mt-4 grid gap-3">
               <button
+                aria-pressed={tool === "hammer"}
                 onClick={() => setTool("hammer")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "hammer"
@@ -520,6 +522,7 @@ export default function StoneWorkshop() {
               </button>
 
               <button
+                aria-pressed={tool === "chisel"}
                 onClick={() => setTool("chisel")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "chisel"
@@ -539,6 +542,7 @@ export default function StoneWorkshop() {
               </button>
 
               <button
+                aria-pressed={tool === "brush"}
                 onClick={() => setTool("brush")}
                 className={`rounded-2xl border px-4 py-3 text-left transition ${
                   tool === "brush"
@@ -568,6 +572,7 @@ export default function StoneWorkshop() {
               {templateOptions.map((item) => (
                 <button
                   key={item.key}
+                  aria-pressed={template === item.key}
                   onClick={() => setTemplate(item.key as TemplateType)}
                   className={`rounded-2xl border px-3 py-3 text-sm font-semibold transition ${
                     template === item.key
@@ -612,9 +617,9 @@ export default function StoneWorkshop() {
               </button>
             </div>
           </div>
-        </div>
+        </aside>
 
-        <div className="glow-card panel-ornament rounded-3xl p-5">
+        <section className="muras-studio-canvas"><div className="muras-studio-caption"><h2>{c.draw}</h2><p>{c.toolsHint}</p></div>
           <div className="relative overflow-hidden rounded-3xl border border-line  bg-[#231d17]">
             <canvas
               ref={canvasRef}
@@ -644,12 +649,12 @@ export default function StoneWorkshop() {
           <div className="mt-4 rounded-2xl border border-line  bg-wash  px-4 py-3 text-sm leading-7 text-ink  ">
             {t.workshopTip}
           </div>
-        </div>
+        </section>
       </div>
 
       {interpretation && (
-        <>
-          <div className="grid gap-4 lg:grid-cols-2">
+        <section className="muras-studio-result"><h2>{c.publishStep}</h2>
+          <div className="muras-interpretation-grid">
             <div className="glow-card panel-ornament rounded-3xl p-6">
               <div className="flex items-start justify-between gap-3">
                 <div>
@@ -728,12 +733,14 @@ export default function StoneWorkshop() {
               <input
                 value={publishTitle}
                 onChange={(e) => setPublishTitle(e.target.value)}
+                aria-label={t.workTitle}
                 placeholder={t.workTitle}
                 className="rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
               />
               <input
                 value={publishAuthor}
                 onChange={(e) => setPublishAuthor(e.target.value)}
+                aria-label={t.authorName}
                 placeholder={t.authorName}
                 className="rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
               />
@@ -742,7 +749,8 @@ export default function StoneWorkshop() {
             <textarea
               value={publishDescription}
               onChange={(e) => setPublishDescription(e.target.value)}
-              placeholder={t.shortDescription}
+              aria-label={t.shortDescription}
+                placeholder={t.shortDescription}
               rows={4}
               className="mt-4 w-full rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
             />
@@ -761,12 +769,12 @@ export default function StoneWorkshop() {
             </div>
 
             {publishMessage && (
-              <div className="mt-4 rounded-2xl border border-line  bg-surface  px-4 py-3 text-sm text-ink  ">
+              <div role="status" className="mt-4 rounded-2xl border border-line  bg-surface  px-4 py-3 text-sm text-ink  ">
                 {publishMessage}
               </div>
             )}
           </div>
-        </>
+        </section>
       )}
     </div>
   );

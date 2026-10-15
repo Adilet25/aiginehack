@@ -17,8 +17,8 @@ const dictionary = {
     lootbox: "Чүко",
     profile: "Профиль",
     calendar: "Календарь",
-    petroQuiz: "Петро Квиз",
-    stoneLab: "Каменная лаба",
+    petroQuiz: "Петроглиф-тест",
+    stoneLab: "Мастерская",
     gallery: "Галерея",
     leaderboard: "Рейтинг",
     groupExplore: "Исследовать",
@@ -90,7 +90,7 @@ const dictionary = {
     createCompeteDesc: "Создавай свои петроглифы, публикуй их и соревнуйся с другими.",
 
     // Profile
-    profileTitle: "Профиль игрока",
+    profileTitle: "Ваше путешествие",
     profileSubtitle: "Уровень, очки, достижения и общий прогресс.",
     xpProgress: "Прогресс XP",
     xpUntilNext: "до следующего уровня",
@@ -122,7 +122,7 @@ const dictionary = {
     categoryAbstract: "Абстракция",
 
     // Lootbox
-    lootboxTitle: "Чүко Лутбокс",
+    lootboxTitle: "Чүко: новые открытия",
     lootboxSubtitle: "Открывай чүко, получай случайные артефакты и усиливай свой цифровой музей.",
     openChuko: "Открыть Чүко",
     opening: "Открывается...",
@@ -261,8 +261,8 @@ const dictionary = {
     lootbox: "Chüko",
     profile: "Profile",
     calendar: "Calendar",
-    petroQuiz: "Petro Quiz",
-    stoneLab: "Stone Lab",
+    petroQuiz: "Petroglyph quiz",
+    stoneLab: "Workshop",
     gallery: "Gallery",
     leaderboard: "Leaderboard",
     groupExplore: "Explore",
@@ -334,7 +334,7 @@ const dictionary = {
     createCompeteDesc: "Create your own petroglyphs, publish them and compete with others.",
 
     // Profile
-    profileTitle: "Player Profile",
+    profileTitle: "Your journey",
     profileSubtitle: "Level, points, achievements and overall progress.",
     xpProgress: "XP Progress",
     xpUntilNext: "until next level",
@@ -366,7 +366,7 @@ const dictionary = {
     categoryAbstract: "Abstract",
 
     // Lootbox
-    lootboxTitle: "Chüko Lootbox",
+    lootboxTitle: "Chüko: new discoveries",
     lootboxSubtitle: "Open chüko boxes, collect random artifacts and power up your digital museum.",
     openChuko: "Open Chuko",
     opening: "Opening...",

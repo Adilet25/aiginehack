@@ -1,0 +1,58 @@
+import { useLang } from '../app/providers/LanguageProvider';
+
+const ru = {
+  back: 'Назад',
+  searchPlaces: 'Найти место по названию или району', searchWorks: 'Найти работу или автора',
+  noResults: 'Ничего не найдено', tryAgain: 'Измените запрос или сбросьте фильтры.', reset: 'Сбросить фильтры',
+  results: 'Найдено', month: 'По месяцам', wheel: 'Круг года', learn: 'Проверьте себя',
+  explore: 'Исследуйте наследие', create: 'Творчество и открытия', community: 'Живое сообщество', personal: 'Ваше путешествие',
+  choosePlace: 'Выберите точку на карте или место в списке.', planHint: 'Выберите начало и конец маршрута. Линия на карте — схема, не дорожная навигация.',
+  locationHint: 'Геопозиция недоступна. Разрешите доступ в браузере или выберите место начала вручную.',
+  discoveries: 'Ваши находки', next: 'Продолжить путешествие', browse: 'Посмотреть работы',
+  createWork: 'Создать свою работу', sort: 'Порядок работ', newest: 'Сначала новые', popular: 'По рейтингу',
+  voteThanks: 'Оценка сохранена', pending: 'Ожидают проверки', complete: 'Всё просмотрено',
+  collectionNote: 'Игровая коллекция. Предметы не являются музейным каталогом.',
+  calendarNote: 'Демонстрационная модель календаря. Даты и трактовки требуют проверки по источникам.',
+  quizNote: 'Развлекательный тест по мотивам наскального искусства.',
+  draw: 'Создайте рисунок', toolsHint: 'Выберите инструмент и проведите по камню мышью или пальцем.',
+  publishStep: 'Рассмотрите результат и поделитесь работой', emptyCollectionAction: 'Получить первый предмет',
+  rewardHint: 'Бесплатная игровая награда. Вероятности указаны ниже.', viewCollection: 'В мою коллекцию',
+};
+type Copy = { [K in keyof typeof ru]: string };
+const en: Copy = {
+  back: 'Back',
+  searchPlaces: 'Find a place or district', searchWorks: 'Find artwork or an artist', noResults: 'No results',
+  tryAgain: 'Try another search or reset the filters.', reset: 'Reset filters', results: 'Found',
+  month: 'By month', wheel: 'Wheel of the year', learn: 'Test your knowledge',
+  explore: 'Explore the heritage', create: 'Create and discover', community: 'A living community', personal: 'Your journey',
+  choosePlace: 'Choose a marker on the map or a place from the list.',
+  planHint: 'Choose your start and destination. The map line is a schematic, not road navigation.',
+  locationHint: 'Location unavailable. Allow access in your browser or choose a starting place manually.',
+  discoveries: 'Your discoveries', next: 'Continue your journey', browse: 'Explore the gallery', createWork: 'Create your own artwork',
+  sort: 'Sort artworks', newest: 'Newest first', popular: 'Highest rated', voteThanks: 'Rating saved',
+  pending: 'Awaiting review', complete: 'All caught up', collectionNote: 'Game collection. These items are not a museum catalogue.',
+  calendarNote: 'Demonstration calendar model. Dates and interpretations need source verification.',
+  quizNote: 'An entertainment quiz inspired by rock art.', draw: 'Create your drawing',
+  toolsHint: 'Choose a tool and draw on the stone with your mouse or finger.',
+  publishStep: 'Explore the result and share your work', emptyCollectionAction: 'Find your first collectible',
+  rewardHint: 'A free game reward. Drop probabilities are shown below.', viewCollection: 'View my collection',
+};
+const kg: Copy = {
+  back: 'Артка',
+  searchPlaces: 'Жерди же районду издөө', searchWorks: 'Ишти же авторду издөө', noResults: 'Эч нерсе табылган жок',
+  tryAgain: 'Суроону өзгөртүңүз же чыпкаларды тазалаңыз.', reset: 'Чыпкаларды тазалоо', results: 'Табылды',
+  month: 'Айлар боюнча', wheel: 'Жыл айлампасы', learn: 'Өзүңүздү текшериңиз',
+  explore: 'Мурасты тааныңыз', create: 'Чыгармачылык жана ачылыштар', community: 'Жандуу коомчулук', personal: 'Сиздин саякатыңыз',
+  choosePlace: 'Картадан же тизмеден жерди тандаңыз.',
+  planHint: 'Жолдун башталышын жана аягын тандаңыз. Картадагы сызык — схема, жол навигациясы эмес.',
+  locationHint: 'Жайгашкан жер аныкталган жок. Браузерден уруксат бериңиз же башталышты кол менен тандаңыз.',
+  discoveries: 'Сиздин табылгалар', next: 'Саякатты улантуу', browse: 'Иштерди көрүү', createWork: 'Өз ишиңизди жаратыңыз',
+  sort: 'Иштердин тартиби', newest: 'Адегенде жаңылары', popular: 'Рейтинг боюнча', voteThanks: 'Баа сакталды',
+  pending: 'Текшерүүнү күтүүдө', complete: 'Баары каралды', collectionNote: 'Оюн коллекциясы. Буюмдар музей каталогу эмес.',
+  calendarNote: 'Календардын көрсөтмө модели. Даталар жана чечмелөөлөр булактар аркылуу текшерилиши керек.',
+  quizNote: 'Аскадагы сүрөттөрдөн шыктанган көңүл ачуучу тест.', draw: 'Сүрөт жаратыңыз',
+  toolsHint: 'Куралды тандап, ташка чычкан же манжа менен тартыңыз.',
+  publishStep: 'Натыйжаны карап, ишиңиз менен бөлүшүңүз', emptyCollectionAction: 'Биринчи буюмду алуу',
+  rewardHint: 'Акысыз оюн сыйлыгы. Ыктымалдыктар төмөндө көрсөтүлгөн.', viewCollection: 'Коллекциямды көрүү',
+};
+export function useInterfaceCopy() { const { lang } = useLang(); return { ru, en, kg }[lang]; }

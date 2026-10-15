@@ -1,32 +1,32 @@
 import PageHeader from "../components/shared/PageHeader";
 import { useGame } from "../app/providers/GameProvider";
 import { useLang } from "../app/providers/LanguageProvider";
+import EmptyState from '../components/shared/EmptyState';
+import { useInterfaceCopy } from '../data/interface';
 
 export default function AdminReviewPage() {
   const { t } = useLang();
+  const c = useInterfaceCopy();
   const { submissions, approveSubmission, rejectSubmission } = useGame();
 
   const pendingItems = submissions.filter((item) => item.status === "pending");
 
   return (
-    <div>
+    <div className="muras-review">
       <PageHeader
         title={t.adminTitle}
         subtitle={t.adminSubtitle}
       />
+      <p className="muras-result-count" role="status">{c.pending}: {pendingItems.length}</p>
 
       {pendingItems.length === 0 ? (
-        <div className="glow-card rounded-3xl border border-line bg-surface p-8">
-          <p className="text-sm text-ink ">
-            {t.noPending}
-          </p>
-        </div>
+        <EmptyState title={c.complete} description={t.noPending} />
       ) : (
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="muras-review-list">
           {pendingItems.map((item) => (
             <div
               key={item.id}
-              className="glow-card rounded-3xl border border-line bg-surface p-5"
+              className="muras-review-item"
             >
               <div className="overflow-hidden rounded-2xl border border-line">
                 <img
@@ -36,7 +36,7 @@ export default function AdminReviewPage() {
                 />
               </div>
 
-              <h3 className="mt-4 text-xl font-bold text-ink ">
+              <div><h3 className="mt-4 text-xl font-bold text-ink ">
                 {item.title}
               </h3>
               <p className="mt-2 text-sm text-ink ">
@@ -57,6 +57,7 @@ export default function AdminReviewPage() {
                 >
                   {t.reject}
                 </button>
+              </div>
               </div>
             </div>
           ))}

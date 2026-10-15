@@ -1,5 +1,6 @@
 import type { PetroSubmission, SubmissionStatus } from "../../types";
 import { useLang } from "../../app/providers/LanguageProvider";
+import { useEffect, useRef } from 'react';
 
 interface SubmissionViewerProps {
   submission: PetroSubmission | null;
@@ -11,6 +12,15 @@ export default function SubmissionViewer({
   onClose,
 }: SubmissionViewerProps) {
   const { t } = useLang();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!submission || !dialog) return;
+    dialog.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { dialog.close(); document.body.style.overflow = previousOverflow; };
+  }, [submission]);
 
   if (!submission) return null;
 
@@ -29,8 +39,9 @@ export default function SubmissionViewer({
   };
 
   return (
-    <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+    <dialog ref={dialogRef} className="muras-submission-dialog" aria-labelledby="submission-title" onCancel={event => { event.preventDefault(); onClose(); }}>
       <div className="glow-card w-full max-w-5xl animate-[fadeIn_.25s_ease] rounded-3xl border border-line  p-4 md:p-6">
+        <div className="mb-3 flex justify-end"><button type="button" onClick={onClose} className="muras-link">{t.close} ×</button></div>
         <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="overflow-hidden rounded-3xl border border-line  bg-wash ">
             <img
@@ -43,7 +54,7 @@ export default function SubmissionViewer({
           <div className="flex flex-col">
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
-                <h2 className="text-2xl font-black text-ink ">
+                <h2 id="submission-title" className="text-2xl font-black text-ink ">
                   {submission.title}
                 </h2>
                 <p className="mt-1 text-sm text-ink  ">
@@ -90,6 +101,6 @@ export default function SubmissionViewer({
           </div>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }
