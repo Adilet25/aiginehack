@@ -2,9 +2,9 @@ import { useLang } from '../../app/providers/LanguageProvider';
 
 const notices = {
   map: {
-    ru: 'Прототип карты: есть сгенерированные демонстрационные места. Маршруты схематические, не предназначены для навигации.',
-    en: 'Map prototype: includes generated demonstration places. Routes are schematic and are not intended for navigation.',
-    kg: 'Карта — прототип: жасалма көрсөтмө жерлер бар. Маршруттар шарттуу жана навигация үчүн арналган эмес.',
+    ru: 'Прототип карты: есть сгенерированные демонстрационные места. Автомобильные маршруты OSRM требуют интернета; доступность подъезда нужно проверить перед поездкой.',
+    en: 'Map prototype: includes generated demonstration places. OSRM driving routes require internet; check access before travelling.',
+    kg: 'Карта — прототип: жасалма көрсөтмө жерлер бар. OSRM унаа багыттары үчүн интернет керек; жолдун жеткиликтүүлүгүн сапар алдында текшериңиз.',
   },
   community: {
     ru: 'Демонстрация сообщества: примеры работ и голосование хранятся только в текущем сеансе. Конкурс и приз — концепция прототипа.',

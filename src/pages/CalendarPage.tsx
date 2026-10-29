@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import PageHeader from "../components/shared/PageHeader";
 import { useLang } from "../app/providers/LanguageProvider";
-import KyrgyzCalendarWheel from "../components/calendar/KyrgyzCalendarWheel";
+import CalendarYearExplorer from "../components/calendar/CalendarYearExplorer";
 import type { Lang } from "../types";
 
 type KyrgyzMonthInfo = {
@@ -301,7 +301,7 @@ function getMonths(lang: Lang) {
 function getWeekdays(lang: Lang) {
   return lang === "en"
     ? ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]
-    : ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+    : lang === 'kg' ? ['Дш','Шш','Шр','Бш','Жм','Иш','Жш'] : ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 }
 
 function getDayMarkers(month: number, day: number, lang: Lang): DayMarker[] {
@@ -318,13 +318,12 @@ function getDayMarkers(month: number, day: number, lang: Lang): DayMarker[] {
 
   const isNauryz = month === 2 && day === 21;
   const isSumbula = month === 6 && day >= 19 && day <= 25;
-  const isTogool = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23].includes(day);
 
   if (isTokson) markers.push({ label: lang === "en" ? "Tokson" : "Токсон", type: "cold" });
   if (isKyshChilde) markers.push({ label: lang === "en" ? "Kysh childe" : "Кыш чилде", type: "cold" });
   if (isNauryz) markers.push({ label: lang === "en" ? "Nooruz" : "Нооруз", type: "season" });
   if (isSumbula) markers.push({ label: lang === "en" ? "Sumbula" : "Сумбула", type: "sky" });
-  if (isTogool) markers.push({ label: lang === "en" ? "Togool" : "Тогоол", type: "togool" });
+  // Togool dates require verified astronomical data; month numbers are not event dates.
 
   return markers;
 }
@@ -525,7 +524,7 @@ function createCalendarRound() {
 
 export default function CalendarPage() {
   const c = useInterfaceCopy();
-  const [view, setView] = useState<'month' | 'wheel' | 'learn'>('month');
+  const [view, setView] = useState<'month' | 'wheel' | 'learn'>('wheel');
   const { t, lang } = useLang();
   const months = useMemo(() => getMonths(lang), [lang]);
   const weekdays = useMemo(() => getWeekdays(lang), [lang]);
@@ -548,6 +547,11 @@ export default function CalendarPage() {
   const days = useMemo(() => getCalendarDays(year, month, lang), [year, month, lang]);
 
   const selectedMonthInfo = months[selectedDate.getMonth()];
+  const selectMonth = (nextMonth: number, nextYear = year) => {
+    const date = new Date(nextYear, nextMonth, 1);
+    setCurrentDate(date);
+    setSelectedDate(date);
+  };
 
   const quizOptions = round.options.map(index => months[index]);
 
@@ -595,7 +599,7 @@ export default function CalendarPage() {
               <div className="flex items-center gap-3">
                 <button
                   aria-label={lang === "en" ? "Previous month" : lang === "kg" ? "Мурунку ай" : "Предыдущий месяц"}
-                  onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
+                  onClick={() => selectMonth(month - 1)}
                   className="rounded-2xl border border-line bg-surface p-3 text-ink  transition hover:bg-surface"
                 >
                   <ChevronLeft size={18} />
@@ -615,7 +619,7 @@ export default function CalendarPage() {
 
                 <button
                   aria-label={lang === "en" ? "Next month" : lang === "kg" ? "Кийинки ай" : "Следующий месяц"}
-                  onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
+                  onClick={() => selectMonth(month + 1)}
                   className="rounded-2xl border border-line bg-surface p-3 text-ink  transition hover:bg-surface"
                 >
                   <ChevronRight size={18} />
@@ -735,7 +739,7 @@ export default function CalendarPage() {
             </div>
           </div></aside>
       </section>
-      <section id="calendar-wheel" hidden={view !== 'wheel'} className="muras-wheel-stage muras-view-panel" aria-label={c.wheel}><KyrgyzCalendarWheel /></section>
+      <section id="calendar-wheel" hidden={view !== 'wheel'} className="muras-wheel-stage muras-view-panel" aria-label={c.wheel}><CalendarYearExplorer months={months} month={month} year={year} onSelect={selectMonth} onToday={() => { const today = new Date(); selectMonth(today.getMonth(), today.getFullYear()); }} onOpenMonth={() => setView('month')} /></section>
       <section id="calendar-learn" hidden={view !== 'learn'} className="muras-calendar-quiz muras-view-panel" aria-label={c.learn}><div className="glow-card panel-ornament rounded-3xl p-6">
             <div className="mb-4 flex items-center gap-3">
               <div className="rounded-2xl bg-gold-soft p-3">

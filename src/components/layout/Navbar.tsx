@@ -44,8 +44,11 @@ export default function Navbar() {
         <BrandMark /><span><strong>МУРАС</strong><small>{lang === 'en' ? 'Living heritage of Kyrgyzstan' : lang === 'kg' ? 'Кыргызстандын жандуу мурасы' : 'Живое наследие Кыргызстана'}</small></span>
       </Link>
       <nav className="heritage-desktop-nav" aria-label={t.menu}>
-        {groups.map(group => <NavDropdown key={group.label} {...group} />)}
-        <NavLink className="heritage-nav-link" to="/profile">{t.profile}</NavLink>
+        <NavLink className="heritage-nav-link" to="/map">{t.map}</NavLink>
+        <NavLink className="heritage-nav-link" to="/calendar">{t.calendar}</NavLink>
+        <NavLink className="heritage-nav-link" to="/stone-workshop">{t.stoneLab}</NavLink>
+        <NavDropdown label={t.groupCommunity} items={groups[2].items} />
+        <NavDropdown label={lang === 'en' ? 'More' : lang === 'kg' ? 'Дагы' : 'Ещё'} items={[groups[0].items[3], groups[1].items[0], groups[1].items[2], {to:'/profile', label:t.profile, icon:User}]} />
       </nav>
       <div className="heritage-nav-tools">
         <select aria-label="Language / Язык / Тил" value={lang} onChange={event => setLang(event.target.value as Lang)}><option value="kg">КЫР</option><option value="ru">RU</option><option value="en">EN</option></select>

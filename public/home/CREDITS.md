@@ -1,5 +1,11 @@
 # Homepage photographs
 
+## Living guide update (2026-10-27)
+
+- `song-kol-hills.jpg`: **Hills around Song Köl lake, Kyrgyzstan**, Thomas Depenbusch. [Source](https://commons.wikimedia.org/wiki/File:Hills_around_Song_K%C3%B6l_lake,_Kyrgyzstan;_Thomas_Depenbusch;_June_2012.jpg), [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/). Wikimedia thumbnail at 1280px, cropped responsively with a CSS overlay on the homepage.
+- `song-kol-daylight.jpg`: **Song-Köl**, Ondřej Žváček, 2008. [Source](https://commons.wikimedia.org/wiki/File:Song-K%C3%B6l.jpg), [CC BY 2.5](https://creativecommons.org/licenses/by/2.5/). Wikimedia thumbnail at 1280px, cropped responsively for a direction card.
+- The living guide uses natural-color photographs. The previous generated parchment hero below is retained as an unused historical asset. Decorative orbit graphics are not an astronomical model.
+
 ## Decorative hero illustration
 
 `heritage-illustration.png` was created with the built-in ImageGen tool from the user's supplied visual reference on 2026-10-15. It is an artistic composition, not a documentary photograph or a verified archaeological reconstruction. The homepage explicitly labels it as AI-assisted artwork. Original photographs below remain preserved.
@@ -16,3 +22,9 @@ Downloaded as Wikimedia thumbnails on 2026-10-14. Attribution and license links 
 The photographs document their named locations. The homepage does not assign dates or meanings to the pictured carvings.
 
 The Мурас brand mark is a vector interpretation of the user-supplied logo reference. The calendar illustration is decorative geometry, not a historical calendar reconstruction. Documentary photographs use a sepia CSS treatment in the exhibition layout.
+
+## Living guide hero
+`living-guide-hero.png`: AI-generated artistic landscape inspired by Kyrgyzstan, created for this project. It does not depict a verified location. Prompt: `output/design-options/LIVING-GUIDE-HERO-PROMPT.md`.
+
+## Sulaiman-Too
+`sulaiman-too.jpg`: Hzewo, [Osh sulaiman Too.jpg](https://commons.wikimedia.org/wiki/File:Osh_sulaiman_Too.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original file, cropped in the card via CSS.
