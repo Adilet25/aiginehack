@@ -16,12 +16,12 @@ export default function Constellation() {
       ctx.clearRect(0,0,canvas.width,canvas.height);
       points = points.filter(p => (p.life -= .025) > 0);
       points.forEach((p,i) => {
-        ctx.fillStyle = `rgba(43,125,110,${p.life * .7})`;
+        ctx.fillStyle = `rgba(218,206,174,${p.life * .7})`;
         ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fill();
         points.slice(i+1).forEach(q => {
           const distance = Math.hypot(p.x-q.x,p.y-q.y);
           if (distance > 130) return;
-          ctx.strokeStyle = `rgba(50,137,125,${Math.min(p.life,q.life)*(1-distance/130)*.5})`;
+          ctx.strokeStyle = `rgba(218,206,174,${Math.min(p.life,q.life)*(1-distance/130)*.5})`;
           ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.stroke();
         });
       });

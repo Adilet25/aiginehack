@@ -15,10 +15,10 @@ export function mountScene(host: HTMLElement, onError: (fatal: boolean) => void)
   const camera = new THREE.PerspectiveCamera(36, 1, .1, 40);
   camera.position.set(0, .4, 8.8);
   camera.lookAt(0, 0, 0);
-  scene.add(new THREE.HemisphereLight(0xe7f6ff, 0x27674c, 3));
+  scene.add(new THREE.HemisphereLight(0xe7f6ff, 0x302d22, 3));
   const key = new THREE.DirectionalLight(0xffffff, 4);
   key.position.set(-3, 4, 5); scene.add(key);
-  const rim = new THREE.DirectionalLight(0x73d5ea, 3);
+  const rim = new THREE.DirectionalLight(0xb5aa8b, 3);
   rim.position.set(4, 0, -2); scene.add(rim);
   const world = new THREE.Group();
   scene.add(world);
@@ -36,7 +36,7 @@ export function mountScene(host: HTMLElement, onError: (fatal: boolean) => void)
     vertices.setXYZ(i, x * factor, y * factor * 1.13, z * factor * .63);
   }
   geometry.computeVertexNormals();
-  const stone = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color: 0x326e62, roughness: .63, metalness: .22, flatShading: true }));
+  const stone = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ color: 0x797568, roughness: .63, metalness: .22, flatShading: true }));
   placeholder.add(stone);
   const markMaterial = new THREE.MeshStandardMaterial({ color: 0xf3e4bd, metalness: .65, roughness: .3 });
   const strokes = [[[-.48,.5], [0,0]], [[0,0],[-.48,-.5]], [[-.08,.5],[.4,0]], [[.4,0],[-.08,-.5]], [[-.54,.12],[-.22,.5]]];
@@ -52,7 +52,7 @@ export function mountScene(host: HTMLElement, onError: (fatal: boolean) => void)
   for (let i = 0; i < 3; i++) {
     const orbit = new THREE.Group();
     orbit.rotation.set(.8 + i * .6, .2 + i * .8, i * .7);
-    const material = new THREE.MeshStandardMaterial({ color: [0x4d9e82,0x59afc9,0xe99773][i], metalness: .55, roughness: .35 });
+    const material = new THREE.MeshStandardMaterial({ color: [0xa79c7d,0xc5c2b1,0x897653][i], metalness: .55, roughness: .35 });
     orbit.add(new THREE.Mesh(new THREE.TorusGeometry(1.68 + i * .18, .012, 6, 100), material));
     const satellite = new THREE.Mesh(new THREE.IcosahedronGeometry(.105 + i * .025, 1), material);
     satellite.position.x = 1.68 + i * .18;

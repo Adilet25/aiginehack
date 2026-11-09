@@ -59,7 +59,7 @@ export default function CommunityGalleryPage() {
       <PageHeader title={t.galleryTitle} subtitle={t.gallerySubtitle} action={{ to: '/stone-workshop', label: c.createWork }} />
       <PrototypeNotice kind="community" />
 
-      <div className="muras-gallery-toolbar">
+      <div className="atlas-gallery-workspace"><aside className="muras-gallery-toolbar">
         <div className="muras-search-row"><input type="search" aria-label={c.searchWorks} placeholder={c.searchWorks} value={search} onChange={e => setSearch(e.target.value)} /><select aria-label={c.sort} value={sort} onChange={e => setSort(e.target.value)}><option value="newest">{c.newest}</option><option value="rating">{c.popular}</option></select></div>
         <div className="muras-filters">
           {(["all", "goat", "deer", "hunter", "sun", "abstract"] as const).map((item) => (
@@ -69,8 +69,8 @@ export default function CommunityGalleryPage() {
             </button>
           ))}
         </div>
-      </div>
-
+      </aside>
+      <div className="atlas-gallery-results">
       <p className="muras-result-count" role="status">{c.results}: {filtered.length}</p>
       {filtered.length === 0 && <EmptyState title={c.noResults} description={c.tryAgain}><button className="muras-link" onClick={() => { setFilter('all'); setSearch(''); }}>{c.reset}</button><Link className="heritage-button" to="/stone-workshop">{c.createWork}</Link></EmptyState>}
       <div className="muras-gallery-grid">
@@ -105,6 +105,7 @@ export default function CommunityGalleryPage() {
           </article>
         ))}
       </div>
+      </div></div>
     </div>
   );
 }

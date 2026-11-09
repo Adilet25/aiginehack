@@ -1,0 +1,61 @@
+/* Atelier-inspired exhibition skin; existing route and section structure is retained. */
+:root { color-scheme: dark; --bg-0:#13130f; --bg-1:#191913; --panel:#1c1c16; --wash:#24241c; --line:#3b3b30; --text:#e9e5d7; --muted:#b1ae9e; --clay:#d3c6a4; --clay-soft:#353127; --sage:#c4c1a4; --sage-soft:#2d3026; --sky:#b7c3c4; --sky-soft:#293132; --bronze:#d3ba86; --gold-soft:#353021; --heading-font:Georgia,'Times New Roman',serif; }
+.dark { --bg-0:#090a08; --bg-1:#11120e; --panel:#141510; --wash:#20211a; --line:#35372c; --text:#e9e5d7; --muted:#b1ae9e; --clay:#d3c6a4; --clay-soft:#353127; --sage:#c4c1a4; --sage-soft:#2d3026; --sky:#b7c3c4; --sky-soft:#293132; }
+body::before { display:block; opacity:.035; }
+.heritage-shell h1,.heritage-shell h2,.heritage-shell h3,.heritage-shell h4 { font-family:var(--heading-font); font-weight:400; letter-spacing:-.045em; }
+.heritage-shell .heritage-nav { background:color-mix(in srgb,var(--bg-0) 92%,transparent); border-bottom:1px solid var(--line); }
+.heritage-shell .heritage-brand strong { font-size:1rem; letter-spacing:.38em; font-weight:500; }
+.heritage-shell .heritage-brand svg { width:32px; }
+.heritage-shell .heritage-nav-link,.heritage-shell .heritage-dropdown summary { font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; }
+.heritage-shell .heritage-dropdown-panel { border-radius:0; background:var(--panel); }
+.heritage-shell .guide-hero { background:#10110d; min-height:680px; padding-top:6rem; padding-bottom:3rem; }
+.heritage-shell .guide-hero-photo { filter:saturate(.25) brightness(.47); }
+.heritage-shell .guide-hero-overlay { background:linear-gradient(90deg,#11120de8, #11120d55 68%,#11120d22),linear-gradient(0deg,#13130f,transparent 50%); }
+.heritage-shell .guide-hero-content { max-width:850px; }
+.heritage-shell .guide-hero h1 { font:400 clamp(3.3rem,6.4vw,6.5rem)/1.03 Georgia,'Times New Roman',serif; letter-spacing:-.055em; color:#eee9dc; }
+.heritage-shell .guide-hero h1 span+span { font-style:italic; color:#d4c7a8; }
+.heritage-shell .guide-eyebrow { color:var(--clay); font-size:.62rem; letter-spacing:.28em; font-weight:400; }
+.heritage-shell .guide-hero .guide-eyebrow>span { background:#d4c7a8; box-shadow:none; }
+.heritage-shell .guide-intro { font:400 1.1rem/1.8 Georgia,serif; color:#ccc8bc; max-width:450px; }
+.heritage-shell .guide-button,.heritage-shell .heritage-button { border:1px solid #8f8975; border-radius:0; background:transparent; color:var(--text); box-shadow:none; font-size:.7rem; font-weight:400; letter-spacing:.12em; }
+.heritage-shell .guide-button:hover,.heritage-shell .heritage-button:hover { background:#d6ccb5; color:#161710; transform:translateY(-2px); }
+.heritage-shell .guide-search { background:var(--panel); border-radius:0; box-shadow:none; border-color:var(--line); }
+.heritage-shell .guide-section { padding-block:5rem; }
+.heritage-shell .guide-home h2 { font-size:clamp(2.4rem,4vw,4.2rem); }
+.heritage-shell .guide-home h3 { font-size:1.8rem; font-weight:400; }
+.heritage-shell .guide-section-heading { margin-bottom:2.5rem; padding-bottom:1.4rem; border-bottom:1px solid var(--line); }
+.heritage-shell #directions h2::after { display:none; }
+.heritage-shell .guide-destination-image,.heritage-shell .guide-stone figure img { border-radius:0; }
+.heritage-shell .guide-destination img { filter:saturate(.3) brightness(.78); transition:transform 1.8s cubic-bezier(.2,.7,.2,1),filter 1.5s; }
+.heritage-shell .guide-destination:hover img { filter:saturate(.8) brightness(.95); transform:scale(1.045); }
+.heritage-shell .guide-destination-image::after { background:linear-gradient(0deg,#10110de8,transparent 85%); }
+.heritage-shell .guide-card-label { background:transparent; color:#e5ddca; border-radius:0; letter-spacing:.2em; }
+.heritage-shell .guide-card-arrow { background:transparent; border:1px solid #ded7c27a; color:#e5ddca; }
+.heritage-shell .guide-text-link { font-size:.72rem; letter-spacing:.08em; font-weight:400; }
+.heritage-shell .guide-connected { border-radius:0; border-block:1px solid var(--line); background:radial-gradient(ellipse at 25% 50%,#37332655,transparent 60%); }
+.heritage-shell .guide-stone figure { transform:none; }
+.heritage-shell .guide-stone img { filter:saturate(.25); }
+.heritage-shell .guide-experiences>a { border-radius:0; background:transparent; border:0; border-top:1px solid var(--line); box-shadow:none; }
+.heritage-shell .guide-experiences>a:hover { background:var(--panel); }
+.heritage-shell .guide-experience-icon { border:1px solid var(--line); border-radius:50%; background:transparent!important; color:var(--clay)!important; }
+.heritage-shell .guide-journey { border-radius:0; border-block:1px solid var(--line); background:var(--panel); }
+.heritage-shell .guide-journey .guide-eyebrow,.heritage-shell .guide-journey dt,.heritage-shell .guide-journey .guide-text-link { color:var(--muted); }
+.heritage-shell .guide-journey dd { font-family:Georgia,serif; font-weight:400; }
+.heritage-shell .guide-cursor i { background:#d6cbb20a; border-color:#d6cbb278; box-shadow:none; }
+.heritage-shell .guide-scroll-progress { height:1px; background:#c5b991; }
+.heritage-shell .museum-reveal { transition:opacity 1.4s,transform 1.4s cubic-bezier(.2,.7,.2,1); }
+.heritage-shell .museum-reveal[data-revealed='false'] { transform:translateY(38px); }
+.heritage-shell .guide-map-quick-route,.heritage-shell .guide-map-result,.heritage-shell .glow-card { border-radius:2px; box-shadow:none; }
+.heritage-shell .guide-map-quick-route .guide-button { border-radius:0; }
+.heritage-shell .muras-map-frame .leaflet-tile-pane { filter:saturate(.3) brightness(.85); }
+.heritage-shell .heritage-page-header h1 { font-weight:400; }
+.atelier-atmosphere { position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:2; opacity:.6; }
+@media(min-width:1024px) { .heritage-shell .guide-connected { min-height:620px; }.heritage-shell .guide-section { padding-block:6rem; } }
+@media(prefers-reduced-motion:reduce) { .heritage-shell .museum-reveal { transition:none; }.heritage-shell .museum-reveal[data-revealed='false'] { opacity:1; transform:none; } }
+html[data-motion-paused='true'] .museum-reveal { opacity:1; transform:none; transition:none; }
+
+/* Preserve a genuine light appearance for the existing theme switch. */
+:root:not(.dark) { color-scheme:light; --bg-0:#eeebe2; --bg-1:#e5e1d5; --panel:#f5f1e7; --wash:#e2ddd1; --line:#c5c0b1; --text:#25251e; --muted:#656355; --clay:#716044; --clay-soft:#ded5c2; --sage:#5a604d; --sage-soft:#dce0d2; --sky:#506466; --sky-soft:#dce3e0; }
+.heritage-shell .guide-hero .guide-button { color:#eee9dc; }
+.heritage-shell .guide-hero .guide-button:hover { color:#161710; }
+.heritage-shell .guide-journey { color:var(--text); }

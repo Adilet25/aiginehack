@@ -524,7 +524,7 @@ function createCalendarRound() {
 
 export default function CalendarPage() {
   const c = useInterfaceCopy();
-  const [view, setView] = useState<'month' | 'wheel' | 'learn'>('wheel');
+  const [view, setView] = useState<'month' | 'wheel' | 'learn'>('month');
   const { t, lang } = useLang();
   const months = useMemo(() => getMonths(lang), [lang]);
   const weekdays = useMemo(() => getWeekdays(lang), [lang]);

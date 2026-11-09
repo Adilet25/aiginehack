@@ -4,6 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import "./index.css";
 import App from "./App";
+import "./components/layout/AtelierTheme.css";
+import "./components/layout/MurasStructure.css";
 import { GameProvider } from "./app/providers/GameProvider";
 import { LanguageProvider } from "./app/providers/LanguageProvider";
 

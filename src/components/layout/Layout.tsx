@@ -6,6 +6,7 @@ import { Pause, Play } from 'lucide-react';
 import { MotionContext } from '../experience/motion';
 import PointerEffects from '../experience/PointerEffects';
 import Constellation from '../experience/Constellation';
+import AtelierAtmosphere from '../experience/AtelierAtmosphere';
 import { useGuideCopy } from '../../data/guide';
 import './InternalPages.css';
 import './GuideTheme.css';
@@ -25,7 +26,7 @@ export default function Layout({ children }: LayoutProps) {
   const isHome = pathname === '/';
   return (
     <MotionContext.Provider value={{ paused, setPaused }}><div className="heritage-shell">
-      <PointerEffects /><Constellation />
+      <PointerEffects />{!isHome && <><Constellation /><AtelierAtmosphere /></>}
       <button className="guide-motion-toggle" aria-label={paused ? g.resume : g.pause} title={paused ? g.resume : g.pause} onClick={() => setPaused(!paused)}>{paused ? <Play size={16} /> : <Pause size={16} />}</button>
       <a className="heritage-skip" href="#main-content">{lang === 'en' ? 'Skip to content' : lang === 'kg' ? 'Мазмунга өтүү' : 'Перейти к содержимому'}</a>
       <Navbar />

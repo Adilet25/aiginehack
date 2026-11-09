@@ -28,7 +28,7 @@ function NavDropdown({ label, items }: { label: string; items: NavItem[] }) {
 export default function Navbar() {
   const { lang, setLang, t } = useLang();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => window.localStorage.getItem('theme') === 'dark' ? 'dark' : 'light');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => window.localStorage.getItem('theme') === 'light' ? 'light' : 'dark');
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
     window.localStorage.setItem('theme', theme);
