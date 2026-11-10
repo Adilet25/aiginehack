@@ -48,15 +48,31 @@ export function mountScene(host: HTMLElement, onError: (fatal: boolean) => void)
     beam.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), end.sub(start).normalize());
     placeholder.add(beam);
   }
-  const orbits = new THREE.Group(); world.add(orbits);
-  for (let i = 0; i < 3; i++) {
-    const orbit = new THREE.Group();
-    orbit.rotation.set(.8 + i * .6, .2 + i * .8, i * .7);
-    const material = new THREE.MeshStandardMaterial({ color: [0x4d9e82,0x59afc9,0xe99773][i], metalness: .55, roughness: .35 });
-    orbit.add(new THREE.Mesh(new THREE.TorusGeometry(1.68 + i * .18, .012, 6, 100), material));
-    const satellite = new THREE.Mesh(new THREE.IcosahedronGeometry(.105 + i * .025, 1), material);
-    satellite.position.x = 1.68 + i * .18;
-    orbit.add(satellite); orbits.add(orbit);
+  const pebbles = new THREE.Group();
+  world.add(pebbles);
+  const pebbleMaterial = new THREE.MeshStandardMaterial({
+    color: 0x817363,
+    roughness: .95,
+    metalness: 0,
+    flatShading: true,
+  });
+  for (let i = 0; i < 7; i++) {
+    const pebbleGeometry = new THREE.IcosahedronGeometry(.11 + (i % 3) * .035, 1);
+    const positions = pebbleGeometry.attributes.position;
+    for (let vertex = 0; vertex < positions.count; vertex++) {
+      const x = positions.getX(vertex);
+      const y = positions.getY(vertex);
+      const z = positions.getZ(vertex);
+      const unevenness = 1 + .18 * Math.sin(x * 23 + y * 31 + z * 17 + i);
+      positions.setXYZ(vertex, x * unevenness, y * unevenness * .8, z * unevenness * .7);
+    }
+    pebbleGeometry.computeVertexNormals();
+    const pebble = new THREE.Mesh(pebbleGeometry, pebbleMaterial);
+    const angle = i * Math.PI * 2 / 7;
+    const radius = 1.7 + (i % 2) * .15;
+    pebble.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius * .85, -.35 + (i % 3) * .3);
+    pebble.rotation.set(i * .7, i * 1.1, i * .4);
+    pebbles.add(pebble);
   }
   const shadowCanvas = document.createElement('canvas'); shadowCanvas.width = 128; shadowCanvas.height = 128;
   const ctx = shadowCanvas.getContext('2d');
@@ -118,8 +134,8 @@ export function mountScene(host: HTMLElement, onError: (fatal: boolean) => void)
     world.rotation.x += (py * .14 - world.rotation.x) * .045;
     artifact.rotation.y = manualAngle + Math.sin(time * .3) * .45;
     artifact.position.y = Math.sin(time * .8) * .09;
-    orbits.rotation.y = time * .1;
-    orbits.rotation.z = time * .06;
+    pebbles.rotation.y = Math.sin(time * .15) * .2;
+    pebbles.rotation.z = time * .035;
     draw(); frame = requestAnimationFrame(tick);
   }
   function sync() {

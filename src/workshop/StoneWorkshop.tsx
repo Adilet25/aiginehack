@@ -1,3 +1,4 @@
+import './WorkshopStudio.css';
 import { useInterfaceCopy } from '../data/interface';
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -165,13 +166,13 @@ function getInterpretationLibrary(lang: Lang): Record<DetectedType, Interpretati
   };
 }
 
-const confidenceStyles = {
-  low: "border-danger bg-danger-soft text-danger",
-  medium: "border-gold bg-gold-soft text-ink ",
-  high: "border-sage bg-sage-soft text-ink ",
-};
-
 export default function StoneWorkshop() {
+  const [focused, setFocused] = useState(false);
+  useEffect(() => {
+    const close = (event: KeyboardEvent) => { if (event.key === 'Escape') setFocused(false); };
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const { publishArtwork } = useGame();
   const { t, lang } = useLang();
@@ -468,13 +469,7 @@ export default function StoneWorkshop() {
     setPublishDescription("");
   };
 
-  const confidenceLabel: Record<Interpretation["confidence"], string> = {
-    low: t.confidenceLow,
-    medium: t.confidenceMedium,
-    high: t.confidenceHigh,
-  };
-
-  const templateOptions: { key: TemplateType; label: string }[] = [
+const templateOptions: { key: TemplateType; label: string }[] = [
     { key: "none", label: t.noTemplate },
     { key: "goat", label: t.goat },
     { key: "deer", label: t.deer },
@@ -483,299 +478,62 @@ export default function StoneWorkshop() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="muras-studio-layout">
-        <aside className="muras-studio-tools">
-          <details className="glow-card muras-studio-help">
-            <summary className="text-xl text-ink">
-              {t.carvingMode}
-            </summary>
-            <p className="mt-3 text-sm leading-7 text-ink  ">
-              {t.carvingModeDesc}
-            </p>
-          </details>
+    <div className={focused ? 'stone-desk stone-desk--expanded' : 'stone-desk'}>
+      <header className="stone-desk-bar">
+        <div className="stone-toolset" role="group" aria-label={t.tools}>
+          {[
+            { id: 'hammer' as const, label: t.hammer, Icon: Hammer },
+            { id: 'chisel' as const, label: t.chisel, Icon: Sparkles },
+            { id: 'brush' as const, label: t.softTool, Icon: Brush },
+          ].map(({ id, label, Icon }) => (
+            <button key={id} aria-pressed={tool === id} onClick={() => setTool(id)}><Icon size={19} />{label}</button>
+          ))}
+        </div>
+        <button className="stone-expand" aria-pressed={focused} onClick={() => setFocused(value => !value)}>
+          {focused ? '↙ Esc' : '↗'}
+          <span>{lang === 'en' ? 'Canvas' : lang === 'kg' ? 'Кенеп' : 'Холст'}</span>
+        </button>
+      </header>
 
-          <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-ink ">
-              {t.tools}
-            </h4>
-
-            <div className="mt-4 grid gap-3">
-              <button
-                aria-pressed={tool === "hammer"}
-                onClick={() => setTool("hammer")}
-                className={`rounded-2xl border px-4 py-3 text-left transition ${
-                  tool === "hammer"
-                    ? "border-gold bg-gold-soft text-ink "
-                    : "border-line  bg-surface  text-ink  hover:bg-surface"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Hammer size={18} />
-                  <div>
-                    <div className="font-semibold">{t.hammer}</div>
-                    <div className="text-xs text-ink  ">
-                      {t.hammerDesc}
-                    </div>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                aria-pressed={tool === "chisel"}
-                onClick={() => setTool("chisel")}
-                className={`rounded-2xl border px-4 py-3 text-left transition ${
-                  tool === "chisel"
-                    ? "border-gold bg-gold-soft text-ink "
-                    : "border-line  bg-surface  text-ink  hover:bg-surface"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Sparkles size={18} />
-                  <div>
-                    <div className="font-semibold">{t.chisel}</div>
-                    <div className="text-xs text-ink  ">
-                      {t.chiselDesc}
-                    </div>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                aria-pressed={tool === "brush"}
-                onClick={() => setTool("brush")}
-                className={`rounded-2xl border px-4 py-3 text-left transition ${
-                  tool === "brush"
-                    ? "border-gold bg-gold-soft text-ink "
-                    : "border-line  bg-surface  text-ink  hover:bg-surface"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Brush size={18} />
-                  <div>
-                    <div className="font-semibold">{t.softTool}</div>
-                    <div className="text-xs text-ink  ">
-                      {t.softToolDesc}
-                    </div>
-                  </div>
-                </div>
-              </button>
-            </div>
+      <div className="stone-desk-workspace">
+        <section className="stone-desk-stage" aria-label={c.draw}>
+          <div className="stone-stage-label"><span>{t.carvingMode}</span><span>900 × 620</span></div>
+          <div className="stone-desk-sheet">
+            <canvas ref={canvasRef} width={900} height={620} aria-label={t.carvingMode}
+              onPointerDown={handleDown} onPointerMove={handleMove} onPointerUp={handleUp}
+              onPointerCancel={handleUp} onLostPointerCapture={handleUp} />
+            {impactPulse && <span className="stone-impact" style={{ left: (impactPulse.x / 900) * 100 + '%', top: (impactPulse.y / 620) * 100 + '%' }} />}
           </div>
-
-          <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-ink ">
-              {t.template}
-            </h4>
-
-            <div className="mt-4 grid grid-cols-2 gap-3">
-              {templateOptions.map((item) => (
-                <button
-                  key={item.key}
-                  aria-pressed={template === item.key}
-                  onClick={() => setTemplate(item.key as TemplateType)}
-                  className={`rounded-2xl border px-3 py-3 text-sm font-semibold transition ${
-                    template === item.key
-                      ? "border-gold bg-gold-soft text-ink "
-                      : "border-line  bg-surface  text-ink  hover:bg-surface"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="glow-card panel-ornament rounded-3xl p-5">
-            <h4 className="text-lg font-bold text-ink ">
-              {t.actions}
-            </h4>
-
-            <div className="mt-4 grid gap-3">
-              <button
-                onClick={interpretDrawing}
-                className="flex items-center gap-3 rounded-2xl border border-sky bg-sky-soft px-4 py-3 text-sky transition hover:bg-sky-soft"
-              >
-                <Search size={18} />
-                {t.interpretDrawing}
-              </button>
-
-              <button
-                onClick={clearCanvas}
-                className="flex items-center gap-3 rounded-2xl border border-line  bg-surface  px-4 py-3 text-ink   transition hover:bg-surface"
-              >
-                <RotateCcw size={18} />
-                {t.clearStone}
-              </button>
-
-              <button
-                onClick={saveImage}
-                className="flex items-center gap-3 rounded-2xl border border-sage bg-sage-soft px-4 py-3 text-ink   transition hover:bg-sage-soft"
-              >
-                <Download size={18} />
-                {t.savePetroglyph}
-              </button>
-            </div>
-          </div>
-        </aside>
-
-        <section className="muras-studio-canvas"><div className="muras-studio-caption"><h2>{c.draw}</h2><p>{c.toolsHint}</p></div>
-          <div className="relative overflow-hidden rounded-3xl border border-line  bg-[#231d17]">
-            <canvas
-              ref={canvasRef}
-              width={900}
-              height={620}
-              className="w-full cursor-crosshair touch-none"
-              aria-label={t.carvingMode}
-              onPointerDown={handleDown}
-              onPointerMove={handleMove}
-              onPointerUp={handleUp}
-              onPointerCancel={handleUp}
-              onLostPointerCapture={handleUp}
-            />
-
-            {impactPulse && (
-              <div
-                className="pointer-events-none absolute h-14 w-14 rounded-full border border-gold bg-gold-soft animate-ping"
-                style={{
-                  left: `${(impactPulse.x / 900) * 100}%`,
-                  top: `${(impactPulse.y / 620) * 100}%`,
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
-            )}
-          </div>
-
-          <div className="mt-4 rounded-2xl border border-line  bg-wash  px-4 py-3 text-sm leading-7 text-ink  ">
-            {t.workshopTip}
-          </div>
+          <div className="stone-stage-footer"><p>{c.toolsHint}</p><button onClick={clearCanvas}><RotateCcw size={15} />{t.clearStone}</button></div>
         </section>
+
+        <aside className="stone-desk-library">
+          <span className="stone-eyebrow">01 / {t.template}</span>
+          <div className="stone-template-list">
+            {templateOptions.map(item => <button key={item.key} aria-pressed={template === item.key} onClick={() => setTemplate(item.key)}>
+              <svg viewBox="80 30 380 420" aria-hidden="true">
+                {item.key === 'none' ? <path d="M220 180 L320 280 M320 180 L220 280" /> : <path d={templatePaths[item.key]} />}
+              </svg><span>{item.label}</span>
+            </button>)}
+          </div>
+          <details className="stone-help"><summary>{t.carvingMode}</summary><p>{t.carvingModeDesc}</p><p>{t.workshopTip}</p></details>
+        </aside>
       </div>
 
-      {interpretation && (
-        <section className="muras-studio-result"><h2>{c.publishStep}</h2>
-          <div className="muras-interpretation-grid">
-            <div className="glow-card panel-ornament rounded-3xl p-6">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-ink  ">
-                    {t.interpretation}
-                  </p>
-                  <h3 className="mt-2 text-2xl font-black text-ink ">
-                    {interpretation.title}
-                  </h3>
-                </div>
-
-                <span
-                  className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase ${confidenceStyles[interpretation.confidence]}`}
-                >
-                  {confidenceLabel[interpretation.confidence]}
-                </span>
-              </div>
-
-              <div className="mt-5 space-y-4">
-                <div className="rounded-2xl border border-line  bg-wash  p-4">
-                  <p className="text-xs uppercase tracking-wide text-ink  ">
-                    {t.whatSystemSaw}
-                  </p>
-                  <p className="mt-2 text-sm leading-7 text-ink  ">
-                    {interpretation.whatItShows}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-sky bg-sky-soft p-4">
-                  <p className="text-xs uppercase tracking-wide text-sky">
-                    {t.possibleMeaning}
-                  </p>
-                  <p className="mt-2 text-sm leading-7 text-sky">
-                    {interpretation.meaning}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="glow-card panel-ornament rounded-3xl p-6">
-              <p className="text-xs uppercase tracking-[0.2em] text-ink  ">
-                {t.projection}
-              </p>
-              <h3 className="mt-2 text-2xl font-black text-ink ">
-                {t.possibleScene}
-              </h3>
-
-              <div className="mt-5 rounded-2xl border border-gold bg-gold-soft p-5">
-                <p className="text-sm leading-8 text-gold">
-                  {interpretation.projection}
-                </p>
-              </div>
-
-              <div className="mt-4 rounded-2xl border border-line  bg-wash  p-4 text-sm leading-7 text-ink  ">
-                {t.mvpNote}
-              </div>
-            </div>
-          </div>
-
-          <div className="glow-card panel-ornament rounded-3xl p-6">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="rounded-2xl bg-sage-soft p-3">
-                <Upload size={18} />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-ink ">
-                  {t.publishToCommunity}
-                </h3>
-                <p className="text-sm text-ink  ">
-                  {t.publishDesc}
-                </p>
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <input
-                value={publishTitle}
-                onChange={(e) => setPublishTitle(e.target.value)}
-                aria-label={t.workTitle}
-                placeholder={t.workTitle}
-                className="rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
-              />
-              <input
-                value={publishAuthor}
-                onChange={(e) => setPublishAuthor(e.target.value)}
-                aria-label={t.authorName}
-                placeholder={t.authorName}
-                className="rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
-              />
-            </div>
-
-            <textarea
-              value={publishDescription}
-              onChange={(e) => setPublishDescription(e.target.value)}
-              aria-label={t.shortDescription}
-                placeholder={t.shortDescription}
-              rows={4}
-              className="mt-4 w-full rounded-2xl border border-line  bg-wash  px-4 py-3 text-ink  outline-none placeholder:text-ink "
-            />
-
-            <div className="mt-5 flex flex-wrap gap-3">
-              <button
-                onClick={handlePublish}
-                className="rounded-2xl border border-sage bg-sage-soft px-5 py-3 font-semibold text-ink   transition hover:bg-sage-soft"
-              >
-                {t.publishArtwork}
-              </button>
-
-              <div className="rounded-2xl border border-gold bg-gold-soft px-4 py-3 text-sm text-ink ">
-                {t.firstPlacePrize}
-              </div>
-            </div>
-
-            {publishMessage && (
-              <div role="status" className="mt-4 rounded-2xl border border-line  bg-surface  px-4 py-3 text-sm text-ink  ">
-                {publishMessage}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+      <section className="stone-desk-finish">
+        <div><span className="stone-eyebrow">02 / {t.actions}</span><h2>{t.savePetroglyph}</h2><p>{t.publishDesc}</p></div>
+        <div className="stone-finish-actions"><button onClick={saveImage}><Download size={18} />PNG</button><button onClick={interpretDrawing}><Search size={18} />{t.interpretDrawing}</button></div>
+      </section>
+      {interpretation && <section className="stone-desk-story">
+        <div><span className="stone-eyebrow">{t.interpretation}</span><h2>{interpretation.title}</h2><p>{interpretation.whatItShows}</p><p>{interpretation.meaning}</p><p>{interpretation.projection}</p><small>{t.mvpNote}</small></div>
+        <div className="stone-publish"><h2><Upload size={20} />{t.publishToCommunity}</h2>
+          <label>{t.workTitle}<input value={publishTitle} onChange={e => setPublishTitle(e.target.value)} /></label>
+          <label>{t.authorName}<input value={publishAuthor} onChange={e => setPublishAuthor(e.target.value)} /></label>
+          <label>{t.shortDescription}<textarea rows={3} value={publishDescription} onChange={e => setPublishDescription(e.target.value)} /></label>
+          <button onClick={handlePublish}>{t.publishArtwork}</button>
+          {publishMessage && <p role="status">{publishMessage}</p>}
+        </div>
+      </section>}
     </div>
   );
 }

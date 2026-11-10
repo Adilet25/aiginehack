@@ -1,0 +1,31 @@
+
+.stone-desk { background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden; }
+.stone-desk button { cursor:pointer; }
+.stone-desk button:focus-visible,.stone-desk input:focus-visible,.stone-desk textarea:focus-visible { outline:3px solid #78ad91;outline-offset:3px; }
+.stone-desk-bar { display:flex;justify-content:space-between;gap:16px;padding:14px 20px;border-bottom:1px solid var(--line); }
+.stone-toolset { display:flex;gap:6px;flex-wrap:wrap; }
+.stone-toolset button,.stone-expand { display:flex;align-items:center;gap:9px;padding:12px 16px;border-radius:9px;font-size:13px; }
+.stone-toolset button[aria-pressed=true] { background:#215d46;color:white; }
+.stone-expand { border:1px solid var(--line); }
+.stone-desk-workspace { display:grid;grid-template-columns:minmax(0,1fr) 200px; }
+.stone-desk-stage { padding:24px 36px;background:var(--wash);background-image:radial-gradient(#8b9d8f30 1px,transparent 1px);background-size:16px 16px; }
+.stone-stage-label,.stone-stage-footer { display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:11px;color:var(--muted); }
+.stone-stage-label { margin-bottom:18px;letter-spacing:.08em;text-transform:uppercase; }
+.stone-desk-sheet { position:relative;max-width:1100px;margin:auto;border-radius:4px;overflow:hidden;box-shadow:0 12px 28px #17291c25; }
+.stone-desk-sheet canvas { display:block;width:100%;height:auto;touch-action:none;cursor:crosshair; }
+.stone-stage-footer { margin-top:18px; }.stone-stage-footer button { display:flex;align-items:center;gap:8px;white-space:nowrap; }
+.stone-desk-library { padding:24px 18px;border-left:1px solid var(--line); }
+.stone-eyebrow { font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--muted); }
+.stone-template-list { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:20px 0; }
+.stone-template-list button { padding:10px 4px;border:1px solid var(--line);border-radius:8px;font-size:11px; }
+.stone-template-list button[aria-pressed=true] { border-color:#215d46;background:#215d4615; }
+.stone-template-list svg { height:64px;width:100%;fill:none;stroke:currentColor;stroke-width:7;stroke-linecap:round; }
+.stone-help { font-size:12px;line-height:1.8;border-top:1px solid var(--line);padding-top:18px; }.stone-help p { margin-top:12px;color:var(--muted); }
+.stone-desk-finish { display:flex;align-items:center;justify-content:space-between;gap:30px;padding:28px 36px;border-top:1px solid var(--line); }
+.stone-desk h2 { font-size:22px;margin:8px 0; }.stone-desk-finish p { font-size:13px;color:var(--muted); }
+.stone-finish-actions { display:flex;gap:10px; }.stone-finish-actions button,.stone-publish>button { display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 18px;border:1px solid var(--line);border-radius:9px;font-size:13px; }.stone-finish-actions button:last-child,.stone-publish>button { background:#215d46;color:white; }
+.stone-desk-story { display:grid;grid-template-columns:1fr 1fr;gap:45px;padding:36px;border-top:1px solid var(--line); }.stone-desk-story p { font-size:14px;line-height:1.8;margin:14px 0; }.stone-desk-story small { display:block;padding:15px;background:var(--wash); }
+.stone-publish { display:flex;flex-direction:column;gap:14px; }.stone-publish h2 { display:flex;align-items:center;gap:10px; }.stone-publish label { display:grid;gap:6px;font-size:12px; }.stone-publish input,.stone-publish textarea { padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--wash);color:var(--text); }
+.stone-desk--expanded { position:fixed;inset:10px;z-index:1500;overflow:auto; }
+.stone-impact { position:absolute;width:16px;height:16px;border:1px solid #e0cc9e;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none; }
+@media(max-width:850px) { .stone-desk-workspace { grid-template-columns:1fr; }.stone-desk-library { border-left:0;border-top:1px solid var(--line); }.stone-template-list { grid-template-columns:repeat(5,1fr); }.stone-desk-stage { padding:18px; }.stone-desk-finish,.stone-desk-story { display:flex;flex-direction:column;align-items:stretch;padding:22px; }.stone-desk-bar { padding:10px; }.stone-toolset button { padding:9px;font-size:11px; }.stone-expand span { display:none; } }
