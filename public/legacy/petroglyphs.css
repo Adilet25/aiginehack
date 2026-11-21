@@ -1,0 +1,22 @@
+body[data-route="stone"]{background:#f6f1e5;color:#312d25}
+body[data-route="stone"] .masthead{background:#101a28;color:#f7ead3}
+.chapter.rock-archive{max-width:none;width:100%;padding:0;background:#f6f1e5;color:#312d25;min-height:calc(100svh - var(--header))}
+.rock-inner{max-width:1500px;margin:auto;padding:0 var(--gutter) clamp(3rem,7vw,7rem)}
+.rock-bar,.rock-tabs,.rock-tools{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.rock-bar{justify-content:space-between;padding:1.2rem 0;border-bottom:1px solid #cfc5b2;font-size:.85rem}
+.rock-bar span,.rock-index small,.rock-work small,.rock-work figcaption{font-size:.75rem;letter-spacing:.075em;color:#786749}
+.rock-content h1{font:500 clamp(2.7rem,6.5vw,6.8rem)/1 var(--serif);letter-spacing:-.055em;margin:.45em 0}
+.rock-cover{display:grid;align-items:end;min-height:clamp(350px,60svh,650px);padding:clamp(1.6rem,5vw,5rem);margin:1.25rem 0 0;color:#fff1d8;background:linear-gradient(85deg,#161710ec,#26231d64 63%,#201a1422),url('./assets/cholpon-ata.jpg') center 53%/cover}
+.rock-cover h1{margin:0}.rock-cover p{font:1.2rem/1.4 var(--serif);margin:1rem 0 2rem}.rock-cover a,.rock-primary{display:inline-block;padding:.8rem 1.3rem;border-radius:2rem;background:#eddbb7;color:#332719;text-decoration:none}
+.rock-index{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #cfc5b2}
+.rock-index a{padding:1.6rem 1rem;color:inherit;text-decoration:none;border-inline-end:1px solid #cfc5b2}.rock-index a:last-child{border:0}
+.rock-index strong,.rock-index span{display:block}.rock-index strong,.rock-work h2{font:500 clamp(1.45rem,3vw,2.6rem)/1.15 var(--serif);margin:.4rem 0 1rem}.rock-index span,.rock-tabs{font-size:.87rem}
+.rock-index a:hover,.rock-index a:focus-visible{background:#e9e0cb}
+.rock-tabs{padding:1.2rem 0 .3rem}.rock-tabs a{color:inherit;padding:.55rem 0;text-decoration:none}.rock-tabs [aria-current]{border-bottom:2px solid #95532f}
+.rock-work{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(1.5rem,5vw,5rem);align-items:center}
+.rock-work figure{margin:0}.rock-specimen{background:linear-gradient(#211c1744,#211c1788),url('./assets/petroglyph-slab.png') center/cover,#312c26;padding:2rem;text-align:center}.rock-work canvas,.rock-work img{display:block;width:100%;height:auto}.rock-work .rock-specimen figcaption{color:#f4dfbf}.rock-work p{max-width:35em;line-height:1.55}
+.rock-tools{gap:.4rem;margin:1rem 0}.rock-work button{font:inherit;font-size:.88rem;min-height:44px;cursor:pointer;padding:.55rem .95rem;background:transparent;color:#493d2b;border:1px solid #998d77;border-radius:2rem}
+.rock-work button[aria-pressed=true],.rock-work .rock-primary{color:#fff4d9;background:#534231}.rock-work button:disabled{opacity:.45}.rock-observation{min-height:3em}.rock-source{color:#754224}.rock-paper{touch-action:none;cursor:crosshair;border:1px solid #cdbf9d}
+.rock-field>div{overflow:hidden}.rock-field img{transition:transform .5s}.rock-field img.zoomed{transform:scale(1.85)}.rock-field figcaption{padding:.5rem 0}
+@media(max-width:680px){.rock-index,.rock-work{grid-template-columns:1fr}.rock-index a{display:grid;grid-template-columns:2rem 1fr;align-items:center;padding:1rem 0;border:0;border-bottom:1px solid #cfc5b2}.rock-index strong{margin:0}.rock-index span{grid-column:2}.rock-tabs{gap:.7rem}.rock-cover{min-height:47svh}}
+@media(prefers-reduced-motion:reduce){.rock-field img{transition:none}}

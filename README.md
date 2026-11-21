@@ -1,73 +1,28 @@
-# React + TypeScript + Vite
+# Айгине · React + Vite + TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Требования
 
-Currently, two official plugins are available:
+- Node.js 20.19+ или 22.12+
+- npm
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Запуск
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Production-сборка
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
 ```
+
+Vite собирает React и TypeScript оболочку в `dist/`. Исходные интерактивные модули демо и их ресурсы находятся в `public/legacy/` и копируются в production без изменений. Поэтому текущие сцены календаря, юрты, интро петроглифов и карта продолжают работать. Точка входа React — `src/main.tsx`, оболочка сайта — `src/site-shell.tsx`.
+
+Сцена загружает юрту и предметы из `public/legacy/assets/yurt-models/`. Створки юрты открываются отдельно, а түндүк расположен в отдельной группе интерьера. Сандык находится в `public/legacy/assets/sandyk.glb`.
+
+По адресу `/#places` открывается 3D-экспозиция из `public/legacy/sacred-sites/`. Камера приближается к столу, рельеф поднимается над бумажной картой, а интерфейс появляется поверх затемнённой юрты. Для обзорной сцены используются локальные ресурсы. Поиск адресов, дорожные маршруты и детальные 2D-тайлы используют внешние картографические сервисы.
+
+Внешние библиотеки Three.js и Leaflet в `public/legacy/vendor/` сохранены с собственными лицензиями. Условия OpenStreetMap, Natural Earth и атрибуция перечислены в интерфейсе и исходном README демо.

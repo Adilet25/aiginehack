@@ -1,0 +1,47 @@
+export const worldCopy = {
+  ru: {
+    enter: 'Войти в юрту', hint: 'Нажмите на юрту или прокрутите вниз', opening: 'Открываем двери…',
+    sky: 'Схема неба', stars: 'Үркөр — Плеяды', starsText: 'В традиционном счёте времени следили за сближением Луны с Плеядами. Это наблюдение лежит в основе цикла тогоол, описанного исследователями «Айгине».',
+    starHint: 'Поверните круг или выберите период. Найдите Үркөр.',
+    observing: ['Чын куран · весна', 'Теке · лето', 'Тогуздун айы · осень', 'Бирдин айы · зима'],
+    note: 'Сезонная иллюстрация. Названия периодов приведены по одному из описаний календаря.',
+    previous: 'Предыдущий период', next: 'Следующий период', showWheel: 'Вращать колесо',
+    plan: 'Мой маршрут', add: 'Добавить в маршрут', remove: 'Убрать из маршрута', clear: 'Очистить',
+    empty: 'Добавьте два места, чтобы увидеть маршрут.', km: 'км', reverse: 'Развернуть маршрут', order: 'Порядок остановок',
+    viewPhoto: 'Фото водопада', stoneModel: '3D-иллюстрация камня',
+    rotateLeft: 'Повернуть влево', rotateRight: 'Повернуть вправо', zoomIn: 'Приблизить', zoomOut: 'Отдалить',
+    stoneInstruction: 'Вращайте камень и выберите рисунок для изучения.',
+  },
+  ky: {
+    enter: 'Боз үйгө кирүү', hint: 'Боз үйдү басыңыз же ылдый жылдырыңыз', opening: 'Эшик ачылууда…',
+    sky: 'Асман схемасы', stars: 'Үркөр — Плеядалар', starsText: 'Салттуу убакыт санагында Айдын Үркөргө жакындашын байкашкан. «Айгине» изилдөөчүлөрү тогоол айлампасын ушул байкоо менен байланыштырат.',
+    starHint: 'Айлампаны буруңуз же мезгилди тандаңыз. Үркөрдү табыңыз.',
+    observing: ['Чын куран · жаз', 'Теке · жай', 'Тогуздун айы · күз', 'Бирдин айы · кыш'],
+    note: 'Мезгилдик иллюстрация. Аталыштар календардын бир сүрөттөмөсүнөн алынды.',
+    previous: 'Мурунку мезгил', next: 'Кийинки мезгил', showWheel: 'Айлампаны буруу',
+    plan: 'Менин багытым', add: 'Багытка кошуу', remove: 'Багыттан алып салуу', clear: 'Тазалоо',
+    empty: 'Багытты көрүү үчүн эки жерди кошуңуз.', km: 'км', reverse: 'Багытты тескерилетүү', order: 'Аялдамалардын ирети',
+    viewPhoto: 'Шаркыратманын сүрөтү', stoneModel: 'Таштын 3D иллюстрациясы',
+    rotateLeft: 'Солго буруу', rotateRight: 'Оңго буруу', zoomIn: 'Жакындатуу', zoomOut: 'Алыстатуу',
+    stoneInstruction: 'Ташты буруп, изилдей турган сүрөттү тандаңыз.',
+  },
+  en: {
+    enter: 'Enter the yurt', hint: 'Select the yurt or scroll down', opening: 'Opening the doors…',
+    sky: 'Illustrated sky', stars: 'Ürkör — the Pleiades', starsText: 'Traditional timekeepers observed the Moon approach the Pleiades. Aigine researchers describe this observation as the basis of the togool cycle.',
+    starHint: 'Turn the wheel or choose a period. Find Ürkör.',
+    observing: ['Chyn kuran · spring', 'Teke · summer', 'Toguzdun aiy · autumn', 'Birdin aiy · winter'],
+    note: 'Seasonal illustration. The period names follow one documented account of the calendar.',
+    previous: 'Previous period', next: 'Next period', showWheel: 'Turn the wheel',
+    plan: 'My route', add: 'Add to route', remove: 'Remove from route', clear: 'Clear',
+    empty: 'Add two places to see a route.', km: 'km', reverse: 'Reverse order', order: 'Stop order',
+    viewPhoto: 'Waterfall photo', stoneModel: 'Illustrated 3D stone',
+    rotateLeft: 'Rotate left', rotateRight: 'Rotate right', zoomIn: 'Zoom in', zoomOut: 'Zoom out',
+    stoneInstruction: 'Turn the stone and select a motif to explore.',
+  },
+};
+
+export const placePoints = [
+  { lat: 40.5311, lng: 72.7828, source: 'https://whc.unesco.org/en/list/1230/' },
+  { lat: 42.14754, lng: 77.08542, source: 'https://aigine.kg/images/issyk-kol_book_english.PDF' },
+  { lat: 40.162778, lng: 72.363056, source: 'https://aigine.kg/images/Southbookrus.PDF' },
+];

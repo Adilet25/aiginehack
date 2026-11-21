@@ -1,0 +1,90 @@
+/* Shared surfaces and controls for the yurt, atlas and field collection. */
+:root {
+  --night: #121d28;
+  --linen: #f7f2e7;
+  --charcoal: #302d28;
+  --brass: #e7bd7b;
+  --copper: #824331;
+  --rule: #c9beac;
+  --paper: var(--linen);
+  --ink: var(--charcoal);
+  --serif: Georgia, 'Times New Roman', serif;
+  --sans: 'Segoe UI', Arial, sans-serif;
+}
+body .masthead, body[data-route] .masthead {
+  background: var(--night); color: var(--linen); border-bottom: 1px solid #be95694d;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left));
+}
+.masthead::after { display:none }
+.brand { min-height:44px; font:600 1.14rem/1 var(--serif); letter-spacing:.18em }
+.brand-mark { width:34px; height:34px; color:var(--brass) }
+body .masthead .edition { color:#dbcbb0; font:italic 1rem/1.3 var(--serif) }
+.masthead-controls :is(button,select) { min-height:44px; border-radius:4px; color:var(--linen); border:1px solid #61717a; background:var(--night); font:600 .8rem/1.2 var(--sans) }
+.masthead-controls .journal-opener { color:var(--night); background:var(--linen); border-color:var(--linen); padding-inline:1rem }
+.masthead-controls .journey-sound { display:inline-flex; align-items:center; gap:8px; justify-content:center; min-width:44px }
+.masthead-controls .journey-sound[aria-pressed="true"] {
+  background: var(--brass);
+  color: var(--night);
+  border-color: var(--brass);
+}
+.masthead-controls select { min-width:48px; color-scheme:dark }
+.masthead-controls button:hover { box-shadow:inset 0 0 0 1px currentColor }
+body :is(a,button,select,input,summary,[tabindex]):focus-visible { outline:3px solid #ffcd75; outline-offset:2px; box-shadow:0 0 0 5px #233341 }
+.hero-copy h1 { font-size:clamp(2.4rem,5.4vw,5.8rem); max-width:19ch; letter-spacing:-.052em; line-height:.99 }
+.hero-copy .enter { min-height:46px; background:var(--linen); color:var(--night); border:1px solid #f7dcac; font-weight:650; box-shadow:0 5px 24px #11182777 }
+.stage .exhibit-label { border-radius:3px; background:var(--linen); color:var(--charcoal); font-size:.83rem }
+.object-ring { width:44px; background:var(--night); font-size:1.5rem }
+.field-journal { width:min(40rem,94vw); background:var(--linen); border-radius:6px; color:var(--charcoal) }
+.field-journal header button { min-width:44px; min-height:44px }
+.field-journal nav a { grid-template-columns:4.7rem 1fr auto; gap:1.2rem; padding:.72rem 0 }
+.journal-plate { display:block; width:100%; aspect-ratio:1.28; background-position:center; background-size:cover; border-radius:3px }
+.plate-places { background-image:url('./assets/sulaiman-too.jpg') }
+.plate-stone { background-image:url('./assets/cholpon-ata.jpg') }
+.plate-calendar { background:radial-gradient(circle at 55% 52%, #0b1b30 0 20%,transparent 21%), radial-gradient(circle at 50% 50%,#e8cca1 0 24%,transparent 25%),radial-gradient(circle at 22% 22%,white 0 1px,transparent 2px),radial-gradient(circle at 80% 65%,white 0 1px,transparent 2px),#101f32 }
+.field-journal footer a,.rock-tabs a,.rock-bar a,.lunar-header .return,.cal-subnav a { display:inline-flex; min-height:44px;align-items:center }
+.rock-cover { border-bottom:4px solid var(--copper) }
+.rock-work .rock-primary,.route-toggle { background:var(--copper);color:var(--linen) }
+.rock-tabs [aria-current] { color:var(--copper);font-weight:650 }
+.rock-index a:hover strong { text-decoration:underline;text-underline-offset:.17em }
+.cal-flow { --cal-bg:var(--night);--cal-card:#172536;--cal-line:#8195ad4a;--cal-auth:var(--brass) }
+.cal-subnav { background:#121d28f7; gap:8px }
+.cal-btn,.atlas-controls button,.map-actions button { min-height:44px; min-width:44px }
+.cal-section-head h2,.map-heading h1 { font-family:var(--serif);letter-spacing:-.035em }
+.map-actions button { border-radius:4px }
+.map-actions button:focus-visible { outline:3px solid var(--brass);outline-offset:2px }
+@media(max-width:700px) {
+  .masthead { grid-template-columns:auto 1fr; gap:4px }
+  .masthead .edition { display:none }
+  .brand { gap:5px; letter-spacing:.08em; font-size:.98rem }
+  .brand-mark { width:27px;height:27px }
+  .masthead-controls { gap:4px }
+  .masthead-controls .journal-opener { padding-inline:.55rem;font-size:.74rem }
+  .stage[data-inside="true"] .exhibits { inset:auto .8rem max(3.9rem,env(safe-area-inset-bottom)) .8rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px }
+  .stage[data-inside] .exhibits .exhibit { position:static; transform:none; background:#14202eee;border:1px solid #c9ac7a;border-radius:4px;min-height:52px;justify-content:center;padding:4px }
+  .stage .exhibits .exhibit-label { color:var(--linen);background:none;border:none;box-shadow:none;white-space:normal;padding:0;font-size:.78rem }
+  .exhibits .object-ring { display:none }
+  .field-journal nav a { grid-template-columns:3.6rem 1fr auto;gap:.65rem }
+  .field-journal nav em { font-size:.82rem }
+}
+@media(prefers-reduced-motion:reduce) {
+  .hero-copy h1,.door-stars,.door-stars i,.rock-field img,.journal-plate { animation:none;transition:none }
+}
+.stage[data-loading="true"] .scene-loading{
+  position:absolute;inset:0;z-index:20;display:grid;place-content:center;justify-items:center;
+  margin:0;padding:1rem;border:0;border-radius:0;transform:none;background:#121d28;color:#f7eedb;
+  font:500 clamp(1.3rem,3vw,2rem)/1.3 var(--serif);text-align:center;pointer-events:auto;
+}
+.stage[data-loading="true"] .scene-loading::before{content:"";width:2rem;height:2rem;border:2px solid #675b4c;border-top-color:#edc68a;border-radius:50%;margin-bottom:1rem;animation:yurt-loading 1.2s linear infinite}
+@keyframes yurt-loading{to{transform:rotate(1turn)}}
+#stage[data-loading="true"] :is(.hero-copy,.yurt-entry,.stage-foot,.exhibits,.inside-prompt,.door-stars){visibility:hidden}
+body:has(#home:not([hidden]) #stage[data-loading="true"]){overflow:hidden}
+@media(prefers-reduced-motion:reduce){.stage[data-loading="true"] .scene-loading::before{animation:none}}
+.hero-kicker{color:#e8c489;font-size:.75rem;font-weight:650;letter-spacing:.045em}
+.hero-introduction{color:#f5e9d7;font:400 1.05rem/1.55 var(--sans);text-shadow:0 1px 6px #101726}
+@media(min-width:700px){
+  .hero-copy{inset:0 auto 0 0;width:33%;padding:0 clamp(18px,3.6vw,70px) 0 clamp(20px,4.8vw,100px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:1.1rem;text-align:left;background:linear-gradient(90deg,#091321a8,transparent)}
+  .hero-copy h1{position:static;margin:0;max-width:100%;font-size:clamp(2.5rem,5.4vw,5.9rem);text-wrap:balance}
+  .hero-introduction{max-width:31ch}
+  .hero-copy .enter{position:static;transform:none;margin-top:.35rem}
+}
+@media(max-width:699px){.hero-kicker,.hero-introduction{display:none}}
